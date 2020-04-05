@@ -65,7 +65,7 @@ classdef Log4jConfigurator
                 % Use \n instead of %n because the Matlab console wants Unix-style line
                 % endings, even on Windows.
                 pattern = ['%d{HH:mm:ss.SSS} %-5p %c{1} %x - %m' sprintf('\n')];
-                myLayout = org.apache.log4j.PatternLayout(pattern);
+                myLayout = javaObject('org.apache.log4j.PatternLayout', pattern);
                 rootAppender.setLayout(myLayout);
             end
             
