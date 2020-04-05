@@ -1,0 +1,8 @@
+SLF4M Changelog
+===============
+
+Version 0.1.0  (???)
+--------------------------
+
+* Initial checkin, based on a copy of SLF4M
+* Port to Octave
