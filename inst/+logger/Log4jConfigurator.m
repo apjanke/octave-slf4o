@@ -76,7 +76,7 @@ classdef Log4jConfigurator
             %
             % This is just a convenience method. Assumes there is a single
             % appender on the root logger.
-            rootLogger = org.apache.log4j.Logger.getRootLogger();
+            rootLogger = javaMethod('getRootLogger', 'org.apache.log4j.Logger');
             rootAppender = rootLogger.getAllAppenders().nextElement();
             myLayout = org.apache.log4j.PatternLayout(pattern);
             rootAppender.setLayout(myLayout);
