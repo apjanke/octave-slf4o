@@ -26,6 +26,10 @@ pkg install https://github.com/apjanke/octave-slf4o/archive/master.zip
 
 ### Use
 
+In your Octave session:
+
+* Call `pkg load slf4o` to load the SLF4O package.
+
 In your Octave program:
 
 * Call `logger.initSLF4O()` to initialize SLF4O. This needs to be done before any logging calls are made.
