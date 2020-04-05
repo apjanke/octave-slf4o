@@ -10,6 +10,6 @@ function infoj(msg, varargin)
 %
 % logger.infoj('Some message. value1={} value2={}', 'foo', 42);
 
-loggerCallImpl('info', msg, varargin, 'j');
+__SLF4O_loggerCallImpl__('info', msg, varargin, 'j');
 
 end

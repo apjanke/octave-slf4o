@@ -10,6 +10,6 @@ function tracej(msg, varargin)
 %
 % logger.tracej('Some message. value1={} value2={}', 'foo', 42);
 
-loggerCallImpl('trace', msg, varargin, 'j');
+__SLF4O_loggerCallImpl__('trace', msg, varargin, 'j');
 
 end

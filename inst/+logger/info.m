@@ -11,6 +11,6 @@ function info(msg, varargin)
 %
 % logger.info('Some message. value1=%s value2=%d', 'foo', 42);
 
-loggerCallImpl('info', msg, varargin);
+__SLF4O_loggerCallImpl__('info', msg, varargin);
 
 end

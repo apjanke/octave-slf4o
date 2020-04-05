@@ -14,7 +14,7 @@ function mustBeA(value, type)
 % Type (char) is the name of the type that Value must be. A type
 % name may be one of:
 %   * A class, such as 'double', 'cell', or 'containers.Map'
-%   * One of the special SLF4M pseudotypes:
+%   * One of the special SLF4O pseudotypes:
 %       cellstr
 %       numeric
 %       object
@@ -67,4 +67,6 @@ end
 
 end
 
-
+function reportBadValue(label, expectedType, actualType)
+    error('slf4o:InvalidInput', '%s must be a %s, but got a %s', label, expectedType, actualType);
+end

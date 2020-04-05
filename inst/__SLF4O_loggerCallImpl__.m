@@ -1,4 +1,4 @@
-function loggerCallImpl(logLevel, msg, args, form)
+function __SLF4O_loggerCallImpl__(logLevel, msg, args, form)
 %LOGGERCALLIMPL Implementation for the top-level logger functions
 %
 if nargin < 3 || isempty(args);  args = {};  end

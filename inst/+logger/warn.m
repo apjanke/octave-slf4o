@@ -11,6 +11,6 @@ function warn(msg, varargin)
 %
 % logger.warn('Some message. value1=%s value2=%d', 'foo', 42);
 
-loggerCallImpl('warn', msg, varargin);
+__SLF4O_loggerCallImpl__('warn', msg, varargin);
 
 end

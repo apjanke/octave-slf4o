@@ -10,6 +10,6 @@ function warnj(msg, varargin)
 %
 % logger.warnj('Some message. value1={} value2={}', 'foo', 42);
 
-loggerCallImpl('warn', msg, varargin, 'j');
+__SLF4O_loggerCallImpl__('warn', msg, varargin, 'j');
 
 end

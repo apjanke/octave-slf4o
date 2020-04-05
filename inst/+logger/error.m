@@ -11,6 +11,6 @@ function error(msg, varargin)
 %
 % logger.error('Some message. value1=%s value2=%d', 'foo', 42);
 
-loggerCallImpl('error', msg, varargin);
+__SLF4O_loggerCallImpl__('error', msg, varargin);
 
 end

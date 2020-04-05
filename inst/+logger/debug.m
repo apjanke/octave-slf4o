@@ -11,6 +11,6 @@ function debug(msg, varargin)
 %
 % logger.debug('Some message. value1=%s value2=%d', 'foo', 42);
 
-loggerCallImpl('debug', msg, varargin);
+__SLF4O_loggerCallImpl__('debug', msg, varargin);
 
 end

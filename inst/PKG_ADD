@@ -1,0 +1,8 @@
+% We disable the shadowed-function warning because we provide a package-scoped
+% error() function, which causes Octave to mistakenly, repeatedly issue warnings
+% like this:
+%   warning: function [...]/SLF4O/inst/+logger/error.m shadows a built-in function
+%
+% Sorry about this terrible hack.
+
+warning off Octave:shadowed-function

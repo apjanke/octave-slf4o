@@ -3,7 +3,7 @@ classdef Logger
     %
     % The Logger class provides method calls for performing logging, and the ability
     % to look up loggers by name. This is the main entry point through which all
-    % SLF4M logging happens.
+    % SLF4O logging happens.
     %
     % Usually you don't need to interact with this class directly, but can just call
     % one of the error(), warn(), info(), debug(), or trace() functions in the logger
@@ -58,7 +58,7 @@ classdef Logger
     methods (Static)
         function out = getLogger(identifier)
         % Gets the named Logger
-        jLogger = org.slf4j.LoggerFactory.getLogger(identifier);
+        jLogger = javaMethod('getLogger', 'org.slf4j.LoggerFactory', identifier);
         out = logger.Logger(jLogger);
         end
     end
@@ -68,7 +68,14 @@ classdef Logger
         %LOGGER Build a new logger object around an SLF4J Logger object.
         %
         % Generally, you shouldn't call this. Use logger.Logger.getLogger() instead.
-        mustBeA(jLogger, 'org.slf4j.Logger');
+        
+        % We cannot actually do this check, because it seems that Octave's isa() function
+        % does not respect interface implementation in Java objects.
+        % TODO: Report this to the Octave bug tracker. We probably won't be able to
+        % change this anyway, because we want to support Octave 4.4.x, and that one won't
+        % get fixed.
+        % mustBeA(jLogger, 'org.slf4j.Logger');
+
         this.jLogger = jLogger;
         end
         

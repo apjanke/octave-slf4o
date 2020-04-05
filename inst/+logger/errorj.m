@@ -10,6 +10,6 @@ function errorj(msg, varargin)
 %
 % logger.errorj('Some message. value1={} value2={}', 'foo', 42);
 
-loggerCallImpl('error', msg, varargin, 'j');
+__SLF4O_loggerCallImpl__('error', msg, varargin, 'j');
 
 end

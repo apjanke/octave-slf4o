@@ -10,6 +10,6 @@ function debugj(msg, varargin)
 %
 % logger.debugj('Some message. value1={} value2={}', 'foo', 42);
 
-loggerCallImpl('debug', msg, varargin, 'j');
+__SLF4O_loggerCallImpl__('debug', msg, varargin, 'j');
 
 end

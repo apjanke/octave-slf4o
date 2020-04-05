@@ -1,14 +1,14 @@
 classdef Log4jConfigurator
     % A configurator for log4j
     %
-    % This class configures the logging setup for Matlab/SLF4M logging. It
-    % configures the log4j library that SLF4M logging sits on top of. (We use log4j
+    % This class configures the logging setup for Matlab/SLF4O logging. It
+    % configures the log4j library that SLF4O logging sits on top of. (We use log4j
     % because it ships with Matlab.)
     %
-    % This class is provided as a convenience. You can also configure SLF4M logging
+    % This class is provided as a convenience. You can also configure SLF4O logging
     % by directly configuring log4j using its normal Java interface.
     %
-    % SLF4M does not automatically configure log4j. You must either call a
+    % SLF4O does not automatically configure log4j. You must either call a
     % configureXxx method on this class or configure log4j directly yourself to get
     % logging to work. Otherwise, you may get warnings like this at the console:
     %
@@ -53,12 +53,12 @@ classdef Log4jConfigurator
             % appender on the root logger (indicating logging has already been
             % configured), it silently does nothing.
             
-            rootLogger = org.apache.log4j.Logger.getRootLogger();
+            rootLogger = javaMethod('getRootLogger', 'org.apache.log4j.Logger');
             rootAppenders = rootLogger.getAllAppenders();
             isConfiguredAlready = rootAppenders.hasMoreElements;
             if ~isConfiguredAlready
-                org.apache.log4j.BasicConfigurator.configure();
-                rootLogger = org.apache.log4j.Logger.getRootLogger();
+                javaMethod('configure', 'org.apache.log4j.BasicConfigurator');
+                rootLogger = javaMethod('getRootLogger', 'org.apache.log4j.Logger');
                 rootLogger.setLevel(org.apache.log4j.Level.INFO);
                 rootAppender = rootLogger.getAllAppenders().nextElement();
                 % Use \n instead of %n because the Matlab console wants Unix-style line
@@ -112,7 +112,7 @@ classdef Log4jConfigurator
             %     });
             for i = 1:size(levels, 1)
                 [logName,levelName] = levels{i,:};
-                logger = org.apache.log4j.LogManager.getLogger(logName);
+                logger = javaMethod('getLogger', 'org.apache.log4j.LogManager', logName);
                 level = logger.Log4jConfigurator.getLog4jLevel(levelName);
                 logger.setLevel(level);
             end
@@ -135,7 +135,7 @@ classdef Log4jConfigurator
             end
             
             % Get all names first so we can display in sorted order
-            loggers = org.apache.log4j.LogManager.getCurrentLoggers();
+            loggers = javaMethod('getCurrentLoggers', 'org.apache.log4j.LogManager');
             loggerNames = {};
             while loggers.hasMoreElements()
                 logger = loggers.nextElement();
@@ -144,10 +144,10 @@ classdef Log4jConfigurator
             loggerNames = sort(loggerNames);
             
             % Display the hierarchy
-            rootLogger = org.apache.log4j.LogManager.getRootLogger();
+            rootLogger = javaMethod('getRootLogger', 'org.apache.log4j.LogManager');
             fprintf('Root (%s): %s\n', char(rootLogger.getName()), getLevelName(rootLogger));
             for i = 1:numel(loggerNames)
-                logger = org.apache.log4j.LogManager.getLogger(loggerNames{i});
+                logger = javaMethod('getLogger', 'org.apache.log4j.LogManager', loggerNames{i});
                 appenders = logger.getAllAppenders();
                 appenderStrs = {};
                 while appenders.hasMoreElements
@@ -186,16 +186,10 @@ classdef Log4jConfigurator
         function showGui()
             % Display the log4j configuration GUI
             
-            % Make sure the log4j1-config-gui JAR is on the path
-            libDir = fullfile(fileparts(fileparts(fileparts(mfilename('fullpath')))), ...
-                'lib');
-            jarFile = [libDir '/java/log4j1-config-gui/log4j1-config-gui-0.1.1.jar'];
-            jpath = javaclasspath('-all');
-            if ~ismember(jarFile, jpath)
-                javaaddpath(jarFile);
-            end
-            
-            gui = javaObjectEDT('net.apjanke.log4j1gui.Log4jConfiguratorGui');
+            % Octave doesn't seem to have javaObjectEDT(). Use regular javaObject() and hope
+            % we don't have concurrency problems.
+            %gui = javaObjectEDT('net.apjanke.log4j1gui.Log4jConfiguratorGui');
+            gui = javaObject('net.apjanke.log4j1gui.Log4jConfiguratorGui');
             gui.initializeGui();
             frame = gui.showInFrame();
             frame.setVisible(true);

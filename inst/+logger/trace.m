@@ -11,6 +11,6 @@ function trace(msg, varargin)
 %
 % logger.trace('Some message. value1=%s value2=%d', 'foo', 42);
 
-loggerCallImpl('trace', msg, varargin);
+__SLF4O_loggerCallImpl__('trace', msg, varargin);
 
 end

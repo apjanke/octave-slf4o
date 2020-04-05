@@ -1,15 +1,15 @@
 function out = version
-% VERSION Get version info for SLF4M
+% VERSION Get version info for SLF4O
 %
 % logger.version
 % v = logger.version
 %
-% Gets version info for the SLF4M library.
+% Gets version info for the SLF4O library.
 %
-% If return value is not captured, displays version info for SLF4M and related
+% If return value is not captured, displays version info for SLF4O and related
 % libraries to the console.
 %
-% If return value is captured, returns the version of the SLF4M library as
+% If return value is captured, returns the version of the SLF4O library as
 % a char vector.
 
 slf4mVersion = getSlf4mVersion;
@@ -18,7 +18,7 @@ if nargout > 0
     out = slf4mVersion;
     return
 else
-    versions.SLF4M = slf4mVersion;
+    versions.SLF4O = slf4mVersion;
     versions.SLF4J = '?';
     versions.log4j = '?';
     % TODO: Figure out how to extract the version info from the JARs
