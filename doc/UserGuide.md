@@ -160,7 +160,7 @@ For uniformity, if you define `dispstr`, I recommend that you override `disp` to
 
 As a convenience, there is a `logger.Displayable` mix-in class which takes care of this boilerplate for you. It provides standard implementations of `disp` and `dispstr` in terms of `dispstrs`. If you inherit from `logger.Displayable`, you only need to define `dispstrs`.
 
-#### The `dispstr` interface
+### The `dispstr` interface
 
 The `dispstr` function/method takes a single argument, which may be an array of any size, and returns a single one-line string.
 
