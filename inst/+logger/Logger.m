@@ -40,6 +40,7 @@ classdef Logger
     %     some_operation_that_could_go_wrong();
     % catch err
     %     log.warn(err, 'Caught exception during processing')
+    % end
     %
     
     properties (SetAccess = private)
@@ -70,11 +71,13 @@ classdef Logger
         % Generally, you shouldn't call this. Use logger.Logger.getLogger() instead.
         
         % We cannot actually do this check, because it seems that Octave's isa() function
-        % does not respect interface implementation in Java objects.
+        % does not respect inherited interface implementation in Java objects.
+        % See https://github.com/apjanke/octave-slf4o/issues/9
         % TODO: Report this to the Octave bug tracker. We probably won't be able to
         % change this anyway, because we want to support Octave 4.4.x, and that one won't
         % get fixed.
         % mustBeA(jLogger, 'org.slf4j.Logger');
+        keyboard
 
         this.jLogger = jLogger;
         end
