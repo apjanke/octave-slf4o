@@ -59,8 +59,8 @@ classdef Log4jConfigurator
             if ~isConfiguredAlready
                 javaMethod('configure', 'org.apache.log4j.BasicConfigurator');
                 rootLogger = javaMethod('getRootLogger', 'org.apache.log4j.Logger');
-                % TODO: Figure out a way to do this in Octave
-                %rootLogger.setLevel(org.apache.log4j.Level.INFO);
+                level_INFO = java_get('org.apache.log4j.Level', 'INFO');
+                rootLogger.setLevel(level_INFO);
                 rootAppender = rootLogger.getAllAppenders().nextElement();
                 % Use \n instead of %n because the Matlab console wants Unix-style line
                 % endings, even on Windows.
