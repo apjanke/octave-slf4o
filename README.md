@@ -103,7 +103,7 @@ Log4j was chosen as the back-end because that’s what ships with Matlab, and SL
 
 ## License
 
-SLF4O is dual licensed under the business-friendly Apache 2.0 and BSD 2-clause licenses. Pick whichever you like.
+SLF4O is licensed under the GNU General Public License, like GNU Octave itself.
 
 ## Author
 
