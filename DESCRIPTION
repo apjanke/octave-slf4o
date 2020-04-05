@@ -1,0 +1,11 @@
+Name: slf4o
+Version: 0.1.0-SNAPSHOT
+Date: 2020-04-04
+Title: SLF4O - A simple logging framework for GNU Octave
+Author: Andrew Janke <floss@apjanke.net>
+Maintainer: Andrew Janke <floss@apjanke.net>
+Description: A simple logging framework for GNU Octave
+License: GPLv3+
+Problems: Implementation is maybe not complete.
+Url: https://github.com/apjanke/octave-table
+Categories: data manipulation, statistics

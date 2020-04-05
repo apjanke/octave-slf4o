@@ -5,9 +5,9 @@
 To use SLF4O in your code:
 
 * Install and load the SLF4O package using Octave's `pkg` command
-  * `pkg install https://github.com/apjanke/SLF4O/archive/master.zip`
+  * `pkg install https://github.com/apjanke/octave-slf4o/archive/master.zip`
 * Load the SLF4O package in your Octave session
-  * `pkg load SLF4O`
+  * `pkg load slf4o`
 * Call `logger.initSLF4O` to initialize the library before doing any logging calls
 * Add calls to the `logger` functions in your code
 

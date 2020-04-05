@@ -21,7 +21,7 @@ SLF4O is an Octave port of the [SLF4M](https://github.com/apjanke/SLF4M) package
 You can install SLF4O using Octave's `pkg` command:
 
 ```octave
-pkg install https://github.com/apjanke/SLF4O/archive/master.zip
+pkg install https://github.com/apjanke/octave-slf4o/archive/master.zip
 ```
 
 ### Use
