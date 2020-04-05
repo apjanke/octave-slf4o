@@ -1,0 +1,20 @@
+SLF4O >> SLF4O
+Logging
+  logger.Logger
+  logger.Log4jConfigurator
+  logger.debug
+  logger.debugj
+  logger.error
+  logger.errorj
+  logger.info
+  logger.infoj
+  logger.trace
+  logger.tracej
+  logger.warn
+  logger.warnj
+  logger.initSLF4O
+  logger.version
+Dispstr
+  dispstr
+  dispstrs
+  prettyprint
