@@ -21,16 +21,26 @@ else
     versions.SLF4O = slf4mVersion;
     versions.SLF4J = '?';
     versions.log4j = '?';
-    % TODO: Figure out how to extract the version info from the JARs
-    % This probably can't be done without comparing JAR file checksums to
-    % Maven Central, which is slow, so maybe this isn't worth doing.
-    jars = javaclasspath('-static');
+    % For now, parse the versions from the JAR filenames, since we're shipping
+    % our own JARs and know that they're properly version-labelled. Would be nice
+    % if we could extract it from the JAR contents instead.
+    instDir = fileparts(fileparts(mfilename('fullpath')));
+    javaLibDir = fullfile(instDir, 'lib', 'java');
+    d = dir([javaLibDir '/*.jar']);
+    jars = javaclasspath;
+    map = {
+        'SLF4J' 'slf4j-api'
+        'log4j' 'log4j'
+        };
     for i = 1:numel(jars)
         jarFile = jars{i};
-        if endsWith(jarFile, 'log4j.jar')
-            %jar = java.util.jar.JarFile(jarFile);
-            %manifest = jar.getManifest;
-        elseif endsWith(jarFile, 'slf4j-api.jar')
+        [~,jarBase,~] = fileparts(jarFile);
+        for iLib = 1:size(map, 1)
+            [libName, fileStart] = map{iLib,:};
+            if strncmp(jarBase, fileStart, numel(fileStart))
+                versions.(libName) = jarBase(numel(fileStart)+2:end);
+                break
+            end
         end
     end
     libnames = fieldnames(versions);
@@ -42,9 +52,26 @@ end
 end
 
 function out = getSlf4mVersion
-thisFile = mfilename('fullpath');
-rootDir = fileparts(fileparts(fileparts(thisFile)));
-versionFile = fullfile(rootDir, 'VERSION');
-txt = fileread(versionFile);
-out = regexprep(txt, '\r?\n', '');
+instDir = fileparts(fileparts(mfilename('fullpath')));
+descrInInstalledPackage = fullfile(instDir, 'packinfo', 'DESCRIPTION');
+if exist(descrInInstalledPackage, 'file')
+  out = parseVersionFromDescrFile(descrInInstalledPackage);
+  return
+end
+descrInRepo = fullfile(fileparts(instDir), 'DESCRIPTION');
+if exist(descrInRepo, 'file')
+  out = parseVersionFromDescrFile(descrInRepo);
+  return
+end
+error('%s\n%s', 'Can not determine SLF4O version: Could not find DESCRIPTION file for package.', ...
+  'This probably means the package installation or your source repo are broken.');
+end
+
+function out = parseVersionFromDescrFile(descrFile)
+txt = fileread(descrFile);
+[match,tok] = regexp(txt, 'Version: *(\S+)', 'match', 'tokens');
+if isempty(match)
+  error('Failed parsing Version from package DESCRIPTION file: %s', descrFile);
+end
+out = tok{1}{1};
 end
