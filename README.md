@@ -1,33 +1,36 @@
-# SLF4M
+# SLF4O
 
-[![View apjanke/SLF4M on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/66157-apjanke-slf4m)
+SLF4O is a simple but flexible logging framework for GNU Octave, built on top of [SLF4J](https://www.slf4j.org/) and [Apache Log4j](https://logging.apache.org/log4j/2.0/). You can use it to do runtime-configurable logging from your Octave scripts and programs. This can be more informative and more manageable than commenting in and out `fprintf()` statements.
 
-SLF4M is a simple but flexible logging framework for Matlab, built on top of [SLF4J](https://www.slf4j.org/) and [Apache Log4j](https://logging.apache.org/log4j/2.0/). You can use it to do runtime-configurable logging from your Matlab scripts and programs. This can be more informative and more manageable than commenting in and out `fprintf()` statements.
+SLF4O provides:
 
-SLF4M provides:
-
-* Logging functions (a Matlab layer of bindings for SLF4J)
+* Logging functions (an Octave layer of bindings for SLF4J)
 * A "Dispstr" API for customizing object display.
 * A Log4j configuration GUI
 
 The API is simple enough that you can get up and running with it quickly, or even use it casually in scripts, but it’s flexible and powerful enough to be useful for larger systems.
 
-(The `dispstr` part is mostly optional; you don't have to learn it in order to use SLF4M logging.)
+(The `dispstr` part is mostly optional; you don't have to learn it in order to use SLF4O logging.)
 
-![SLF4M screenshot showing log output and configuration GUI](doc/SLF4M-configurator-screenshot-scaled.png)
+SLF4O is an Octave port of the [SLF4M](https://github.com/apjanke/SLF4M) package for Matlab.
 
 ## Usage
 
-To install, unzip the distribution somewhere, and add its `Mcode/` directory
-to your Matlab path.
+### Installation
 
-In your Matlab program:
+You can install SLF4O using Octave's `pkg` command:
 
-* Call `logger.initSLF4M()` to initialize SLF4M. This needs to be done before any logging calls are made.
-* Call `logger.Log4jConfigurator.configureBasicConsoleLogging()`
-to set up basic logging. This will write log output to the Matlab console.
+```octave
+pkg install https://github.com/apjanke/SLF4O/archive/master.zip
+```
 
-The logging functions are in the `+logger` package. Call them from within your Matlab
+### Use
+
+In your Octave program:
+
+* Call `logger.initSLF4O()` to initialize SLF4O. This needs to be done before any logging calls are made.
+
+The logging functions are in the `+logger` package. Call them from within your Octave
 code. In order of logging level, they are:
 
 * logger.error()
@@ -40,7 +43,7 @@ The logging functions take sprintf()-style formatting arguments. You can also pa
 an `MException` as the first argument to include the error message and stack
 trace in the log message.
 
-```matlab
+```octave
 function helloWorld(x)
 
 if nargin < 1 || isempty(x)
@@ -75,7 +78,7 @@ Error in helloWorld (line 16)
     some_bad_operation(x);
 ```
 
-Thanks to `dispstr()`, you can also pass Matlab objects to the `%s` conversions.
+Thanks to `dispstr()`, you can also pass Octave objects to the `%s` conversions.
 
 ```text
 >> m = containers.Map;
@@ -84,24 +87,24 @@ Thanks to `dispstr()`, you can also pass Matlab objects to the `%s` conversions.
 09:52:29.809 INFO  base - Hello, world! 2-by-1 containers.Map
 ```
 
-To launch the configuration GUI, run `logger.Log4jConfigurator.showGui`. This GUI lets you set the logging levels and other attributes of the various loggers in your Matlab session.
+To launch the configuration GUI, run `logger.Log4jConfigurator.showGui`. This GUI lets you set the logging levels and other attributes of the various loggers in your Octave session.
 
 For more details, see the [User's Guide](doc/UserGuide.md).
 
 ## Requirements
 
-A kind of recent version of Matlab. SLF4M was developed and tested on Matlab R2016b and R2017b, but it will probably work on some older Matlab versions too.
+Octave 4.4.1 or newer, built with Java enabled.
 
 ## Implementation
 
-SLF4M is a thin layer built on top of SLF4J and Log4j. It is compatible with any other Java or Matlab code that uses SLF4J or Log4j.
+SLF4O is a thin layer built on top of SLF4J and Log4j. It is compatible with any other Java or Octave code that uses SLF4J or Log4j.
 
-Log4j was chosen as the back-end because that’s what ships with Matlab.
+Log4j was chosen as the back-end because that’s what ships with Matlab, and SLF4O attempts to be maximally compatible with SLF4M.
 
 ## License
 
-SLF4M is dual licensed under the business-friendly Apache 2.0 and BSD 2-clause licenses. Pick whichever you like.
+SLF4O is dual licensed under the business-friendly Apache 2.0 and BSD 2-clause licenses. Pick whichever you like.
 
 ## Author
 
-SLF4M is developed by [Andrew Janke](https://apjanke.net). Its home page is [the repo on GitHub](https://github.com/apjanke/SLF4M).
+SLF4O is developed by [Andrew Janke](https://apjanke.net). Its home page is [the repo on GitHub](https://github.com/apjanke/SLF4O).

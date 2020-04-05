@@ -1,10 +1,10 @@
 # This Makefile is just for building the release distribution.
 # It's not needed for just building or running the program.
 
-PROGRAM=SLF4M
+PROGRAM=SLF4O
 VERSION=$(shell cat VERSION)
 DIST=dist/${PROGRAM}-${VERSION}
-FILES=README.md LICENSE Mcode doc lib
+FILES=README.md LICENSE inst doc
 
 .PHONY: dist
 dist:
