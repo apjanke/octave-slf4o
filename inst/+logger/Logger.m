@@ -77,7 +77,6 @@ classdef Logger
         % change this anyway, because we want to support Octave 4.4.x, and that one won't
         % get fixed.
         % mustBeA(jLogger, 'org.slf4j.Logger');
-        keyboard
 
         this.jLogger = jLogger;
         end
