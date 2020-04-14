@@ -1,6 +1,5 @@
 ## -*- texinfo -*-
 ##
-## @node size2str
 ## @deftypefn {Function} {@var{out} =} size2str (@var{sz})
 ##
 ## Format a matrix size for display.

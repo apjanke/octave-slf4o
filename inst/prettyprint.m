@@ -1,6 +1,5 @@
 ## -*- texinfo -*-
 ##
-## @node prettyprint
 ## @deftypefn {Function} {@var{out} =} prettyprint (@var{x})
 ##
 ## Formatted output of array contents.

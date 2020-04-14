@@ -1,6 +1,5 @@
 ## -*- texinfo -*-
 ##
-## @node mustBeA
 ## @deftypefn {Function} mustBeA (@var{value}, @var{type})
 ##
 ## Validate that an input is of a particular data type.

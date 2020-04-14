@@ -1,6 +1,5 @@
 ## -*- texinfo -*-
 ##
-## @node fprintfds
 ## @deftypefn {Function} fprintfds (@var{fmt}, @var{varargin})
 ## @deftypefnx {Function} fprintfds (@var{fid}, @var{fmt}, @var{varargin})
 ##

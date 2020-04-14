@@ -1,6 +1,5 @@
 ## -*- texinfo -*-
 ##
-## @node sprintfds
 ## @deftypefn {Function} sprintfds (@var{fmt}, @var{varargin})
 ##
 ## A variant of sprintf() that supports dispstr functionality.

@@ -1,5 +1,4 @@
 ## -*- texinfo -*-
-## @node logger.version
 ## @deftypefn {Function} logger.version ()
 ## @deftypefnx {Function} {@var{out} =} logger.version ()
 ##

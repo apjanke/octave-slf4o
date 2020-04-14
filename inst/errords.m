@@ -1,6 +1,5 @@
 ## -*- texinfo -*-
 ##
-## @node errords
 ## @deftypefn {Function} errords (@var{fmt}, @var{varargin})
 ## @deftypefnx {Function} errords (@var{errorId}, @var{fmt}, @var{varargin})
 ##

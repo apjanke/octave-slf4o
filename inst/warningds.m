@@ -1,6 +1,5 @@
 ## -*- texinfo -*-
 ##
-## @node warningds
 ## @deftypefn {Function} warningds (@var{fmt}, @var{varargin})
 ## @deftypefnx {Function} warningds (@var{warningId}, @var{fmt}, @var{varargin})
 ##

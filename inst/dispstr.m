@@ -1,6 +1,5 @@
 ## -*- texinfo -*-
 ##
-## @node dispstr
 ## @deftypefn {Function} {@var{out} =} dispstr (@var{x})
 ## @deftypefnx {Function} {@var{out} =} dispstr (@var{x}, @var{options})
 ##

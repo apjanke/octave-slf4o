@@ -1,6 +1,5 @@
 ## -*- texinfo -*-
 ##
-## @node pp
 ## @deftypefn {Function} pp (@var{varargin})
 ##
 ## Command wrapper for prettyprint().
