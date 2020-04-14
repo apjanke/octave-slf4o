@@ -73,6 +73,9 @@ your code, and a back-end that supports fine-grained configurability at run time
 to write code with logging statements for debugging or other purposes that can be turned on and
 off at run time without having to alter your source code.
 
+Log messages can be sent to the console, to log files, or to other destinations supported by
+Log4j, such as databases and special-purpose log collection services.
+
 SLF4O is built on top of the well-known SLF4J Java logging framework and the Log4j Java logging
 library. SLF4O is an Octave port of the Matlab SLF4M logging framework.
 
