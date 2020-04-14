@@ -301,130 +301,445 @@ Aside from the @code{dispstr} formatting, everything is done purely in terms of 
 @subsection Logging
 @table @asis
 @item @ref{logger.Logger}
-
+Main entry point through which logging happens
 
 @item @ref{logger.Log4jConfigurator}
-
+A configurator tool for Log4j
 
 @item @ref{logger.debug}
-
+Log a DEBUG level message from caller, with printf style formatting.
 
 @item @ref{logger.debugj}
-
+Log a DEBUG level message from caller, with SLF4J style formatting.
 
 @item @ref{logger.error}
-
+Log an ERROR level message from caller, with printf style formatting.
 
 @item @ref{logger.errorj}
-
+Log an ERROR level message from caller, with SLF4J style formatting.
 
 @item @ref{logger.info}
-
+Log an INFO level message from caller, with printf style formatting.
 
 @item @ref{logger.infoj}
-
+Log an INFO level message from caller, with SLF4J style formatting.
 
 @item @ref{logger.trace}
-
+Log a TRACE level message from caller, with printf style formatting.
 
 @item @ref{logger.tracej}
-
+Log a TRACE level message from caller, with SLF4J style formatting.
 
 @item @ref{logger.warn}
-
+Log a WARN level message from caller, with printf style formatting.
 
 @item @ref{logger.warnj}
-
+Log a WARN level message from caller, with SLF4J style formatting.
 
 @item @ref{logger.initSLF4O}
-
+Initialzie SLF4O
 
 @item @ref{logger.version}
-
+Gets version info for the SLF4O library.
 
 @end table
 @subsection Dispstr
 @table @asis
 @item @ref{dispstr}
-
+This returns a one-line string representing the input value, in a format suitable for inclusion into multi-element output.
 
 @item @ref{dispstrs}
-
+Get display strings for array elements.
 
 @item @ref{prettyprint}
-
+Formatted output of array contents.
 
 @end table
 @subsection Uncategorized
 @table @asis
-@item @ref{logger.logger.Log4jConfigurator.configureBasicConsoleLogging}
-Configures log4j to do basic logging to the console
+@item @ref{errords}
+A variant of error() that supports dispstr functionality.
 
-@item @ref{logger.logger.Logger.getLogger}
-Gets the named Logger.
+@item @ref{fprintfds}
+A variant of fprintf() that supports dispstr functionality.
+
+@item @ref{logger.initSLF4M}
+SLF4M compatibility shim for initSLF4O
+
+@item @ref{mustBeA}
+Validate that an input is of a particular data type.
+
+@item @ref{pp}
+Command wrapper for prettyprint().
+
+@item @ref{size2str}
+Format a matrix size for display.
+
+@item @ref{sprintfds}
+A variant of sprintf() that supports dispstr functionality.
+
+@item @ref{warningds}
+A variant of warning() that supports dispstr functionality.
 
 @end table
 
 @node API Alphabetically
 @section API Alphabetically
 @menu
-* dispstr::	
-* dispstrs::	
-* logger.debug::	
-* logger.debugj::	
-* logger.error::	
-* logger.errorj::	
-* logger.info:: 
-* logger.infoj::	
-* logger.initSLF4O::	
-* logger.Log4jConfigurator::	
-* logger.Logger::	
-* logger.logger.Log4jConfigurator.configureBasicConsoleLogging::       
-		Configures log4j to do basic logging to the console
-* logger.logger.Logger.getLogger::	Gets the named Logger.
-* logger.trace::	
-* logger.tracej::	
-* logger.version::	
-* logger.warn:: 
-* logger.warnj::	
-* prettyprint:: 
+* dispstr::	This returns a one-line string representing the input
+		value, in a format suitable for inclusion into
+		multi-element output.
+* dispstrs::	Get display strings for array elements.
+* errords::	A variant of error() that supports dispstr functionality.
+* fprintfds::	A variant of fprintf() that supports dispstr functionality.
+* logger.debug::	Log a DEBUG level message from caller, with printf
+		style formatting.
+* logger.debugj::	Log a DEBUG level message from caller, with SLF4J
+		style formatting.
+* logger.error::	Log an ERROR level message from caller, with printf
+		style formatting.
+* logger.errorj::	Log an ERROR level message from caller, with SLF4J
+		style formatting.
+* logger.info:: Log an INFO level message from caller, with printf style
+		formatting.
+* logger.infoj::	Log an INFO level message from caller, with SLF4J
+		style formatting.
+* logger.initSLF4M::	SLF4M compatibility shim for initSLF4O
+* logger.initSLF4O::	Initialzie SLF4O
+* logger.Log4jConfigurator::	A configurator tool for Log4j
+* logger.Logger::	Main entry point through which logging happens
+* logger.trace::	Log a TRACE level message from caller, with printf
+		style formatting.
+* logger.tracej::	Log a TRACE level message from caller, with SLF4J
+		style formatting.
+* logger.version::	Gets version info for the SLF4O library.
+* logger.warn:: Log a WARN level message from caller, with printf style
+		formatting.
+* logger.warnj::	Log a WARN level message from caller, with SLF4J
+		style formatting.
+* mustBeA::	Validate that an input is of a particular data type.
+* pp::	Command wrapper for prettyprint().
+* prettyprint:: Formatted output of array contents.
+* size2str::	Format a matrix size for display.
+* sprintfds::	A variant of sprintf() that supports dispstr functionality.
+* warningds::	A variant of warning() that supports dispstr functionality.
 @end menu
 
 @node dispstr
 @subsection dispstr
-@emph{Not documented}
+
+@deftypefn {Function} {@var{out} =} dispstr (@var{x})
+@deftypefnx {Function} {@var{out} =} dispstr (@var{x}, @var{options})
+
+This returns a one-line string representing the input value, in a format
+suitable for inclusion into multi-element output. The output describes the
+entire input array in a single string (as opposed to dumping all its
+elements.)
+
+The intention is for user-defined classes to override this method, providing
+customized display of their values.
+
+The input x may be a value of any type. The main DISPSTR implementation has
+support for Matlab built-ins and common types. Other user-defined objects are
+displayed in a generic "m-by-n <class> array" format.
+
+Options may be a struct or an n-by-2 cell array of name/value pairs (names in
+column 1; values in column 2).
+
+Returns a single string as char.
+
+Options:
+  QuoteStrings  - Put scalar strings in quotes.
+
+Examples:
+@example
+  dispstr(magic(3))
+@end example
+
+See also:
+DISPSTRS, SPRINTFDS
+
+@end deftypefn
+
+
 @node dispstrs
 @subsection dispstrs
-@emph{Not documented}
+
+@deftypefn {Function} {@var{out} =} dispstrs (@var{x})
+@deftypefnx {Function} {@var{out} =} dispstrs (@var{x}, @var{options})
+
+Get display strings for array elements.
+
+DISPSTRS returns a cellstr array containing display strings that represent the
+values in the elements of x. These strings are concise, single-line strings
+suitable for incorporation into multi-element output. If x is a cell, each
+element cell's contents are displayed, instead of each cell.
+
+Unlike DISPSTR, DISPSTRS returns output describing each element of the input
+array individually.
+
+This is used for constructing display output for functions like DISP.
+User-defined objects are expected to override DISPSTRS to produce suitable,
+readable output.
+
+The output is human-consumable text. It does not have to be fully precise, and
+does not have to be parseable back to the original input. Full type
+information will not be inferrable from DISPSTRS output. The primary audience
+for DISPSTRS output is Octave programmers and advanced users.
+
+The intention is for user-defined classes to override this method, providing
+customized display of their values.
+
+The input x may be a value of any type. The main DISPSTRS implementation has
+support for Octave built-ins and common types. Other user-defined objects are
+displayed in a generic "m-by-n <class> array" format.
+
+Returns a cellstr the same size as x.
+
+Options:
+  None are currently defined. This argument is reserved for future use.
+
+Examples:
+  dispstrs(magic(3))
+
+See also: DISPSTR
+
+@end deftypefn
+
+
+@node errords
+@subsection errords
+
+@deftypefn {Function} errords (@var{fmt}, @var{varargin})
+@deftypefnx {Function} errords (@var{errorId}, @var{fmt}, @var{varargin})
+
+A variant of error() that supports dispstr functionality.
+
+This is just like Octave's error(), except you can pass objects
+directly to @code{%s} conversion specifiers, and they will be automatically
+converted using dispstr.
+
+@end deftypefn
+
+
+@node fprintfds
+@subsection fprintfds
+
+@deftypefn {Function} fprintfds (@var{fmt}, @var{varargin})
+@deftypefnx {Function} fprintfds (@var{fid}, @var{fmt}, @var{varargin})
+
+A variant of fprintf() that supports dispstr functionality.
+
+This is just like Octave's fprintf(), except you can pass objects
+directly to @code{%s} conversion specifiers, and they will be automatically
+converted using dispstr.
+
+See the documentation for SPRINTFDS for details on how it works.
+
+Examples:
+
+@example
+bday = Birthday(3, 14);
+fprintfds('The value is: %s', bday)
+@end example
+
+See also:
+SPRINTFDS
+
+@end deftypefn
+
+
 @node logger.debug
 @subsection logger.debug
-@emph{Not documented}
+@deftypefn {Function} logger.debug (@var{msg}, @var{varargin})
+@deftypefnx {Function} logger.debug (@var{exception}, @var{msg}, @var{varargin})
+
+Log a DEBUG level message from caller, with printf style formatting.
+
+This accepts a message with printf style formatting, using '%...' formatting
+controls as placeholders.
+
+Examples:
+
+@example
+logger.debug('Some message. value1=%s value2=%d', 'foo', 42);
+@end example
+
+@end deftypefn
+
+
 @node logger.debugj
 @subsection logger.debugj
-@emph{Not documented}
+@deftypefn {Function} logger.debugj (@var{msg}, @var{varargin})
+
+Log a DEBUG level message from caller, with SLF4J style formatting.
+
+This accepts a message with SLF4J style formatting, using '@{@}' as placeholders for
+values to be interpolated into the message.
+
+Examples:
+
+@example
+logger.debugj('Some message. value1=@{@} value2=@{@}', 'foo', 42);
+@end example
+
+@end deftypefn
+
+
 @node logger.error
 @subsection logger.error
-@emph{Not documented}
+@deftypefn {Function} logger.error (@var{msg}, @var{varargin})
+@deftypefnx {Function} logger.error (@var{exception}, @var{msg}, @var{varargin})
+
+Log an ERROR level message from caller, with printf style formatting.
+
+This accepts a message with printf style formatting, using '%...' formatting
+controls as placeholders.
+
+Examples:
+
+@example
+logger.error('Some message. value1=%s value2=%d', 'foo', 42);
+@end example
+
+@end deftypefn
+
+
 @node logger.errorj
 @subsection logger.errorj
-@emph{Not documented}
+@deftypefn {Function} logger.errorj (@var{msg}, @var{varargin})
+
+Log an ERROR level message from caller, with SLF4J style formatting.
+
+This accepts a message with SLF4J style formatting, using '@{@}' as placeholders for
+values to be interpolated into the message.
+
+Examples:
+
+@example
+logger.errorj('Some message. value1=@{@} value2=@{@}', 'foo', 42);
+@end example
+
+@end deftypefn
+
+
 @node logger.info
 @subsection logger.info
-@emph{Not documented}
+@deftypefn {Function} logger.info (@var{msg}, @var{varargin})
+@deftypefnx {Function} logger.info (@var{exception}, @var{msg}, @var{varargin})
+
+Log an INFO level message from caller, with printf style formatting.
+
+This accepts a message with printf style formatting, using '%...' formatting
+controls as placeholders.
+
+Examples:
+
+@example
+logger.info('Some message. value1=%s value2=%d', 'foo', 42);
+@end example
+
+@end deftypefn
+
+
 @node logger.infoj
 @subsection logger.infoj
-@emph{Not documented}
+@deftypefn {Function} logger.infoj (@var{msg}, @var{varargin})
+
+Log an INFO level message from caller, with SLF4J style formatting.
+
+This accepts a message with SLF4J style formatting, using '@{@}' as placeholders for
+values to be interpolated into the message.
+
+Examples:
+
+@example
+logger.infoj('Some message. value1=@{@} value2=@{@}', 'foo', 42);
+@end example
+
+@end deftypefn
+
+
+@node logger.initSLF4M
+@subsection logger.initSLF4M
+@deftypefn {Function} logger.initSLF4M ()
+
+SLF4M compatibility shim for initSLF4O
+
+This is an alias for initSLF4O. Calling it just results in initSLF4O()
+being called.
+
+This function is provided as a compatibility shim so that code which is
+expecting SLF4M will still work with SLF4O.
+
+@end deftypefn
+
+
 @node logger.initSLF4O
 @subsection logger.initSLF4O
-@emph{Not documented}
+@deftypefn {Function} logger.initSLF4O ()
+
+Initialzie SLF4O
+
+This function must be called once before you use SLF4O.
+
+@end deftypefn
+
+
 @node logger.Log4jConfigurator
 @subsection logger.Log4jConfigurator
-@emph{Not documented}
-@node logger.Logger
-@subsection logger.Logger
-@emph{Not documented}
-@node logger.logger.Log4jConfigurator.configureBasicConsoleLogging
-@subsection logger.logger.Log4jConfigurator.configureBasicConsoleLogging
+
+@deftp {Class} logger.Log4jConfigurator
+
+A configurator tool for Log4j
+
+This class configures the logging setup for Octave/SLF4O logging. It
+configures the log4j library that SLF4O logging sits on top of.
+
+This class is provided as a convenience. You can also configure SLF4O logging
+by directly configuring log4j using its normal Java interface.
+
+SLF4O does not automatically configure log4j. You must either call a
+configureXxx method on this class or configure log4j directly yourself to get
+logging to work. Otherwise, you may get warnings like this at the console:
+
+  log4j:WARN No appenders could be found for logger (unknown).
+  log4j:WARN Please initialize the log4j system properly.
+
+If that happens, it means you need to call
+logger.Log4jConfigurator.configureBasicConsoleLogging.
+
+This also provides a log4j configuration GUI that you can launch with
+`logger.Log4jConfigurator.showGui`.
+
+Examples:
+
+@example
+logger.Log4jConfigurator.configureBasicConsoleLogging
+
+logger.Log4jConfigurator.setLevels(@{'root','DEBUG'@});
+
+logger.Log4jConfigurator.setLevels(@{
+    'root'    'INFO'
+    'net.apjanke.logger.swing'  'DEBUG'
+    @});
+
+logger.Log4jConfigurator.prettyPrintLogConfiguration
+
+% Display fully-qualified class/category names in the log output:
+logger.Log4jConfigurator.setRootAppenderPattern(...
+   ['%d@{HH:mm:ss.SSS@} %p %c - %m' sprintf('\n')]);
+
+% Bring up the configuration GUI
+logger.Log4jConfigurator.showGui
+@end example
+
+@end deftp
+
+
+@node logger.Log4jConfigurator.configureBasicConsoleLogging
+@subsubsection logger.Log4jConfigurator.configureBasicConsoleLogging
+
 @deftypefn {Static Method} logger.Log4jConfigurator.configureBasicConsoleLogging ()
 
 Configures log4j to do basic logging to the console
@@ -438,9 +753,8 @@ configured), it silently does nothing.
 
 @end deftypefn
 
-
-@node logger.logger.Log4jConfigurator.setRootAppenderPattern
-@subsubsection logger.logger.Log4jConfigurator.setRootAppenderPattern
+@node logger.Log4jConfigurator.setRootAppenderPattern
+@subsubsection logger.Log4jConfigurator.setRootAppenderPattern
 
 @deftypefn {Static Method} logger.Log4jConfigurator.setRootAppenderPattern (@var{pattern})
 
@@ -451,8 +765,8 @@ appender on the root logger.
 
 @end deftypefn
 
-@node logger.logger.Log4jConfigurator.getLog4jLevel
-@subsubsection logger.logger.Log4jConfigurator.getLog4jLevel
+@node logger.Log4jConfigurator.getLog4jLevel
+@subsubsection logger.Log4jConfigurator.getLog4jLevel
 
 @deftypefn {Static Method} logger.Log4jConfigurator.getLog4jLevel (@var{levelName})
 
@@ -466,8 +780,8 @@ Returns a Java org.apache.log4j.Level enum object.
 
 @end deftypefn
 
-@node logger.logger.Log4jConfigurator.setLevels
-@subsubsection logger.logger.Log4jConfigurator.setLevels
+@node logger.Log4jConfigurator.setLevels
+@subsubsection logger.Log4jConfigurator.setLevels
 
 @deftypefn {Static Method} logger.Log4jConfigurator.setLevels (@var{levels})
 
@@ -494,8 +808,8 @@ logger.Log4jConfigurator.setLevels(@{
 
 @end deftypefn
 
-@node logger.logger.Log4jConfigurator.prettyPrintLogConfiguration
-@subsubsection logger.logger.Log4jConfigurator.prettyPrintLogConfiguration
+@node logger.Log4jConfigurator.prettyPrintLogConfiguration
+@subsubsection logger.Log4jConfigurator.prettyPrintLogConfiguration
 
 @deftypefn {Static Method} logger.Log4jConfigurator.prettyPrintLogConfiguration ()
 @deftypefnx {Static Method} logger.Log4jConfigurator.prettyPrintLogConfiguration (@var{verbose})
@@ -507,8 +821,8 @@ Defaults to false.
 
 @end deftypefn
 
-@node logger.logger.Log4jConfigurator.showGui
-@subsubsection logger.logger.Log4jConfigurator.showGui
+@node logger.Log4jConfigurator.showGui
+@subsubsection logger.Log4jConfigurator.showGui
 
 @deftypefn {Static Method} logger.Log4jConfigurator.showGui ()
 
@@ -520,8 +834,67 @@ This tool is currently broken, and will probably crash Octave if you call it.
 
 @end deftypefn
 
-@node logger.logger.Logger.getLogger
-@subsection logger.logger.Logger.getLogger
+@node logger.Logger
+@subsection logger.Logger
+@deftp {Class} logger.Logger
+
+Main entry point through which logging happens
+
+The Logger class provides method calls for performing logging, and the ability
+to look up loggers by name. This is the main entry point through which all
+SLF4O logging happens.
+
+Usually you don't need to interact with this class directly, but can just call
+one of the error(), warn(), info(), debug(), or trace() functions in the logger
+namespace. Those will log messages using the calling class's name as the name
+of the logger. Also, don't call the constructor for this class. Use the static
+getLogger() method instead.
+
+Use this class directly if you want to customize the names of the loggers to
+which logging is directed.
+
+Each of the logging methods - error(), warn(), info(), debug(), and
+trace() - takes a sprintf()-style signature, with a format string as
+the first argument, and substitution values as the remaining
+arguments.
+@example
+   logger.info(format, varargin)
+@end example
+You can also insert an MException object at the beginning of the
+argument list to have its message and stack trace included in the log
+message.
+@example
+   logger.warn(exception, format, varargin)
+@end example
+
+See also:
+logger.error
+logger.warn
+logger.info
+logger.debug
+logger.trace
+
+Examples:
+
+@example
+log = logger.Logger.getLogger('foo.bar.FooBar');
+log.info('Hello, world! Running on Octave %s', version);
+@end example
+
+@example
+try
+    some_operation_that_could_go_wrong();
+catch err
+    log.warn(err, 'Caught exception during processing')
+end
+@end example
+
+@end deftp
+
+
+@node logger.Logger.getLogger
+@subsubsection logger.Logger.getLogger
+
 @deftypefn {Static Method} {@var{obj} =} logger.Logger.getLogger (@var{identifier})
 
 Gets the named Logger.
@@ -530,9 +903,8 @@ Returns a logger.Logger object.
 
 @end deftypefn
 
-
-@node logger.logger.Logger.Logger
-@subsubsection logger.logger.Logger.Logger
+@node logger.Logger.Logger
+@subsubsection logger.Logger.Logger
 
 @deftypefn {Constructor} {@var{obj} =} logger.Logger (@var{jLogger})
 
@@ -542,8 +914,8 @@ Generally, you shouldn't call this. Use logger.Logger.getLogger() instead.
 
 @end deftypefn
 
-@node logger.logger.Logger.error
-@subsubsection logger.logger.Logger.error
+@node logger.Logger.error
+@subsubsection logger.Logger.error
 
 @deftypefn {Method} error (@var{obj}, @var{msg}, @var{varargin})
 @deftypefnx {Method} error (@var{obj}, @var{exception}, @var{msg}, @var{varargin})
@@ -552,8 +924,8 @@ Log a message at the ERROR level.
 
 @end deftypefn
 
-@node logger.logger.Logger.warn
-@subsubsection logger.logger.Logger.warn
+@node logger.Logger.warn
+@subsubsection logger.Logger.warn
 
 @deftypefn {Method} warn (@var{obj}, @var{msg}, @var{varargin})
 @deftypefnx {Method} warn (@var{obj}, @var{exception}, @var{msg}, @var{varargin})
@@ -562,8 +934,8 @@ Log a message at the WARN level.
 
 @end deftypefn
 
-@node logger.logger.Logger.info
-@subsubsection logger.logger.Logger.info
+@node logger.Logger.info
+@subsubsection logger.Logger.info
 
 @deftypefn {Method} info (@var{obj}, @var{msg}, @var{varargin})
 @deftypefnx {Method} info (@var{obj}, @var{exception}, @var{msg}, @var{varargin})
@@ -572,8 +944,8 @@ Log a message at the INFO level.
 
 @end deftypefn
 
-@node logger.logger.Logger.debug
-@subsubsection logger.logger.Logger.debug
+@node logger.Logger.debug
+@subsubsection logger.Logger.debug
 
 @deftypefn {Method} debug (@var{obj}, @var{msg}, @var{varargin})
 @deftypefnx {Method} debug (@var{obj}, @var{exception}, @var{msg}, @var{varargin})
@@ -582,8 +954,8 @@ Log a message at the DEBUG level.
 
 @end deftypefn
 
-@node logger.logger.Logger.trace
-@subsubsection logger.logger.Logger.trace
+@node logger.Logger.trace
+@subsubsection logger.Logger.trace
 
 @deftypefn {Method} trace (@var{obj}, @var{msg}, @var{varargin})
 @deftypefnx {Method} trace (@var{obj}, @var{exception}, @var{msg}, @var{varargin})
@@ -592,8 +964,8 @@ Log a message at the TRACE level.
 
 @end deftypefn
 
-@node logger.logger.Logger.errorj
-@subsubsection logger.logger.Logger.errorj
+@node logger.Logger.errorj
+@subsubsection logger.Logger.errorj
 
 @deftypefn {Method} errorj (@var{obj}, @var{msg}, @var{varargin})
 
@@ -601,8 +973,8 @@ Log a message at the ERROR level, using SLF4J formatting.
 
 @end deftypefn
 
-@node logger.logger.Logger.warnj
-@subsubsection logger.logger.Logger.warnj
+@node logger.Logger.warnj
+@subsubsection logger.Logger.warnj
 
 @deftypefn {Method} warnj (@var{obj}, @var{msg}, @var{varargin})
 
@@ -610,8 +982,8 @@ Log a message at the WARN level, using SLF4J formatting.
 
 @end deftypefn
 
-@node logger.logger.Logger.infoj
-@subsubsection logger.logger.Logger.infoj
+@node logger.Logger.infoj
+@subsubsection logger.Logger.infoj
 
 @deftypefn {Method} infoj (@var{obj}, @var{msg}, @var{varargin})
 
@@ -619,8 +991,8 @@ Log a message at the INFO level, using SLF4J formatting.
 
 @end deftypefn
 
-@node logger.logger.Logger.debugj
-@subsubsection logger.logger.Logger.debugj
+@node logger.Logger.debugj
+@subsubsection logger.Logger.debugj
 
 @deftypefn {Method} debugj (@var{obj}, @var{msg}, @var{varargin})
 
@@ -628,8 +1000,8 @@ Log a message at the DEBUG level, using SLF4J formatting.
 
 @end deftypefn
 
-@node logger.logger.Logger.tracej
-@subsubsection logger.logger.Logger.tracej
+@node logger.Logger.tracej
+@subsubsection logger.Logger.tracej
 
 @deftypefn {Method} tracej (@var{obj}, @var{msg}, @var{varargin})
 
@@ -637,8 +1009,8 @@ Log a message at the TRACE level, using SLF4J formatting.
 
 @end deftypefn
 
-@node logger.logger.Logger.isErrorEnabled
-@subsubsection logger.logger.Logger.isErrorEnabled
+@node logger.Logger.isErrorEnabled
+@subsubsection logger.Logger.isErrorEnabled
 
 @deftypefn {Method} {@var{out} =} isErrorEnabled (@var{obj})
 
@@ -646,8 +1018,8 @@ True if ERROR level logging is enabled for this logger.
 
 @end deftypefn
 
-@node logger.logger.Logger.isWarnEnabled
-@subsubsection logger.logger.Logger.isWarnEnabled
+@node logger.Logger.isWarnEnabled
+@subsubsection logger.Logger.isWarnEnabled
 
 @deftypefn {Method} {@var{out} =} isWarnEnabled (@var{obj})
 
@@ -655,8 +1027,8 @@ True if WARN level logging is enabled for this logger.
 
 @end deftypefn
 
-@node logger.logger.Logger.isInfoEnabled
-@subsubsection logger.logger.Logger.isInfoEnabled
+@node logger.Logger.isInfoEnabled
+@subsubsection logger.Logger.isInfoEnabled
 
 @deftypefn {Method} {@var{out} =} isInfoEnabled (@var{obj})
 
@@ -664,8 +1036,8 @@ True if INFO level logging is enabled for this logger.
 
 @end deftypefn
 
-@node logger.logger.Logger.isDebugEnabled
-@subsubsection logger.logger.Logger.isDebugEnabled
+@node logger.Logger.isDebugEnabled
+@subsubsection logger.Logger.isDebugEnabled
 
 @deftypefn {Method} {@var{out} =} isDebugEnabled (@var{obj})
 
@@ -673,8 +1045,8 @@ True if DEBUG level logging is enabled for this logger.
 
 @end deftypefn
 
-@node logger.logger.Logger.isTraceEnabled
-@subsubsection logger.logger.Logger.isTraceEnabled
+@node logger.Logger.isTraceEnabled
+@subsubsection logger.Logger.isTraceEnabled
 
 @deftypefn {Method} {@var{out} =} isTraceEnabled (@var{obj})
 
@@ -682,8 +1054,8 @@ True if TRACE level logging is enabled for this logger.
 
 @end deftypefn
 
-@node logger.logger.Logger.listEnabledLevels
-@subsubsection logger.logger.Logger.listEnabledLevels
+@node logger.Logger.listEnabledLevels
+@subsubsection logger.Logger.listEnabledLevels
 
 @deftypefn {Method} {@var{out} =} listEnabledLevels (@var{obj})
 
@@ -697,22 +1069,241 @@ Returns a cellstr vector or empty.
 
 @node logger.trace
 @subsection logger.trace
-@emph{Not documented}
+@deftypefn {Function} logger.trace (@var{msg}, @var{varargin})
+@deftypefnx {Function} logger.trace (@var{exception}, @var{msg}, @var{varargin})
+
+Log a TRACE level message from caller, with printf style formatting.
+
+This accepts a message with printf style formatting, using '%...' formatting
+controls as placeholders.
+
+Examples:
+
+@example
+logger.trace('Some message. value1=%s value2=%d', 'foo', 42);
+@end example
+
+@end deftypefn
+
+
 @node logger.tracej
 @subsection logger.tracej
-@emph{Not documented}
+@deftypefn {Function} logger.tracej (@var{msg}, @var{varargin})
+
+Log a TRACE level message from caller, with SLF4J style formatting.
+
+This accepts a message with SLF4J style formatting, using '@{@}' as placeholders for
+values to be interpolated into the message.
+
+Examples:
+
+@example
+logger.tracej('Some message. value1=@{@} value2=@{@}', 'foo', 42);
+@end example
+
+@end deftypefn
+
+
 @node logger.version
 @subsection logger.version
-@emph{Not documented}
+@deftypefn {Function} logger.version ()
+@deftypefnx {Function} {@var{out} =} logger.version ()
+
+Gets version info for the SLF4O library.
+
+If return value is not captured, displays version info for SLF4O and related
+libraries to the console.
+
+If return value is captured, returns the version of the SLF4O library as
+a char vector.
+
+@end deftypefn
+
+
 @node logger.warn
 @subsection logger.warn
-@emph{Not documented}
+@deftypefn {Function} logger.warn (@var{msg}, @var{varargin})
+@deftypefnx {Function} logger.warn (@var{exception}, @var{msg}, @var{varargin})
+
+Log a WARN level message from caller, with printf style formatting.
+
+This accepts a message with printf style formatting, using '%...' formatting
+controls as placeholders.
+
+Examples:
+
+@example
+logger.warn('Some message. value1=%s value2=%d', 'foo', 42);
+@end example
+
+@end deftypefn
+
+
 @node logger.warnj
 @subsection logger.warnj
-@emph{Not documented}
+@deftypefn {Function} logger.warnj (@var{msg}, @var{varargin})
+
+Log a WARN level message from caller, with SLF4J style formatting.
+
+This accepts a message with SLF4J style formatting, using '@{@}' as placeholders for
+values to be interpolated into the message.
+
+Examples:
+
+@example
+logger.warnj('Some message. value1=@{@} value2=@{@}', 'foo', 42);
+@end example
+
+@end deftypefn
+
+
+@node mustBeA
+@subsection mustBeA
+
+@deftypefn {Function} mustBeA (@var{value}, @var{type})
+
+Validate that an input is of a particular data type.
+
+Validates that the input Value is of the specified Type or a
+subtype. If Value is not of Type, an error is raised. If Value is
+of Type, does nothing and returns.
+
+Value is the value to validates the type of. It may be anything. If
+you call it using a variable (as opposed to a longer expression),
+the variable name is included in any error messages.
+
+Type (char) is the name of the type that Value must be. A type
+name may be one of:
+  * A class, such as 'double', 'cell', or 'containers.Map'
+  * One of the special SLF4O pseudotypes:
+      cellstr
+      numeric
+      object
+      any
+
+Note: The cellstr pseudotype is nontrivial to check for, as it
+must call iscellstr() and check all cell contents.
+
+Examples:
+
+@example
+function foo(x, someStrings)
+  mustBeA(x, 'double');
+  mustBeA(someStrings, 'cellstr');
+endfunction
+@end example
+
+@end deftypefn
+
+
+@node pp
+@subsection pp
+
+@deftypefn {Function} pp (@var{varargin})
+
+Command wrapper for prettyprint().
+
+PP is a command-oriented wrapper for prettyprint, intended for interactive
+use. Code should not call this.
+
+Right now, it just calls PRETTYPRINT on its input, but the intention is to
+extend it to take variable names as chars in addition to the normal
+prettyprint input, so you can say 'pp foo' instead of 'pp(foo)'. This is
+purely a convenience to save users from typing in parentheses.
+
+@end deftypefn
+
+
 @node prettyprint
 @subsection prettyprint
-@emph{Not documented}
+
+@deftypefn {Function} {@var{out} =} prettyprint (@var{x})
+
+Formatted output of array contents.
+
+Displays a formatted, human-readable representation of the contents of a
+value. This is a detailed, multi-line output that typically displays all the
+individual values in an array, or drills down one or more levels into complex
+objects. In many cases, this is just like doing a DISP, but it respects the
+DISPSTR and DISPSTRS methods defined on user-defined objects inside complex
+types, where DISP does not.
+
+This output is for human consumption and its format may change over time. The
+format may also be dependent on settings in the Octave session, such as
+`format` and the user's locale.
+
+The default PRETTYPRINT implementation has support for Octave built-in types,
+structs, cells, and tables, and, unlike the default disp() behavior for them,
+respects DISPSTRS defined for values inside structs, cells, and tables.
+
+The input x may be a value of any type.
+
+If the output is not captured, displays its results to the console. If the
+output is captured, returns its results as char.
+
+The intention is for user-defined classes to override this method, providing
+customized display of their values.
+
+@end deftypefn
+
+
+@node size2str
+@subsection size2str
+
+@deftypefn {Function} {@var{out} =} size2str (@var{sz})
+
+Format a matrix size for display.
+
+Sz is an array of dimension sizes, in the format returned by SIZE.
+
+Returns a charvec.
+
+@end deftypefn
+
+
+@node sprintfds
+@subsection sprintfds
+
+@deftypefn {Function} sprintfds (@var{fmt}, @var{varargin})
+
+A variant of sprintf() that supports dispstr functionality.
+
+This is just like Octave's sprintf(), except you can pass objects
+directly to @code{%s} conversion specifiers, and they will be automatically
+converted using dispstr.
+
+For inputs that are objects, dispstr() is implicitly called on them, so you
+can pass them directly to '%s' conversion specifiers in your format
+string.
+
+Examples:
+
+@example
+bday = Birthday(3, 14);
+str = sprintfds('The value is: %s', bday)
+@end example
+
+See also:
+FPRINTFDS
+
+@end deftypefn
+
+
+@node warningds
+@subsection warningds
+
+@deftypefn {Function} warningds (@var{fmt}, @var{varargin})
+@deftypefnx {Function} warningds (@var{warningId}, @var{fmt}, @var{varargin})
+
+A variant of warning() that supports dispstr functionality.
+
+This is just like Octave's warning(), except you can pass objects
+directly to @code{%s} conversion specifiers, and they will be automatically
+converted using dispstr.
+
+@end deftypefn
+
+
 
 
 
