@@ -18,7 +18,7 @@ This manual is for SLF4O, version 0.1.0-SNAPSHOT.
      modified versions.
 
 
-File: slf4o.info,  Node: Top,  Next: Setup,  Up: (dir)
+File: slf4o.info,  Node: Top,  Next: Introduction,  Up: (dir)
 
 SLF4O
 *****
@@ -27,6 +27,7 @@ This manual is for SLF4O, version 0.1.0-SNAPSHOT.
 
 * Menu:
 
+* Introduction::
 * Setup::
 * API::
 * The dispstr API::
@@ -36,31 +37,47 @@ This manual is for SLF4O, version 0.1.0-SNAPSHOT.
 * Copying::
 
 
-File: slf4o.info,  Node: Setup,  Next: API,  Up: Top
+File: slf4o.info,  Node: Introduction,  Next: Setup,  Up: Top
 
-1 Setup
+1 Introduction
+**************
+
+SLF4O is a simple logging framework for GNU Octave.  It provides an API
+for making logging calls from your code, and a back-end that supports
+fine-grained configurability at run time.  This allows you to write code
+with logging statements for debugging or other purposes that can be
+turned on and off at run time without having to alter your source code.
+
+   SLF4O is built on top of the well-known SLF4J Java logging framework
+and the Log4j Java logging library.  SLF4O is an Octave port of the
+Matlab SLF4M logging framework.
+
+
+File: slf4o.info,  Node: Setup,  Next: API,  Prev: Introduction,  Up: Top
+
+2 Setup
 *******
 
 To use SLF4O in your code:
 
-   1.  Install and load the SLF4O package using Octave’s ‘pkg’ command
+   1.  Install and load the SLF4O package using Octave’s ‘pkg’ command.
 
    ‘pkg install
 https://github.com/apjanke/octave-slf4o/archive/master.zip’
 
-   2.  Load the SLF4O package in your Octave session
+   2.  Load the SLF4O package in your Octave session.
 
    ‘pkg load slf4o’
 
    3.  Call ‘logger.initSLF4O’ to initialize the library before doing
-any logging calls
+any logging calls.
 
-   4.  Add calls to the ‘logger.*’ functions in your code
+   4.  Add calls to the ‘logger.*’ functions in your code.
 
 
 File: slf4o.info,  Node: API,  Next: The dispstr API,  Prev: Setup,  Up: Top
 
-2 API
+3 API
 *****
 
 SLF4O provides:
@@ -84,7 +101,7 @@ your code.
 
 File: slf4o.info,  Node: Logging functions,  Up: API
 
-2.1 Logging functions
+3.1 Logging functions
 =====================
 
 Each logging level has a corresponding ‘logger.*’ function and "J
@@ -110,7 +127,7 @@ is a design decision made to keep the API simple and performant.
 
 File: slf4o.info,  Node: Calling logging functions,  Next: Regular and j variants,  Up: Logging functions
 
-2.1.1 Calling logging functions
+3.1.1 Calling logging functions
 -------------------------------
 
 In your code, put calls to ‘logger.info(...)’, ‘logger.debug(...)’, and
@@ -124,7 +141,7 @@ so on, as appropriate.
 
 File: slf4o.info,  Node: Regular and j variants,  Next: Logger names,  Prev: Calling logging functions,  Up: Logging functions
 
-2.1.2 Regular and j variants
+3.1.2 Regular and j variants
 ----------------------------
 
 The regular ("m") versions of the logging functions take ‘fprintf’-style
@@ -167,7 +184,7 @@ enabled.
 
 File: slf4o.info,  Node: Logger names,  Prev: Regular and j variants,  Up: Logging functions
 
-2.1.3 Logger names
+3.1.3 Logger names
 ------------------
 
 The logging functions in ‘+logger’ use the caller’s class or function
@@ -201,7 +218,7 @@ Octave.  For example, if you have the following loggers:
 
 File: slf4o.info,  Node: The Logger object,  Up: Logger names
 
-2.1.3.1 The Logger object
+3.1.3.1 The Logger object
 .........................
 
 You can also use the object-oriented ‘logger.Logger’ API directly.  This
@@ -248,7 +265,7 @@ subclasses, too; they may want to use different IDs.
 
 File: slf4o.info,  Node: The dispstr API,  Next: Configuration,  Prev: API,  Up: Top
 
-3 The dispstr API
+4 The dispstr API
 *****************
 
 In addition to the SLF4J adapter layer, SLF4O provides a new API for
@@ -309,7 +326,7 @@ inherit from ‘logger.Displayable’, you only need to define ‘dispstrs’.
 
 File: slf4o.info,  Node: The dispstr interface,  Up: The dispstr API
 
-3.1 The dispstr interface
+4.1 The dispstr interface
 =========================
 
 The ‘dispstr’ function/method takes a single argument, which may be an
@@ -327,7 +344,7 @@ corresponds to the input ‘x(i)’.
 
 File: slf4o.info,  Node: How dispstr and SLF4O interact,  Up: The dispstr interface
 
-3.1.1 How dispstr and SLF4O interact
+4.1.1 How dispstr and SLF4O interact
 ------------------------------------
 
 When you call the normal ("‘m’") variants of the logging functions,
@@ -348,7 +365,7 @@ wrong type.)  It gets particularly useful when you define custom
 
 File: slf4o.info,  Node: Configuration,  Next: Implementation notes,  Prev: The dispstr API,  Up: Top
 
-4 Configuration
+5 Configuration
 ***************
 
 All the actual logging goes through the Log4j back end; you can
@@ -367,7 +384,7 @@ the the Log4j back end; none of it is stored in the Octave layer.
 
 File: slf4o.info,  Node: Implementation notes,  Next: API Reference,  Prev: Configuration,  Up: Top
 
-5 Implementation notes
+6 Implementation notes
 **********************
 
 I chose Log4j as the back end because that’s what SLF4M uses, and I
@@ -381,7 +398,7 @@ other code or tools that use SLF4J or Log4j.
 
 File: slf4o.info,  Node: API Reference,  Next: Copying,  Prev: Implementation notes,  Up: Top
 
-6 API Reference
+7 API Reference
 ***************
 
 * Menu:
@@ -392,10 +409,10 @@ File: slf4o.info,  Node: API Reference,  Next: Copying,  Prev: Implementation no
 
 File: slf4o.info,  Node: API by Category,  Next: API Alphabetically,  Up: API Reference
 
-6.1 API by Category
+7.1 API by Category
 ===================
 
-6.1.1 Logging
+7.1.1 Logging
 -------------
 
 *note logger.Logger::
@@ -448,7 +465,7 @@ File: slf4o.info,  Node: API by Category,  Next: API Alphabetically,  Up: API Re
 *note logger.version::
      Gets version info for the SLF4O library.
 
-6.1.2 Dispstr
+7.1.2 Dispstr
 -------------
 
 *note dispstr::
@@ -479,7 +496,7 @@ File: slf4o.info,  Node: API by Category,  Next: API Alphabetically,  Up: API Re
 *note size2str::
      Format a matrix size for display.
 
-6.1.3 Uncategorized
+7.1.3 Uncategorized
 -------------------
 
 *note mustBeA::
@@ -488,7 +505,7 @@ File: slf4o.info,  Node: API by Category,  Next: API Alphabetically,  Up: API Re
 
 File: slf4o.info,  Node: API Alphabetically,  Prev: API by Category,  Up: API Reference
 
-6.2 API Alphabetically
+7.2 API Alphabetically
 ======================
 
 * Menu:
@@ -534,7 +551,7 @@ File: slf4o.info,  Node: API Alphabetically,  Prev: API by Category,  Up: API Re
 
 File: slf4o.info,  Node: dispstr,  Next: dispstrs,  Up: API Alphabetically
 
-6.2.1 dispstr
+7.2.1 dispstr
 -------------
 
  -- Function: OUT = dispstr (X)
@@ -568,7 +585,7 @@ File: slf4o.info,  Node: dispstr,  Next: dispstrs,  Up: API Alphabetically
 
 File: slf4o.info,  Node: dispstrs,  Next: errords,  Prev: dispstr,  Up: API Alphabetically
 
-6.2.2 dispstrs
+7.2.2 dispstrs
 --------------
 
  -- Function: OUT = dispstrs (X)
@@ -615,7 +632,7 @@ File: slf4o.info,  Node: dispstrs,  Next: errords,  Prev: dispstr,  Up: API Alph
 
 File: slf4o.info,  Node: errords,  Next: fprintfds,  Prev: dispstrs,  Up: API Alphabetically
 
-6.2.3 errords
+7.2.3 errords
 -------------
 
  -- Function: errords (FMT, VARARGIN)
@@ -630,7 +647,7 @@ File: slf4o.info,  Node: errords,  Next: fprintfds,  Prev: dispstrs,  Up: API Al
 
 File: slf4o.info,  Node: fprintfds,  Next: logger.debug,  Prev: errords,  Up: API Alphabetically
 
-6.2.4 fprintfds
+7.2.4 fprintfds
 ---------------
 
  -- Function: fprintfds (FMT, VARARGIN)
@@ -654,7 +671,7 @@ File: slf4o.info,  Node: fprintfds,  Next: logger.debug,  Prev: errords,  Up: AP
 
 File: slf4o.info,  Node: logger.debug,  Next: logger.debugj,  Prev: fprintfds,  Up: API Alphabetically
 
-6.2.5 logger.debug
+7.2.5 logger.debug
 ------------------
 
  -- Function: logger.debug (MSG, VARARGIN)
@@ -673,7 +690,7 @@ File: slf4o.info,  Node: logger.debug,  Next: logger.debugj,  Prev: fprintfds,  
 
 File: slf4o.info,  Node: logger.debugj,  Next: logger.error,  Prev: logger.debug,  Up: API Alphabetically
 
-6.2.6 logger.debugj
+7.2.6 logger.debugj
 -------------------
 
  -- Function: logger.debugj (MSG, VARARGIN)
@@ -690,7 +707,7 @@ File: slf4o.info,  Node: logger.debugj,  Next: logger.error,  Prev: logger.debug
 
 File: slf4o.info,  Node: logger.error,  Next: logger.errorj,  Prev: logger.debugj,  Up: API Alphabetically
 
-6.2.7 logger.error
+7.2.7 logger.error
 ------------------
 
  -- Function: logger.error (MSG, VARARGIN)
@@ -709,7 +726,7 @@ File: slf4o.info,  Node: logger.error,  Next: logger.errorj,  Prev: logger.debug
 
 File: slf4o.info,  Node: logger.errorj,  Next: logger.info,  Prev: logger.error,  Up: API Alphabetically
 
-6.2.8 logger.errorj
+7.2.8 logger.errorj
 -------------------
 
  -- Function: logger.errorj (MSG, VARARGIN)
@@ -727,7 +744,7 @@ File: slf4o.info,  Node: logger.errorj,  Next: logger.info,  Prev: logger.error,
 
 File: slf4o.info,  Node: logger.info,  Next: logger.infoj,  Prev: logger.errorj,  Up: API Alphabetically
 
-6.2.9 logger.info
+7.2.9 logger.info
 -----------------
 
  -- Function: logger.info (MSG, VARARGIN)
@@ -746,7 +763,7 @@ File: slf4o.info,  Node: logger.info,  Next: logger.infoj,  Prev: logger.errorj,
 
 File: slf4o.info,  Node: logger.infoj,  Next: logger.initSLF4M,  Prev: logger.info,  Up: API Alphabetically
 
-6.2.10 logger.infoj
+7.2.10 logger.infoj
 -------------------
 
  -- Function: logger.infoj (MSG, VARARGIN)
@@ -763,7 +780,7 @@ File: slf4o.info,  Node: logger.infoj,  Next: logger.initSLF4M,  Prev: logger.in
 
 File: slf4o.info,  Node: logger.initSLF4M,  Next: logger.initSLF4O,  Prev: logger.infoj,  Up: API Alphabetically
 
-6.2.11 logger.initSLF4M
+7.2.11 logger.initSLF4M
 -----------------------
 
  -- Function: logger.initSLF4M ()
@@ -779,7 +796,7 @@ File: slf4o.info,  Node: logger.initSLF4M,  Next: logger.initSLF4O,  Prev: logge
 
 File: slf4o.info,  Node: logger.initSLF4O,  Next: logger.Log4jConfigurator,  Prev: logger.initSLF4M,  Up: API Alphabetically
 
-6.2.12 logger.initSLF4O
+7.2.12 logger.initSLF4O
 -----------------------
 
  -- Function: logger.initSLF4O ()
@@ -791,7 +808,7 @@ File: slf4o.info,  Node: logger.initSLF4O,  Next: logger.Log4jConfigurator,  Pre
 
 File: slf4o.info,  Node: logger.Log4jConfigurator,  Next: logger.Logger,  Prev: logger.initSLF4O,  Up: API Alphabetically
 
-6.2.13 logger.Log4jConfigurator
+7.2.13 logger.Log4jConfigurator
 -------------------------------
 
  -- Class: logger.Log4jConfigurator
@@ -851,7 +868,7 @@ File: slf4o.info,  Node: logger.Log4jConfigurator,  Next: logger.Logger,  Prev: 
 
 File: slf4o.info,  Node: logger.Log4jConfigurator.configureBasicConsoleLogging,  Next: logger.Log4jConfigurator.setRootAppenderPattern,  Up: logger.Log4jConfigurator
 
-6.2.13.1 logger.Log4jConfigurator.configureBasicConsoleLogging
+7.2.13.1 logger.Log4jConfigurator.configureBasicConsoleLogging
 ..............................................................
 
  -- Static Method: logger.Log4jConfigurator.configureBasicConsoleLogging
@@ -869,7 +886,7 @@ File: slf4o.info,  Node: logger.Log4jConfigurator.configureBasicConsoleLogging, 
 
 File: slf4o.info,  Node: logger.Log4jConfigurator.setRootAppenderPattern,  Next: logger.Log4jConfigurator.getLog4jLevel,  Prev: logger.Log4jConfigurator.configureBasicConsoleLogging,  Up: logger.Log4jConfigurator
 
-6.2.13.2 logger.Log4jConfigurator.setRootAppenderPattern
+7.2.13.2 logger.Log4jConfigurator.setRootAppenderPattern
 ........................................................
 
  -- Static Method: logger.Log4jConfigurator.setRootAppenderPattern
@@ -883,7 +900,7 @@ File: slf4o.info,  Node: logger.Log4jConfigurator.setRootAppenderPattern,  Next:
 
 File: slf4o.info,  Node: logger.Log4jConfigurator.getLog4jLevel,  Next: logger.Log4jConfigurator.setLevels,  Prev: logger.Log4jConfigurator.setRootAppenderPattern,  Up: logger.Log4jConfigurator
 
-6.2.13.3 logger.Log4jConfigurator.getLog4jLevel
+7.2.13.3 logger.Log4jConfigurator.getLog4jLevel
 ...............................................
 
  -- Static Method: logger.Log4jConfigurator.getLog4jLevel (LEVELNAME)
@@ -899,7 +916,7 @@ File: slf4o.info,  Node: logger.Log4jConfigurator.getLog4jLevel,  Next: logger.L
 
 File: slf4o.info,  Node: logger.Log4jConfigurator.setLevels,  Next: logger.Log4jConfigurator.prettyPrintLogConfiguration,  Prev: logger.Log4jConfigurator.getLog4jLevel,  Up: logger.Log4jConfigurator
 
-6.2.13.4 logger.Log4jConfigurator.setLevels
+7.2.13.4 logger.Log4jConfigurator.setLevels
 ...........................................
 
  -- Static Method: logger.Log4jConfigurator.setLevels (LEVELS)
@@ -926,7 +943,7 @@ File: slf4o.info,  Node: logger.Log4jConfigurator.setLevels,  Next: logger.Log4j
 
 File: slf4o.info,  Node: logger.Log4jConfigurator.prettyPrintLogConfiguration,  Next: logger.Log4jConfigurator.showGui,  Prev: logger.Log4jConfigurator.setLevels,  Up: logger.Log4jConfigurator
 
-6.2.13.5 logger.Log4jConfigurator.prettyPrintLogConfiguration
+7.2.13.5 logger.Log4jConfigurator.prettyPrintLogConfiguration
 .............................................................
 
  -- Static Method: logger.Log4jConfigurator.prettyPrintLogConfiguration
@@ -942,7 +959,7 @@ File: slf4o.info,  Node: logger.Log4jConfigurator.prettyPrintLogConfiguration,  
 
 File: slf4o.info,  Node: logger.Log4jConfigurator.showGui,  Prev: logger.Log4jConfigurator.prettyPrintLogConfiguration,  Up: logger.Log4jConfigurator
 
-6.2.13.6 logger.Log4jConfigurator.showGui
+7.2.13.6 logger.Log4jConfigurator.showGui
 .........................................
 
  -- Static Method: logger.Log4jConfigurator.showGui ()
@@ -957,7 +974,7 @@ File: slf4o.info,  Node: logger.Log4jConfigurator.showGui,  Prev: logger.Log4jCo
 
 File: slf4o.info,  Node: logger.Logger,  Next: logger.trace,  Prev: logger.Log4jConfigurator,  Up: API Alphabetically
 
-6.2.14 logger.Logger
+7.2.14 logger.Logger
 --------------------
 
  -- Class: logger.Logger
@@ -1026,7 +1043,7 @@ File: slf4o.info,  Node: logger.Logger,  Next: logger.trace,  Prev: logger.Log4j
 
 File: slf4o.info,  Node: logger.Logger.getLogger,  Next: logger.Logger.Logger,  Up: logger.Logger
 
-6.2.14.1 logger.Logger.getLogger
+7.2.14.1 logger.Logger.getLogger
 ................................
 
  -- Static Method: OBJ = logger.Logger.getLogger (IDENTIFIER)
@@ -1038,7 +1055,7 @@ File: slf4o.info,  Node: logger.Logger.getLogger,  Next: logger.Logger.Logger,  
 
 File: slf4o.info,  Node: logger.Logger.Logger,  Next: logger.Logger.error,  Prev: logger.Logger.getLogger,  Up: logger.Logger
 
-6.2.14.2 logger.Logger.Logger
+7.2.14.2 logger.Logger.Logger
 .............................
 
  -- Constructor: OBJ = logger.Logger (JLOGGER)
@@ -1051,7 +1068,7 @@ File: slf4o.info,  Node: logger.Logger.Logger,  Next: logger.Logger.error,  Prev
 
 File: slf4o.info,  Node: logger.Logger.error,  Next: logger.Logger.warn,  Prev: logger.Logger.Logger,  Up: logger.Logger
 
-6.2.14.3 logger.Logger.error
+7.2.14.3 logger.Logger.error
 ............................
 
  -- Method: error (OBJ, MSG, VARARGIN)
@@ -1062,7 +1079,7 @@ File: slf4o.info,  Node: logger.Logger.error,  Next: logger.Logger.warn,  Prev: 
 
 File: slf4o.info,  Node: logger.Logger.warn,  Next: logger.Logger.info,  Prev: logger.Logger.error,  Up: logger.Logger
 
-6.2.14.4 logger.Logger.warn
+7.2.14.4 logger.Logger.warn
 ...........................
 
  -- Method: warn (OBJ, MSG, VARARGIN)
@@ -1073,7 +1090,7 @@ File: slf4o.info,  Node: logger.Logger.warn,  Next: logger.Logger.info,  Prev: l
 
 File: slf4o.info,  Node: logger.Logger.info,  Next: logger.Logger.debug,  Prev: logger.Logger.warn,  Up: logger.Logger
 
-6.2.14.5 logger.Logger.info
+7.2.14.5 logger.Logger.info
 ...........................
 
  -- Method: info (OBJ, MSG, VARARGIN)
@@ -1084,7 +1101,7 @@ File: slf4o.info,  Node: logger.Logger.info,  Next: logger.Logger.debug,  Prev: 
 
 File: slf4o.info,  Node: logger.Logger.debug,  Next: logger.Logger.trace,  Prev: logger.Logger.info,  Up: logger.Logger
 
-6.2.14.6 logger.Logger.debug
+7.2.14.6 logger.Logger.debug
 ............................
 
  -- Method: debug (OBJ, MSG, VARARGIN)
@@ -1095,7 +1112,7 @@ File: slf4o.info,  Node: logger.Logger.debug,  Next: logger.Logger.trace,  Prev:
 
 File: slf4o.info,  Node: logger.Logger.trace,  Next: logger.Logger.errorj,  Prev: logger.Logger.debug,  Up: logger.Logger
 
-6.2.14.7 logger.Logger.trace
+7.2.14.7 logger.Logger.trace
 ............................
 
  -- Method: trace (OBJ, MSG, VARARGIN)
@@ -1106,7 +1123,7 @@ File: slf4o.info,  Node: logger.Logger.trace,  Next: logger.Logger.errorj,  Prev
 
 File: slf4o.info,  Node: logger.Logger.errorj,  Next: logger.Logger.warnj,  Prev: logger.Logger.trace,  Up: logger.Logger
 
-6.2.14.8 logger.Logger.errorj
+7.2.14.8 logger.Logger.errorj
 .............................
 
  -- Method: errorj (OBJ, MSG, VARARGIN)
@@ -1116,7 +1133,7 @@ File: slf4o.info,  Node: logger.Logger.errorj,  Next: logger.Logger.warnj,  Prev
 
 File: slf4o.info,  Node: logger.Logger.warnj,  Next: logger.Logger.infoj,  Prev: logger.Logger.errorj,  Up: logger.Logger
 
-6.2.14.9 logger.Logger.warnj
+7.2.14.9 logger.Logger.warnj
 ............................
 
  -- Method: warnj (OBJ, MSG, VARARGIN)
@@ -1126,7 +1143,7 @@ File: slf4o.info,  Node: logger.Logger.warnj,  Next: logger.Logger.infoj,  Prev:
 
 File: slf4o.info,  Node: logger.Logger.infoj,  Next: logger.Logger.debugj,  Prev: logger.Logger.warnj,  Up: logger.Logger
 
-6.2.14.10 logger.Logger.infoj
+7.2.14.10 logger.Logger.infoj
 .............................
 
  -- Method: infoj (OBJ, MSG, VARARGIN)
@@ -1136,7 +1153,7 @@ File: slf4o.info,  Node: logger.Logger.infoj,  Next: logger.Logger.debugj,  Prev
 
 File: slf4o.info,  Node: logger.Logger.debugj,  Next: logger.Logger.tracej,  Prev: logger.Logger.infoj,  Up: logger.Logger
 
-6.2.14.11 logger.Logger.debugj
+7.2.14.11 logger.Logger.debugj
 ..............................
 
  -- Method: debugj (OBJ, MSG, VARARGIN)
@@ -1146,7 +1163,7 @@ File: slf4o.info,  Node: logger.Logger.debugj,  Next: logger.Logger.tracej,  Pre
 
 File: slf4o.info,  Node: logger.Logger.tracej,  Next: logger.Logger.isErrorEnabled,  Prev: logger.Logger.debugj,  Up: logger.Logger
 
-6.2.14.12 logger.Logger.tracej
+7.2.14.12 logger.Logger.tracej
 ..............................
 
  -- Method: tracej (OBJ, MSG, VARARGIN)
@@ -1156,7 +1173,7 @@ File: slf4o.info,  Node: logger.Logger.tracej,  Next: logger.Logger.isErrorEnabl
 
 File: slf4o.info,  Node: logger.Logger.isErrorEnabled,  Next: logger.Logger.isWarnEnabled,  Prev: logger.Logger.tracej,  Up: logger.Logger
 
-6.2.14.13 logger.Logger.isErrorEnabled
+7.2.14.13 logger.Logger.isErrorEnabled
 ......................................
 
  -- Method: OUT = isErrorEnabled (OBJ)
@@ -1166,7 +1183,7 @@ File: slf4o.info,  Node: logger.Logger.isErrorEnabled,  Next: logger.Logger.isWa
 
 File: slf4o.info,  Node: logger.Logger.isWarnEnabled,  Next: logger.Logger.isInfoEnabled,  Prev: logger.Logger.isErrorEnabled,  Up: logger.Logger
 
-6.2.14.14 logger.Logger.isWarnEnabled
+7.2.14.14 logger.Logger.isWarnEnabled
 .....................................
 
  -- Method: OUT = isWarnEnabled (OBJ)
@@ -1176,7 +1193,7 @@ File: slf4o.info,  Node: logger.Logger.isWarnEnabled,  Next: logger.Logger.isInf
 
 File: slf4o.info,  Node: logger.Logger.isInfoEnabled,  Next: logger.Logger.isDebugEnabled,  Prev: logger.Logger.isWarnEnabled,  Up: logger.Logger
 
-6.2.14.15 logger.Logger.isInfoEnabled
+7.2.14.15 logger.Logger.isInfoEnabled
 .....................................
 
  -- Method: OUT = isInfoEnabled (OBJ)
@@ -1186,7 +1203,7 @@ File: slf4o.info,  Node: logger.Logger.isInfoEnabled,  Next: logger.Logger.isDeb
 
 File: slf4o.info,  Node: logger.Logger.isDebugEnabled,  Next: logger.Logger.isTraceEnabled,  Prev: logger.Logger.isInfoEnabled,  Up: logger.Logger
 
-6.2.14.16 logger.Logger.isDebugEnabled
+7.2.14.16 logger.Logger.isDebugEnabled
 ......................................
 
  -- Method: OUT = isDebugEnabled (OBJ)
@@ -1196,7 +1213,7 @@ File: slf4o.info,  Node: logger.Logger.isDebugEnabled,  Next: logger.Logger.isTr
 
 File: slf4o.info,  Node: logger.Logger.isTraceEnabled,  Next: logger.Logger.listEnabledLevels,  Prev: logger.Logger.isDebugEnabled,  Up: logger.Logger
 
-6.2.14.17 logger.Logger.isTraceEnabled
+7.2.14.17 logger.Logger.isTraceEnabled
 ......................................
 
  -- Method: OUT = isTraceEnabled (OBJ)
@@ -1206,7 +1223,7 @@ File: slf4o.info,  Node: logger.Logger.isTraceEnabled,  Next: logger.Logger.list
 
 File: slf4o.info,  Node: logger.Logger.listEnabledLevels,  Prev: logger.Logger.isTraceEnabled,  Up: logger.Logger
 
-6.2.14.18 logger.Logger.listEnabledLevels
+7.2.14.18 logger.Logger.listEnabledLevels
 .........................................
 
  -- Method: OUT = listEnabledLevels (OBJ)
@@ -1220,7 +1237,7 @@ File: slf4o.info,  Node: logger.Logger.listEnabledLevels,  Prev: logger.Logger.i
 
 File: slf4o.info,  Node: logger.trace,  Next: logger.tracej,  Prev: logger.Logger,  Up: API Alphabetically
 
-6.2.15 logger.trace
+7.2.15 logger.trace
 -------------------
 
  -- Function: logger.trace (MSG, VARARGIN)
@@ -1239,7 +1256,7 @@ File: slf4o.info,  Node: logger.trace,  Next: logger.tracej,  Prev: logger.Logge
 
 File: slf4o.info,  Node: logger.tracej,  Next: logger.version,  Prev: logger.trace,  Up: API Alphabetically
 
-6.2.16 logger.tracej
+7.2.16 logger.tracej
 --------------------
 
  -- Function: logger.tracej (MSG, VARARGIN)
@@ -1256,7 +1273,7 @@ File: slf4o.info,  Node: logger.tracej,  Next: logger.version,  Prev: logger.tra
 
 File: slf4o.info,  Node: logger.version,  Next: logger.warn,  Prev: logger.tracej,  Up: API Alphabetically
 
-6.2.17 logger.version
+7.2.17 logger.version
 ---------------------
 
  -- Function: logger.version ()
@@ -1273,7 +1290,7 @@ File: slf4o.info,  Node: logger.version,  Next: logger.warn,  Prev: logger.trace
 
 File: slf4o.info,  Node: logger.warn,  Next: logger.warnj,  Prev: logger.version,  Up: API Alphabetically
 
-6.2.18 logger.warn
+7.2.18 logger.warn
 ------------------
 
  -- Function: logger.warn (MSG, VARARGIN)
@@ -1291,7 +1308,7 @@ File: slf4o.info,  Node: logger.warn,  Next: logger.warnj,  Prev: logger.version
 
 File: slf4o.info,  Node: logger.warnj,  Next: mustBeA,  Prev: logger.warn,  Up: API Alphabetically
 
-6.2.19 logger.warnj
+7.2.19 logger.warnj
 -------------------
 
  -- Function: logger.warnj (MSG, VARARGIN)
@@ -1308,7 +1325,7 @@ File: slf4o.info,  Node: logger.warnj,  Next: mustBeA,  Prev: logger.warn,  Up: 
 
 File: slf4o.info,  Node: mustBeA,  Next: pp,  Prev: logger.warnj,  Up: API Alphabetically
 
-6.2.20 mustBeA
+7.2.20 mustBeA
 --------------
 
  -- Function: mustBeA (VALUE, TYPE)
@@ -1341,7 +1358,7 @@ File: slf4o.info,  Node: mustBeA,  Next: pp,  Prev: logger.warnj,  Up: API Alpha
 
 File: slf4o.info,  Node: pp,  Next: prettyprint,  Prev: mustBeA,  Up: API Alphabetically
 
-6.2.21 pp
+7.2.21 pp
 ---------
 
  -- Function: pp (VARARGIN)
@@ -1360,7 +1377,7 @@ File: slf4o.info,  Node: pp,  Next: prettyprint,  Prev: mustBeA,  Up: API Alphab
 
 File: slf4o.info,  Node: prettyprint,  Next: size2str,  Prev: pp,  Up: API Alphabetically
 
-6.2.22 prettyprint
+7.2.22 prettyprint
 ------------------
 
  -- Function: OUT = prettyprint (X)
@@ -1395,7 +1412,7 @@ File: slf4o.info,  Node: prettyprint,  Next: size2str,  Prev: pp,  Up: API Alpha
 
 File: slf4o.info,  Node: size2str,  Next: sprintfds,  Prev: prettyprint,  Up: API Alphabetically
 
-6.2.23 size2str
+7.2.23 size2str
 ---------------
 
  -- Function: OUT = size2str (SZ)
@@ -1409,7 +1426,7 @@ File: slf4o.info,  Node: size2str,  Next: sprintfds,  Prev: prettyprint,  Up: AP
 
 File: slf4o.info,  Node: sprintfds,  Next: warningds,  Prev: size2str,  Up: API Alphabetically
 
-6.2.24 sprintfds
+7.2.24 sprintfds
 ----------------
 
  -- Function: sprintfds (FMT, VARARGIN)
@@ -1434,7 +1451,7 @@ File: slf4o.info,  Node: sprintfds,  Next: warningds,  Prev: size2str,  Up: API 
 
 File: slf4o.info,  Node: warningds,  Prev: sprintfds,  Up: API Alphabetically
 
-6.2.25 warningds
+7.2.25 warningds
 ----------------
 
  -- Function: warningds (FMT, VARARGIN)
@@ -1449,17 +1466,17 @@ File: slf4o.info,  Node: warningds,  Prev: sprintfds,  Up: API Alphabetically
 
 File: slf4o.info,  Node: Copying,  Prev: API Reference,  Up: Top
 
-7 Copying
+8 Copying
 *********
 
-7.1 Package Copyright
+8.1 Package Copyright
 =====================
 
 SLF4O for Octave is covered by the GNU GPLv3.
 
    All the code in the package is GNU GPLv3.
 
-7.2 Manual Copyright
+8.2 Manual Copyright
 ====================
 
 This manual is for SLF4O, version 0.1.0-SNAPSHOT.
@@ -1483,71 +1500,72 @@ This manual is for SLF4O, version 0.1.0-SNAPSHOT.
 
 Tag Table:
 Node: Top766
-Node: Setup1009
-Node: API1504
-Node: Logging functions2160
-Node: Calling logging functions3152
-Node: Regular and j variants3596
-Node: Logger names5611
-Node: The Logger object6820
-Node: The dispstr API8535
-Node: The dispstr interface10923
-Node: How dispstr and SLF4O interact11494
-Node: Configuration12418
-Node: Implementation notes13243
-Node: API Reference13777
-Node: API by Category13960
-Node: API Alphabetically16295
-Node: dispstr18291
-Node: dispstrs19377
-Node: errords21097
-Node: fprintfds21554
-Node: logger.debug22217
-Node: logger.debugj22747
-Node: logger.error23248
-Node: logger.errorj23783
-Node: logger.info24289
-Node: logger.infoj24816
-Node: logger.initSLF4M25317
-Node: logger.initSLF4O25785
-Node: logger.Log4jConfigurator26082
-Node: logger.Log4jConfigurator.configureBasicConsoleLogging28190
-Node: logger.Log4jConfigurator.setRootAppenderPattern28959
-Node: logger.Log4jConfigurator.getLog4jLevel29524
-Node: logger.Log4jConfigurator.setLevels30193
-Node: logger.Log4jConfigurator.prettyPrintLogConfiguration31076
-Node: logger.Log4jConfigurator.showGui31741
-Node: logger.Logger32201
-Node: logger.Logger.getLogger34520
-Node: logger.Logger.Logger34818
-Node: logger.Logger.error35208
-Node: logger.Logger.warn35521
-Node: logger.Logger.info35827
-Node: logger.Logger.debug36133
-Node: logger.Logger.trace36445
-Node: logger.Logger.errorj36759
-Node: logger.Logger.warnj37050
-Node: logger.Logger.infoj37337
-Node: logger.Logger.debugj37626
-Node: logger.Logger.tracej37920
-Node: logger.Logger.isErrorEnabled38223
-Node: logger.Logger.isWarnEnabled38546
-Node: logger.Logger.isInfoEnabled38872
-Node: logger.Logger.isDebugEnabled39198
-Node: logger.Logger.isTraceEnabled39529
-Node: logger.Logger.listEnabledLevels39864
-Node: logger.trace40251
-Node: logger.tracej40787
-Node: logger.version41292
-Node: logger.warn41778
-Node: logger.warnj42302
-Node: mustBeA42793
-Node: pp43920
-Node: prettyprint44536
-Node: size2str45952
-Node: sprintfds46258
-Node: warningds46983
-Node: Copying47441
+Node: Introduction1033
+Node: Setup1658
+Node: API2178
+Node: Logging functions2834
+Node: Calling logging functions3826
+Node: Regular and j variants4270
+Node: Logger names6285
+Node: The Logger object7494
+Node: The dispstr API9209
+Node: The dispstr interface11597
+Node: How dispstr and SLF4O interact12168
+Node: Configuration13092
+Node: Implementation notes13917
+Node: API Reference14451
+Node: API by Category14634
+Node: API Alphabetically16969
+Node: dispstr18965
+Node: dispstrs20051
+Node: errords21771
+Node: fprintfds22228
+Node: logger.debug22891
+Node: logger.debugj23421
+Node: logger.error23922
+Node: logger.errorj24457
+Node: logger.info24963
+Node: logger.infoj25490
+Node: logger.initSLF4M25991
+Node: logger.initSLF4O26459
+Node: logger.Log4jConfigurator26756
+Node: logger.Log4jConfigurator.configureBasicConsoleLogging28864
+Node: logger.Log4jConfigurator.setRootAppenderPattern29633
+Node: logger.Log4jConfigurator.getLog4jLevel30198
+Node: logger.Log4jConfigurator.setLevels30867
+Node: logger.Log4jConfigurator.prettyPrintLogConfiguration31750
+Node: logger.Log4jConfigurator.showGui32415
+Node: logger.Logger32875
+Node: logger.Logger.getLogger35194
+Node: logger.Logger.Logger35492
+Node: logger.Logger.error35882
+Node: logger.Logger.warn36195
+Node: logger.Logger.info36501
+Node: logger.Logger.debug36807
+Node: logger.Logger.trace37119
+Node: logger.Logger.errorj37433
+Node: logger.Logger.warnj37724
+Node: logger.Logger.infoj38011
+Node: logger.Logger.debugj38300
+Node: logger.Logger.tracej38594
+Node: logger.Logger.isErrorEnabled38897
+Node: logger.Logger.isWarnEnabled39220
+Node: logger.Logger.isInfoEnabled39546
+Node: logger.Logger.isDebugEnabled39872
+Node: logger.Logger.isTraceEnabled40203
+Node: logger.Logger.listEnabledLevels40538
+Node: logger.trace40925
+Node: logger.tracej41461
+Node: logger.version41966
+Node: logger.warn42452
+Node: logger.warnj42976
+Node: mustBeA43467
+Node: pp44594
+Node: prettyprint45210
+Node: size2str46626
+Node: sprintfds46932
+Node: warningds47657
+Node: Copying48115
 
 End Tag Table
 

@@ -5,6 +5,8 @@
     <filterSection>
         <toc>
             <section title="SLF4O" ref="html/index.html">
+                <section title="Introduction" ref="html/Introduction.html">
+                </section>
                 <section title="Setup" ref="html/Setup.html">
                 </section>
                 <section title="API" ref="html/API.html">
@@ -256,6 +258,7 @@
             <file>html/Logging-functions.html</file>
             <file>html/API.html</file>
             <file>html/Setup.html</file>
+            <file>html/Introduction.html</file>
             <file>html/index.html</file>
         </files>
     </filterSection>
