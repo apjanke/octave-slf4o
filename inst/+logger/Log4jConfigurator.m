@@ -1,6 +1,6 @@
 ## -*- texinfo -*-
 ##
-## @deftyp {Class} logger.Log4jConfigurator
+## @deftp {Class} logger.Log4jConfigurator
 ##
 ## A configurator tool for Log4j
 ##
@@ -45,14 +45,14 @@
 ## logger.Log4jConfigurator.showGui
 ## @end example
 ##
-## @end deftyp
+## @end deftp
 
 classdef Log4jConfigurator
     
     methods (Static)
 
         ## -*- texinfo -*-
-        ## @node logger.Log4jConfigurator.configureBasicConsoleLogging
+        ## @node Log4jConfigurator.configureBasicConsoleLogging
         ## @deftypefn {Static Method} logger.Log4jConfigurator.configureBasicConsoleLogging ()
         ##
         ## Configures log4j to do basic logging to the console
