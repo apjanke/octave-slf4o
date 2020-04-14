@@ -11,7 +11,7 @@
                     <section title="Logging functions" ref="html/Logging-functions.html">
                         <section title="Calling logging functions" ref="html/Calling-logging-functions.html">
                         </section>
-                        <section title="Regular and "j" variants" ref="html/Regular-and-"j"-variants.html">
+                        <section title="Regular and j variants" ref="html/Regular-and-j-variants.html">
                         </section>
                         <section title="Logger names" ref="html/Logger-names.html">
                             <section title="The Logger object" ref="html/The-Logger-object.html">
@@ -202,7 +202,7 @@
             <file>html/The-dispstr-API.html</file>
             <file>html/The-Logger-object.html</file>
             <file>html/Logger-names.html</file>
-            <file>html/Regular-and-"j"-variants.html</file>
+            <file>html/Regular-and-j-variants.html</file>
             <file>html/Calling-logging-functions.html</file>
             <file>html/Logging-functions.html</file>
             <file>html/API.html</file>

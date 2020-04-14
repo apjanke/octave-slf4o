@@ -83,7 +83,7 @@ ul.no-bullet {list-style: none}
     <li><a id="toc-Logging-functions-1" href="#Logging-functions">2.1 Logging functions</a>
     <ul class="no-bullet">
       <li><a id="toc-Calling-logging-functions-1" href="#Calling-logging-functions">2.1.1 Calling logging functions</a></li>
-      <li><a id="toc-Regular-and-_0022j_0022-variants-1" href="#Regular-and-_0022j_0022-variants">2.1.2 Regular and &quot;j&quot; variants</a></li>
+      <li><a id="toc-Regular-and-j-variants-1" href="#Regular-and-j-variants">2.1.2 Regular and j variants</a></li>
       <li><a id="toc-Logger-names-1" href="#Logger-names">2.1.3 Logger names</a>
       <ul class="no-bullet">
         <li><a id="toc-The-Logger-object-1" href="#The-Logger-object">2.1.3.1 The Logger object</a></li>
@@ -258,7 +258,7 @@ Up: <a href="#API" accesskey="u" rel="up">API</a> &nbsp; [<a href="#SEC_Contents
 <table class="menu" border="0" cellspacing="0">
 <tr><td align="left" valign="top">&bull; <a href="#Calling-logging-functions" accesskey="1">Calling logging functions</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Regular-and-_0022j_0022-variants" accesskey="2">Regular and &quot;j&quot; variants</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+<tr><td align="left" valign="top">&bull; <a href="#Regular-and-j-variants" accesskey="2">Regular and j variants</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="#Logger-names" accesskey="3">Logger names</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
 </td></tr>
@@ -267,7 +267,7 @@ Up: <a href="#API" accesskey="u" rel="up">API</a> &nbsp; [<a href="#SEC_Contents
 <hr>
 <span id="Calling-logging-functions"></span><div class="header">
 <p>
-Next: <a href="#Regular-and-_0022j_0022-variants" accesskey="n" rel="next">Regular and &quot;j&quot; variants</a>, Up: <a href="#Logging-functions" accesskey="u" rel="up">Logging functions</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+Next: <a href="#Regular-and-j-variants" accesskey="n" rel="next">Regular and j variants</a>, Up: <a href="#Logging-functions" accesskey="u" rel="up">Logging functions</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
 </div>
 <span id="Calling-logging-functions-1"></span><h4 class="subsection">2.1.1 Calling logging functions</h4>
 
@@ -281,11 +281,11 @@ Next: <a href="#Regular-and-_0022j_0022-variants" accesskey="n" rel="next">Regul
 </pre></div>
 
 <hr>
-<span id="Regular-and-_0022j_0022-variants"></span><div class="header">
+<span id="Regular-and-j-variants"></span><div class="header">
 <p>
 Next: <a href="#Logger-names" accesskey="n" rel="next">Logger names</a>, Previous: <a href="#Calling-logging-functions" accesskey="p" rel="prev">Calling logging functions</a>, Up: <a href="#Logging-functions" accesskey="u" rel="up">Logging functions</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
 </div>
-<span id="Regular-and-_0022j_0022-variants-1"></span><h4 class="subsection">2.1.2 Regular and &quot;j&quot; variants</h4>
+<span id="Regular-and-j-variants-1"></span><h4 class="subsection">2.1.2 Regular and j variants</h4>
 
 <p>The regular (&quot;m&quot;) versions of the logging functions take <code>fprintf</code>-style formatting and arguments, with <code>%s</code>/<code>%f</code>/<code>%d</code>/etc placeholders. These calls look like normal Octave <code>fprintf()</code> calls. The argument conversion and formatting is done at the Octave level before the message is passed along to the SLF4J Java library. These are the functions you should usually be using.
 </p>
@@ -312,7 +312,7 @@ loggerCallImpl('info', msg, varargin, 'j');
 <hr>
 <span id="Logger-names"></span><div class="header">
 <p>
-Previous: <a href="#Regular-and-_0022j_0022-variants" accesskey="p" rel="prev">Regular and &quot;j&quot; variants</a>, Up: <a href="#Logging-functions" accesskey="u" rel="up">Logging functions</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+Previous: <a href="#Regular-and-j-variants" accesskey="p" rel="prev">Regular and j variants</a>, Up: <a href="#Logging-functions" accesskey="u" rel="up">Logging functions</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
 </div>
 <span id="Logger-names-1"></span><h4 class="subsection">2.1.3 Logger names</h4>
 

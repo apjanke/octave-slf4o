@@ -133,8 +133,8 @@ In your code, put calls to @code{logger.info(...)}, @code{logger.debug(...)}, an
     ...
 @end example
 
-@node Regular and "j" variants
-@subsection Regular and "j" variants
+@node Regular and j variants
+@subsection Regular and j variants
 
 The regular ("m") versions of the logging functions take @code{fprintf}-style formatting and arguments, with @code{%s}/@code{%f}/@code{%d}/etc placeholders. These calls look like normal Octave @code{fprintf()} calls. The argument conversion and formatting is done at the Octave level before the message is passed along to the SLF4J Java library. These are the functions you should usually be using.
 
