@@ -1,19 +1,30 @@
+## -*- texinfo -*-
+##
+## @node fprintfds
+## @deftypefn {Function} fprintfds (@var{fmt}, @var{varargin})
+## @deftypefnx {Function} fprintfds (@var{fid}, @var{fmt}, @var{varargin})
+##
+## A variant of fprintf() that supports dispstr functionality.
+##
+## This is just like Octave's fprintf(), except you can pass objects
+## directly to @code{%s} conversion specifiers, and they will be automatically
+## converted using dispstr.
+##
+## See the documentation for SPRINTFDS for details on how it works.
+##
+## Examples:
+##
+## @example
+## bday = Birthday(3, 14);
+## fprintfds('The value is: %s', bday)
+## @end example
+##
+## See also:
+## SPRINTFDS
+##
+## @end deftypefn
+
 function out = fprintfds(varargin)
-%FPRINTFDS A fprintf that respects dispstr()
-%
-% out = fprintfds(fmt, varargin)
-% out = fprintfds(fid, fmt, varargin)
-%
-% This is a variant of fprintf that respects the dispstr() function.
-% See the documentation for SPRINTFDS for details on how it works.
-% 
-% Examples:
-%
-% bday = Birthday(3, 14);
-% fprintfds('The value is: %s', bday)
-%
-% See also:
-% SPRINTFDS
 
 args = varargin;
 if isnumeric(args{1})

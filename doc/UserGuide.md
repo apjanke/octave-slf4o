@@ -88,7 +88,7 @@ Then:
 
 #### The Logger object
 
-You can also use the object-oriented `logger.Logger` API directly. This allows you to set custom logger names. It'll also be a bit faster, because it doesn't have to spend time extracting the caller name from the call stack. To use the Logger object directly, get a logger object by calling `logger.Logger.getLogger(name)` where `name` is a string holding the name of the logger you want to use. 
+You can also use the object-oriented `logger.Logger` API directly. This allows you to set custom logger names. It'll also be a bit faster, because it doesn't have to spend time extracting the caller name from the call stack. To use the Logger object directly, get a logger object by calling `logger.Logger.getLogger(name)` where `name` is a string holding the name of the logger you want to use.
 
 ```octave
 logger = logger.Logger.getLogger('foo.bar.baz.MyThing');
@@ -177,15 +177,13 @@ When you call the normal ("`m`") variants of the logging functions, `dispstr()` 
 
 For most Octave-defined objects, this just results in a "`m-by-n <classname>`" output. (But at least it doesn't raise an error, which is especially problematic when your functions are receiving inputs of the wrong type.) It gets particularly useful when you define custom `dispstr` overrides so your objects have useful string representations.
 
-(You used to be able to monkeypatch new methods in to Octave-provided datatypes to customize their output, but that doesn't seem to work on newer versions of Octave.)
-
-### Configuration
+## Configuration
 
 All the actual logging goes through the Log4j back end; you can configure it as with any Log4j installation. See the [Log4j 1.2 documentation](http://logging.apache.org/log4j/1.2/) for details. (Note: you have to use the old 1.2 series doco, because that's what Octave currently ships with.)
 
 The `logger.Log4jConfigurator` class provides a convenient Octave-friendly interface for configuring Log4j to do basic stuff. It's enough for simple cases. But all the configuration state is passed on the the Log4j back end; none of it is stored in the Octave layer.
 
-### Implementation notes
+## Implementation notes
 
 I chose Log4j as the back end because that's what SLF4M uses, and I wanted to be maximally compatible with SLF4M.
 SLF4M chose Log4j as the back end because that's what ships with Matlab.

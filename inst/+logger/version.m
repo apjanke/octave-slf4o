@@ -1,24 +1,27 @@
-function out = version
-% VERSION Get version info for SLF4O
-%
-% logger.version
-% v = logger.version
-%
-% Gets version info for the SLF4O library.
-%
-% If return value is not captured, displays version info for SLF4O and related
-% libraries to the console.
-%
-% If return value is captured, returns the version of the SLF4O library as
-% a char vector.
+## -*- texinfo -*-
+## @node logger.version
+## @deftypefn {Function} logger.version ()
+## @deftypefnx {Function} {@var{out} =} logger.version ()
+##
+## Gets version info for the SLF4O library.
+##
+## If return value is not captured, displays version info for SLF4O and related
+## libraries to the console.
+##
+## If return value is captured, returns the version of the SLF4O library as
+## a char vector.
+##
+## @end deftypefn
 
-slf4mVersion = getSlf4mVersion;
+function out = version
+
+slf4oVersion = getSlf4oVersion;
 
 if nargout > 0
-    out = slf4mVersion;
+    out = slf4oVersion;
     return
 else
-    versions.SLF4O = slf4mVersion;
+    versions.SLF4O = slf4oVersion;
     versions.SLF4J = '?';
     versions.log4j = '?';
     % For now, parse the versions from the JAR filenames, since we're shipping
@@ -51,7 +54,7 @@ end
 
 end
 
-function out = getSlf4mVersion
+function out = getSlf4oVersion
 instDir = fileparts(fileparts(mfilename('fullpath')));
 descrInInstalledPackage = fullfile(instDir, 'packinfo', 'DESCRIPTION');
 if exist(descrInInstalledPackage, 'file')

@@ -1,0 +1,1040 @@
+This is slf4o.info, produced by makeinfo version 6.7 from slf4o.texi.
+
+This manual is for SLF4O, version 0.1.0-SNAPSHOT.
+
+   Copyright © 2020 Andrew Janke
+
+     Permission is granted to make and distribute verbatim copies of
+     this manual provided the copyright notice and this permission
+     notice are preserved on all copies.
+
+     Permission is granted to copy and distribute modified versions of
+     this manual under the conditions for verbatim copying, provided
+     that the entire resulting derived work is distributed under the
+     terms of a permission notice identical to this one.
+
+     Permission is granted to copy and distribute translations of this
+     manual into another language, under the same conditions as for
+     modified versions.
+
+
+File: slf4o.info,  Node: Top,  Next: Setup,  Up: (dir)
+
+SLF4O
+*****
+
+This manual is for SLF4O, version 0.1.0-SNAPSHOT.
+
+* Menu:
+
+* Setup::
+* API::
+* The dispstr API::
+* Configuration::
+* Implementation notes::
+* API Reference::
+* Copying::
+
+
+File: slf4o.info,  Node: Setup,  Next: API,  Up: Top
+
+1 Setup
+*******
+
+To use SLF4O in your code:
+
+   1.  Install and load the SLF4O package using Octave’s ‘pkg’ command
+
+   ‘pkg install
+https://github.com/apjanke/octave-slf4o/archive/master.zip’
+
+   2.  Load the SLF4O package in your Octave session
+
+   ‘pkg load slf4o’
+
+   3.  Call ‘logger.initSLF4O’ to initialize the library before doing
+any logging calls
+
+   4.  Add calls to the ‘logger.*’ functions in your code
+
+
+File: slf4o.info,  Node: API,  Next: The dispstr API,  Prev: Setup,  Up: Top
+
+2 API
+*****
+
+SLF4O provides:
+
+   • A set of logging functions to log events at various levels.  This
+     includes Regular and "‘j’" variants for sprintf-style or
+     SLF4J-style formatting.
+   • A Logger class for doing logging with more control over its
+     behavior.
+   • A Log4j configurator tool and GUI.
+   • ‘dispstr’, a customizable string-conversion API.
+
+   All the code is in the ‘+logger’ package.  I chose a short, readable
+package name because if you’re using logging, it’ll show up a lot in
+your code.
+
+* Menu:
+
+* Logging functions::
+
+
+File: slf4o.info,  Node: Logging functions,  Up: API
+
+2.1 Logging functions
+=====================
+
+Each logging level has a corresponding ‘logger.*’ function and "J
+Variant" function that you can call to emit a log message at that level.
+
+Level                    Function                 J Variant
+---------------------------------------------------------------------------
+‘ERROR’                  ‘logger.error’           ‘logger.errorj’
+‘WARNING’                ‘logger.warn’            ‘logger.warnj’
+‘INFO’                   ‘logger.info’            ‘logger.infoj’
+‘DEBUG’                  ‘logger.debug’           ‘logger.debugj’
+‘TRACE’                  ‘logger.trace’           ‘logger.tracej’
+
+   The logging levels are predefined.  They cannot be customized.  This
+is a design decision made to keep the API simple and performant.
+
+* Menu:
+
+* Calling logging functions::
+* Regular and "j" variants::
+* Logger names::
+
+
+File: slf4o.info,  Node: Calling logging functions,  Next: Regular and "j" variants,  Up: Logging functions
+
+2.1.1 Calling logging functions
+-------------------------------
+
+In your code, put calls to ‘logger.info(...)’, ‘logger.debug(...)’, and
+so on, as appropriate.
+
+         ...
+         logger.info('Working on item %d of %d: %s', i, n, description);
+         logger.debug('Intermediate value: %f', someDoubleValue);
+         ...
+
+
+File: slf4o.info,  Node: Regular and "j" variants,  Next: Logger names,  Prev: Calling logging functions,  Up: Logging functions
+
+2.1.2 Regular and "j" variants
+------------------------------
+
+The regular ("m") versions of the logging functions take ‘fprintf’-style
+formatting and arguments, with ‘%s’/‘%f’/‘%d’/etc placeholders.  These
+calls look like normal Octave ‘fprintf()’ calls.  The argument
+conversion and formatting is done at the Octave level before the message
+is passed along to the SLF4J Java library.  These are the functions you
+should usually be using.
+
+   There are also "‘j’" variants ("‘j’" is for "Java") of all the the
+logging functions which use SLF4J style formatting.  These use "{}" as
+the placeholders, and the arguments are passed down to the SLF4J Java
+layer to be converted there.  These variants are useful if you’re
+working with actual Java objects in your Octave code, and you want Java
+to handle the type conversion.  In the "‘j’" variants, all the input
+arguments are converted to Java objects using Octave’s default
+auto-conversion.
+
+   Some Octave objects may not convert to Java objects at all, so you’ll
+get errors when trying to use the "‘j’" variants with them.
+
+     >> d = database;
+     >> logger.infoj('My database: {}', d)
+     No method 'info' with matching signature found for class 'org.slf4j.impl.Log4jLoggerAdapter'.
+     Error in logger.Logger/infoj (line 146)
+             this.jLogger.info(msg, varargin{:});
+     Error in loggerCallImpl (line 69)
+                     logger.infoj(msg, args{:});
+     Error in logger.infoj (line 13)
+     loggerCallImpl('info', msg, varargin, 'j');
+
+   To avoid this, use the regular variants.
+
+   In both cases, the formatting and conversion is done lazily: if the
+logger is not enabled at the level you are logging the event, the
+function returns without doing the conversion.  So you only pay the cost
+of the ‘sprintf()’ or Java conversion and formatting if the logger is
+enabled.
+
+
+File: slf4o.info,  Node: Logger names,  Prev: Regular and "j" variants,  Up: Logging functions
+
+2.1.3 Logger names
+------------------
+
+The logging functions in ‘+logger’ use the caller’s class or function
+name as the logger name.  (This is in line with the Java convention of
+using the fully-qualified class name as the logger name.)  This is
+accomplished with a trick using ‘dbstack’, looking back up the call
+stack to see who invoked it.
+
+   You can use anything for a logger name; if no logger of that name
+exists, one is created automatically.  Logger names are arranged in a
+hierarchy using dot-qualified prefixes, like package names in Java or
+Octave.  For example, if you have the following loggers:
+
+   • ‘foo.Thing’
+   • ‘foo.bar.Thing’
+   • ‘foo.bar.OtherThing’
+   • ‘foo.bar.baz.Whatever’
+
+   Then:
+
+   • All these loggers are children of the logger ‘foo’
+   • ‘foo.bar.Thing’ and ‘foo.bar.OtherThing’ are children of ‘foo.bar’,
+     which in turn is a child of ‘foo’.
+   • ‘foo.bar.baz.Whatever’ is a child of ‘foo.bar.baz’, which is a
+     child of ‘foo.bar’, which is a child of ‘foo’.
+
+* Menu:
+
+* The Logger object::
+
+
+File: slf4o.info,  Node: The Logger object,  Up: Logger names
+
+2.1.3.1 The Logger object
+.........................
+
+You can also use the object-oriented ‘logger.Logger’ API directly.  This
+allows you to set custom logger names.  It’ll also be a bit faster,
+because it doesn’t have to spend time extracting the caller name from
+the call stack.  To use the Logger object directly, get a logger object
+by calling ‘logger.Logger.getLogger(name)’ where ‘name’ is a string
+holding the name of the logger you want to use.
+
+     logger = logger.Logger.getLogger('foo.bar.baz.MyThing');
+     logger.info('Something happened');
+
+   If you use ‘logger.Logger’ in object-oriented Octave code, I
+recommend you do it like this, which looks like the SLFJ Java
+conventions.
+
+     classdef CallingLoggerDirectlyExample
+
+         properties (Constant, Access=private)
+             log = logger.Logger.getLogger('foo.bar.baz.qux.MyLoggerID');
+         end
+
+         methods
+             function hello(this)
+                 this.log.info('Hello, world!');
+             end
+
+             function doWork(this)
+                 label = 'thingy';
+                 x = 1 + 2;
+                 timestamp = datetime;
+                 this.log.debug('Calculation result: label=%s, x=%f at %s', label, x, timestamp);
+              end
+         end
+
+     end
+
+   Even though ‘log’ is a ‘Constant’ (static) property, I like to call
+it via ‘this’ because it’s more concise, and then you can copy and paste
+your code that makes logging calls between classes.  Make the ‘log’
+property ‘private’ so you can have ‘log’ properties defined in your
+subclasses, too; they may want to use different IDs.
+
+
+File: slf4o.info,  Node: The dispstr API,  Next: Configuration,  Prev: API,  Up: Top
+
+3 The dispstr API
+*****************
+
+In addition to the SLF4J adapter layer, SLF4O provides a new API for
+generic value formatting and customizing the display of user-defined
+objects.  This consists of a pair of functions, ‘dispstr’ and
+‘dispstrs’.  They take values of any type and convert them to either a
+single string, or an array of strings corresponding to the input array’s
+elements.
+
+   This is the equivalent of Java’s ‘toString()’ method, which is
+defined for almost everything and customized extensively.  (Well, really
+it’s equivalent to Java’s ‘""+x’ string concatenation operation, which
+really is defined for everything.)
+
+         str = dispstr(x)     % Returns char string
+         strs = dispstrs(x)   % Returns cellstr array
+
+   The input ‘x’ may be *any* type.
+
+   Normally when writing a library, I avoid defining any global
+functions, to avoid polluting the shared namespace.  But ‘dispstr’ and
+‘dispstrs’ *must* be global functions, because they are polymorphic over
+all input types, including those which are themselves unaware of
+‘dispstr’.
+
+   This provides an extension point for defining custom string
+conversions for your own user-defined classes.  You can override
+‘dispstr’ and ‘dispstrs’ in your classes, and SLF4O will recognize it.
+I find this is useful for other string formatting, too.
+
+   For uniformity, if you define ‘dispstr’ in a class, I recommend that
+you override ‘disp’ to make use of it.  And you’ll typically want to
+make ‘dispstr’ and ‘dispstrs’ consistent.
+
+         function disp(this)
+             disp(dispstr(this));
+         end
+
+         % Standard implementation of dispstr
+         function out = dispstr(this)
+             if isscalar(this)
+                 strs = dispstrs(this);
+                 out = strs{1};
+             else
+                 out = sprintf('%s %s', size2str(size(this)), class(this));
+             end
+         end
+
+   As a convenience, there is a ‘logger.Displayable’ mix-in class which
+takes care of this boilerplate for you.  It provides standard
+implementations of ‘disp’ and ‘dispstr’ in terms of ‘dispstrs’.  If you
+inherit from ‘logger.Displayable’, you only need to define ‘dispstrs’.
+
+* Menu:
+
+* The dispstr interface::
+
+
+File: slf4o.info,  Node: The dispstr interface,  Up: The dispstr API
+
+3.1 The dispstr interface
+=========================
+
+The ‘dispstr’ function/method takes a single argument, which may be an
+array of any size, and returns a single one-line string.
+
+   The ‘dispstrs’ function/method takes a single argument, which may be
+an array of any size, and returns a ‘cellstr’ array of exactly the same
+size as the input.  For ‘strs = dispstrs(x)’, the string in ‘strs{i}’
+corresponds to the input ‘x(i)’.
+
+* Menu:
+
+* How dispstr and SLF4O interact::
+
+
+File: slf4o.info,  Node: How dispstr and SLF4O interact,  Up: The dispstr interface
+
+3.1.1 How dispstr and SLF4O interact
+------------------------------------
+
+When you call the normal ("‘m’") variants of the logging functions,
+‘dispstr()’ is applied to any inputs which are objects, so they’re
+converted automatically and may be passed as parameters for the ‘%s’
+conversion.  (In the normal Octave ‘sprintf’, most objects cannot be
+passed to ‘%s’; it results in an error.)
+
+         d = database;
+         logger.info('Database: %s', d);
+
+   For most Octave-defined objects, this just results in a "‘m-by-n
+<classname>’" output.  (But at least it doesn’t raise an error, which is
+especially problematic when your functions are receiving inputs of the
+wrong type.)  It gets particularly useful when you define custom
+‘dispstr’ overrides so your objects have useful string representations.
+
+
+File: slf4o.info,  Node: Configuration,  Next: Implementation notes,  Prev: The dispstr API,  Up: Top
+
+4 Configuration
+***************
+
+All the actual logging goes through the Log4j back end; you can
+configure it as with any Log4j installation.  See the Log4j 1.2
+documentation (<http://logging.apache.org/log4j/1.2/> for details.
+(Note: you have to use the old 1.2 series doco, because that’s what
+SLF4O currently ships with, due to a desire to maintain parity with
+SLF4J, which is constrained by the Log4j version that Matlab ships
+with.)
+
+   The ‘logger.Log4jConfigurator’ class provides a convenient
+Octave-friendly interface for configuring Log4j to do basic stuff.  It’s
+enough for simple cases.  But all the configuration state is passed on
+the the Log4j back end; none of it is stored in the Octave layer.
+
+
+File: slf4o.info,  Node: Implementation notes,  Next: API Reference,  Prev: Configuration,  Up: Top
+
+5 Implementation notes
+**********************
+
+I chose Log4j as the back end because that’s what SLF4M uses, and I
+wanted to be maximally compatible with SLF4M. SLF4M chose Log4j as the
+back end because that’s what ships with Matlab.
+
+   Aside from the ‘dispstr’ formatting, everything is done purely in
+terms of the underlying SLF4J interface, so SLF4O is compatible with any
+other code or tools that use SLF4J or Log4j.
+
+
+File: slf4o.info,  Node: API Reference,  Next: Copying,  Prev: Implementation notes,  Up: Top
+
+6 API Reference
+***************
+
+* Menu:
+
+* API by Category::
+* API Alphabetically::
+
+
+File: slf4o.info,  Node: API by Category,  Next: API Alphabetically,  Up: API Reference
+
+6.1 API by Category
+===================
+
+6.1.1 Logging
+-------------
+
+*note logger.Logger::
+
+*note logger.Log4jConfigurator::
+
+*note logger.debug::
+
+*note logger.debugj::
+
+*note logger.error::
+
+*note logger.errorj::
+
+*note logger.info::
+
+*note logger.infoj::
+
+*note logger.trace::
+
+*note logger.tracej::
+
+*note logger.warn::
+
+*note logger.warnj::
+
+*note logger.initSLF4O::
+
+*note logger.version::
+
+6.1.2 Dispstr
+-------------
+
+*note dispstr::
+
+*note dispstrs::
+
+*note prettyprint::
+
+6.1.3 Uncategorized
+-------------------
+
+*note logger.logger.Log4jConfigurator.configureBasicConsoleLogging::
+     Configures log4j to do basic logging to the console
+
+*note logger.logger.Logger.getLogger::
+     Gets the named Logger.
+
+
+File: slf4o.info,  Node: API Alphabetically,  Prev: API by Category,  Up: API Reference
+
+6.2 API Alphabetically
+======================
+
+* Menu:
+
+* dispstr::
+* dispstrs::
+* logger.debug::
+* logger.debugj::
+* logger.error::
+* logger.errorj::
+* logger.info::
+* logger.infoj::
+* logger.initSLF4O::
+* logger.Log4jConfigurator::
+* logger.Logger::
+* logger.logger.Log4jConfigurator.configureBasicConsoleLogging::
+		Configures log4j to do basic logging to the console
+* logger.logger.Logger.getLogger::	Gets the named Logger.
+* logger.trace::
+* logger.tracej::
+* logger.version::
+* logger.warn::
+* logger.warnj::
+* prettyprint::
+
+
+File: slf4o.info,  Node: dispstr,  Next: dispstrs,  Up: API Alphabetically
+
+6.2.1 dispstr
+-------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: dispstrs,  Next: logger.debug,  Prev: dispstr,  Up: API Alphabetically
+
+6.2.2 dispstrs
+--------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: logger.debug,  Next: logger.debugj,  Prev: dispstrs,  Up: API Alphabetically
+
+6.2.3 logger.debug
+------------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: logger.debugj,  Next: logger.error,  Prev: logger.debug,  Up: API Alphabetically
+
+6.2.4 logger.debugj
+-------------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: logger.error,  Next: logger.errorj,  Prev: logger.debugj,  Up: API Alphabetically
+
+6.2.5 logger.error
+------------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: logger.errorj,  Next: logger.info,  Prev: logger.error,  Up: API Alphabetically
+
+6.2.6 logger.errorj
+-------------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: logger.info,  Next: logger.infoj,  Prev: logger.errorj,  Up: API Alphabetically
+
+6.2.7 logger.info
+-----------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: logger.infoj,  Next: logger.initSLF4O,  Prev: logger.info,  Up: API Alphabetically
+
+6.2.8 logger.infoj
+------------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: logger.initSLF4O,  Next: logger.Log4jConfigurator,  Prev: logger.infoj,  Up: API Alphabetically
+
+6.2.9 logger.initSLF4O
+----------------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: logger.Log4jConfigurator,  Next: logger.Logger,  Prev: logger.initSLF4O,  Up: API Alphabetically
+
+6.2.10 logger.Log4jConfigurator
+-------------------------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: logger.Logger,  Next: logger.logger.Log4jConfigurator.configureBasicConsoleLogging,  Prev: logger.Log4jConfigurator,  Up: API Alphabetically
+
+6.2.11 logger.Logger
+--------------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: logger.logger.Log4jConfigurator.configureBasicConsoleLogging,  Next: logger.logger.Logger.getLogger,  Prev: logger.Logger,  Up: API Alphabetically
+
+6.2.12 logger.logger.Log4jConfigurator.configureBasicConsoleLogging
+-------------------------------------------------------------------
+
+ -- Static Method: logger.Log4jConfigurator.configureBasicConsoleLogging
+          ()
+
+     Configures log4j to do basic logging to the console
+
+     This sets up a basic log4j configuration, with log output going to
+     the console, and the root logger set to the INFO level.
+
+     This method can safely be called multiple times.  If there’s
+     already an appender on the root logger (indicating logging has
+     already been configured), it silently does nothing.
+
+* Menu:
+
+* logger.logger.Log4jConfigurator.setRootAppenderPattern::
+* logger.logger.Log4jConfigurator.getLog4jLevel::
+* logger.logger.Log4jConfigurator.setLevels::
+* logger.logger.Log4jConfigurator.prettyPrintLogConfiguration::
+* logger.logger.Log4jConfigurator.showGui::
+
+
+File: slf4o.info,  Node: logger.logger.Log4jConfigurator.setRootAppenderPattern,  Next: logger.logger.Log4jConfigurator.getLog4jLevel,  Up: logger.logger.Log4jConfigurator.configureBasicConsoleLogging
+
+6.2.12.1 logger.logger.Log4jConfigurator.setRootAppenderPattern
+...............................................................
+
+ -- Static Method: logger.Log4jConfigurator.setRootAppenderPattern
+          (PATTERN)
+
+     Sets the pattern on the root appender
+
+     This is just a convenience method.  Assumes there is a single
+     appender on the root logger.
+
+
+File: slf4o.info,  Node: logger.logger.Log4jConfigurator.getLog4jLevel,  Next: logger.logger.Log4jConfigurator.setLevels,  Prev: logger.logger.Log4jConfigurator.setRootAppenderPattern,  Up: logger.logger.Log4jConfigurator.configureBasicConsoleLogging
+
+6.2.12.2 logger.logger.Log4jConfigurator.getLog4jLevel
+......................................................
+
+ -- Static Method: logger.Log4jConfigurator.getLog4jLevel (LEVELNAME)
+
+     Gets the log4j Level Java enum value for a named level.
+
+     LEVELNAME is a charvec containing the name of the log level, such
+     as ‘'INFO'’ or ‘'DEBUG'’.  It may also be one of the special names
+     ‘'OFF'’ or ‘'ALL'’.
+
+     Returns a Java org.apache.log4j.Level enum object.
+
+
+File: slf4o.info,  Node: logger.logger.Log4jConfigurator.setLevels,  Next: logger.logger.Log4jConfigurator.prettyPrintLogConfiguration,  Prev: logger.logger.Log4jConfigurator.getLog4jLevel,  Up: logger.logger.Log4jConfigurator.configureBasicConsoleLogging
+
+6.2.12.3 logger.logger.Log4jConfigurator.setLevels
+..................................................
+
+ -- Static Method: logger.Log4jConfigurator.setLevels (LEVELS)
+
+     Set the logging levels for multiple loggers
+
+     logger.Log4jConfigurator.setLevels(levels)
+
+     This is a convenience method for setting the logging levels for
+     multiple loggers.
+
+     The levels input is an n-by-2 cellstr with logger names in column 1
+     and level names in column 2.
+
+     Examples:
+
+          logger.Log4jConfigurator.setLevels({'root','DEBUG'});
+
+          logger.Log4jConfigurator.setLevels({
+              'root'    'INFO'
+              'net.apjanke.logger.swing'  'DEBUG'
+              });
+
+
+File: slf4o.info,  Node: logger.logger.Log4jConfigurator.prettyPrintLogConfiguration,  Next: logger.logger.Log4jConfigurator.showGui,  Prev: logger.logger.Log4jConfigurator.setLevels,  Up: logger.logger.Log4jConfigurator.configureBasicConsoleLogging
+
+6.2.12.4 logger.logger.Log4jConfigurator.prettyPrintLogConfiguration
+....................................................................
+
+ -- Static Method: logger.Log4jConfigurator.prettyPrintLogConfiguration
+          ()
+ -- Static Method: logger.Log4jConfigurator.prettyPrintLogConfiguration
+          (VERBOSE)
+
+     Displays the current log configuration to the console.
+
+     VERBOSE is a logical flag indicating whether verbose mode should be
+     used.  Defaults to false.
+
+
+File: slf4o.info,  Node: logger.logger.Log4jConfigurator.showGui,  Prev: logger.logger.Log4jConfigurator.prettyPrintLogConfiguration,  Up: logger.logger.Log4jConfigurator.configureBasicConsoleLogging
+
+6.2.12.5 logger.logger.Log4jConfigurator.showGui
+................................................
+
+ -- Static Method: logger.Log4jConfigurator.showGui ()
+
+     Display the Log4j configuration GUI provided by SLF4O.
+
+     BROKEN!!!
+
+     This tool is currently broken, and will probably crash Octave if
+     you call it.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.getLogger,  Next: logger.trace,  Prev: logger.logger.Log4jConfigurator.configureBasicConsoleLogging,  Up: API Alphabetically
+
+6.2.13 logger.logger.Logger.getLogger
+-------------------------------------
+
+ -- Static Method: OBJ = logger.Logger.getLogger (IDENTIFIER)
+
+     Gets the named Logger.
+
+     Returns a logger.Logger object.
+
+* Menu:
+
+* logger.logger.Logger.Logger::
+* logger.logger.Logger.error::
+* logger.logger.Logger.warn::
+* logger.logger.Logger.info::
+* logger.logger.Logger.debug::
+* logger.logger.Logger.trace::
+* logger.logger.Logger.errorj::
+* logger.logger.Logger.warnj::
+* logger.logger.Logger.infoj::
+* logger.logger.Logger.debugj::
+* logger.logger.Logger.tracej::
+* logger.logger.Logger.isErrorEnabled::
+* logger.logger.Logger.isWarnEnabled::
+* logger.logger.Logger.isInfoEnabled::
+* logger.logger.Logger.isDebugEnabled::
+* logger.logger.Logger.isTraceEnabled::
+* logger.logger.Logger.listEnabledLevels::
+
+
+File: slf4o.info,  Node: logger.logger.Logger.Logger,  Next: logger.logger.Logger.error,  Up: logger.logger.Logger.getLogger
+
+6.2.13.1 logger.logger.Logger.Logger
+....................................
+
+ -- Constructor: OBJ = logger.Logger (JLOGGER)
+
+     Build a new logger object around an SLF4J Logger object.
+
+     Generally, you shouldn’t call this.  Use logger.Logger.getLogger()
+     instead.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.error,  Next: logger.logger.Logger.warn,  Prev: logger.logger.Logger.Logger,  Up: logger.logger.Logger.getLogger
+
+6.2.13.2 logger.logger.Logger.error
+...................................
+
+ -- Method: error (OBJ, MSG, VARARGIN)
+ -- Method: error (OBJ, EXCEPTION, MSG, VARARGIN)
+
+     Log a message at the ERROR level.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.warn,  Next: logger.logger.Logger.info,  Prev: logger.logger.Logger.error,  Up: logger.logger.Logger.getLogger
+
+6.2.13.3 logger.logger.Logger.warn
+..................................
+
+ -- Method: warn (OBJ, MSG, VARARGIN)
+ -- Method: warn (OBJ, EXCEPTION, MSG, VARARGIN)
+
+     Log a message at the WARN level.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.info,  Next: logger.logger.Logger.debug,  Prev: logger.logger.Logger.warn,  Up: logger.logger.Logger.getLogger
+
+6.2.13.4 logger.logger.Logger.info
+..................................
+
+ -- Method: info (OBJ, MSG, VARARGIN)
+ -- Method: info (OBJ, EXCEPTION, MSG, VARARGIN)
+
+     Log a message at the INFO level.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.debug,  Next: logger.logger.Logger.trace,  Prev: logger.logger.Logger.info,  Up: logger.logger.Logger.getLogger
+
+6.2.13.5 logger.logger.Logger.debug
+...................................
+
+ -- Method: debug (OBJ, MSG, VARARGIN)
+ -- Method: debug (OBJ, EXCEPTION, MSG, VARARGIN)
+
+     Log a message at the DEBUG level.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.trace,  Next: logger.logger.Logger.errorj,  Prev: logger.logger.Logger.debug,  Up: logger.logger.Logger.getLogger
+
+6.2.13.6 logger.logger.Logger.trace
+...................................
+
+ -- Method: trace (OBJ, MSG, VARARGIN)
+ -- Method: trace (OBJ, EXCEPTION, MSG, VARARGIN)
+
+     Log a message at the TRACE level.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.errorj,  Next: logger.logger.Logger.warnj,  Prev: logger.logger.Logger.trace,  Up: logger.logger.Logger.getLogger
+
+6.2.13.7 logger.logger.Logger.errorj
+....................................
+
+ -- Method: errorj (OBJ, MSG, VARARGIN)
+
+     Log a message at the ERROR level, using SLF4J formatting.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.warnj,  Next: logger.logger.Logger.infoj,  Prev: logger.logger.Logger.errorj,  Up: logger.logger.Logger.getLogger
+
+6.2.13.8 logger.logger.Logger.warnj
+...................................
+
+ -- Method: warnj (OBJ, MSG, VARARGIN)
+
+     Log a message at the WARN level, using SLF4J formatting.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.infoj,  Next: logger.logger.Logger.debugj,  Prev: logger.logger.Logger.warnj,  Up: logger.logger.Logger.getLogger
+
+6.2.13.9 logger.logger.Logger.infoj
+...................................
+
+ -- Method: infoj (OBJ, MSG, VARARGIN)
+
+     Log a message at the INFO level, using SLF4J formatting.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.debugj,  Next: logger.logger.Logger.tracej,  Prev: logger.logger.Logger.infoj,  Up: logger.logger.Logger.getLogger
+
+6.2.13.10 logger.logger.Logger.debugj
+.....................................
+
+ -- Method: debugj (OBJ, MSG, VARARGIN)
+
+     Log a message at the DEBUG level, using SLF4J formatting.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.tracej,  Next: logger.logger.Logger.isErrorEnabled,  Prev: logger.logger.Logger.debugj,  Up: logger.logger.Logger.getLogger
+
+6.2.13.11 logger.logger.Logger.tracej
+.....................................
+
+ -- Method: tracej (OBJ, MSG, VARARGIN)
+
+     Log a message at the TRACE level, using SLF4J formatting.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.isErrorEnabled,  Next: logger.logger.Logger.isWarnEnabled,  Prev: logger.logger.Logger.tracej,  Up: logger.logger.Logger.getLogger
+
+6.2.13.12 logger.logger.Logger.isErrorEnabled
+.............................................
+
+ -- Method: OUT = isErrorEnabled (OBJ)
+
+     True if ERROR level logging is enabled for this logger.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.isWarnEnabled,  Next: logger.logger.Logger.isInfoEnabled,  Prev: logger.logger.Logger.isErrorEnabled,  Up: logger.logger.Logger.getLogger
+
+6.2.13.13 logger.logger.Logger.isWarnEnabled
+............................................
+
+ -- Method: OUT = isWarnEnabled (OBJ)
+
+     True if WARN level logging is enabled for this logger.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.isInfoEnabled,  Next: logger.logger.Logger.isDebugEnabled,  Prev: logger.logger.Logger.isWarnEnabled,  Up: logger.logger.Logger.getLogger
+
+6.2.13.14 logger.logger.Logger.isInfoEnabled
+............................................
+
+ -- Method: OUT = isInfoEnabled (OBJ)
+
+     True if INFO level logging is enabled for this logger.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.isDebugEnabled,  Next: logger.logger.Logger.isTraceEnabled,  Prev: logger.logger.Logger.isInfoEnabled,  Up: logger.logger.Logger.getLogger
+
+6.2.13.15 logger.logger.Logger.isDebugEnabled
+.............................................
+
+ -- Method: OUT = isDebugEnabled (OBJ)
+
+     True if DEBUG level logging is enabled for this logger.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.isTraceEnabled,  Next: logger.logger.Logger.listEnabledLevels,  Prev: logger.logger.Logger.isDebugEnabled,  Up: logger.logger.Logger.getLogger
+
+6.2.13.16 logger.logger.Logger.isTraceEnabled
+.............................................
+
+ -- Method: OUT = isTraceEnabled (OBJ)
+
+     True if TRACE level logging is enabled for this logger.
+
+
+File: slf4o.info,  Node: logger.logger.Logger.listEnabledLevels,  Prev: logger.logger.Logger.isTraceEnabled,  Up: logger.logger.Logger.getLogger
+
+6.2.13.17 logger.logger.Logger.listEnabledLevels
+................................................
+
+ -- Method: OUT = listEnabledLevels (OBJ)
+
+     List the levels that are enabled for this logger.
+
+     The enabled levels are listed by name.
+
+     Returns a cellstr vector or empty.
+
+
+File: slf4o.info,  Node: logger.trace,  Next: logger.tracej,  Prev: logger.logger.Logger.getLogger,  Up: API Alphabetically
+
+6.2.14 logger.trace
+-------------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: logger.tracej,  Next: logger.version,  Prev: logger.trace,  Up: API Alphabetically
+
+6.2.15 logger.tracej
+--------------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: logger.version,  Next: logger.warn,  Prev: logger.tracej,  Up: API Alphabetically
+
+6.2.16 logger.version
+---------------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: logger.warn,  Next: logger.warnj,  Prev: logger.version,  Up: API Alphabetically
+
+6.2.17 logger.warn
+------------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: logger.warnj,  Next: prettyprint,  Prev: logger.warn,  Up: API Alphabetically
+
+6.2.18 logger.warnj
+-------------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: prettyprint,  Prev: logger.warnj,  Up: API Alphabetically
+
+6.2.19 prettyprint
+------------------
+
+_Not documented_
+
+
+File: slf4o.info,  Node: Copying,  Prev: API Reference,  Up: Top
+
+7 Copying
+*********
+
+7.1 Package Copyright
+=====================
+
+SLF4O for Octave is covered by the GNU GPLv3.
+
+   All the code in the package is GNU GPLv3.
+
+7.2 Manual Copyright
+====================
+
+This manual is for SLF4O, version 0.1.0-SNAPSHOT.
+
+   Copyright © 2020 Andrew Janke
+
+     Permission is granted to make and distribute verbatim copies of
+     this manual provided the copyright notice and this permission
+     notice are preserved on all copies.
+
+     Permission is granted to copy and distribute modified versions of
+     this manual under the conditions for verbatim copying, provided
+     that the entire resulting derived work is distributed under the
+     terms of a permission notice identical to this one.
+
+     Permission is granted to copy and distribute translations of this
+     manual into another language, under the same conditions as for
+     modified versions.
+
+
+
+Tag Table:
+Node: Top766
+Node: Setup1009
+Node: API1504
+Node: Logging functions2160
+Node: Calling logging functions3154
+Node: Regular and "j" variants3600
+Node: Logger names5621
+Node: The Logger object6832
+Node: The dispstr API8547
+Node: The dispstr interface10935
+Node: How dispstr and SLF4O interact11506
+Node: Configuration12430
+Node: Implementation notes13255
+Node: API Reference13789
+Node: API by Category13972
+Node: API Alphabetically14782
+Node: dispstr15406
+Node: dispstrs15531
+Node: logger.debug15679
+Node: logger.debugj15841
+Node: logger.error16009
+Node: logger.errorj16176
+Node: logger.info16343
+Node: logger.infoj16506
+Node: logger.initSLF4O16674
+Node: logger.Log4jConfigurator16863
+Node: logger.Logger17071
+Node: logger.logger.Log4jConfigurator.configureBasicConsoleLogging17301
+Node: logger.logger.Log4jConfigurator.setRootAppenderPattern18359
+Node: logger.logger.Log4jConfigurator.getLog4jLevel18926
+Node: logger.logger.Log4jConfigurator.setLevels19666
+Node: logger.logger.Log4jConfigurator.prettyPrintLogConfiguration20620
+Node: logger.logger.Log4jConfigurator.showGui21356
+Node: logger.logger.Logger.getLogger21880
+Node: logger.logger.Logger.Logger22855
+Node: logger.logger.Logger.error23258
+Node: logger.logger.Logger.warn23623
+Node: logger.logger.Logger.info23981
+Node: logger.logger.Logger.debug24339
+Node: logger.logger.Logger.trace24703
+Node: logger.logger.Logger.errorj25069
+Node: logger.logger.Logger.warnj25412
+Node: logger.logger.Logger.infoj25751
+Node: logger.logger.Logger.debugj26090
+Node: logger.logger.Logger.tracej26436
+Node: logger.logger.Logger.isErrorEnabled26791
+Node: logger.logger.Logger.isWarnEnabled27166
+Node: logger.logger.Logger.isInfoEnabled27544
+Node: logger.logger.Logger.isDebugEnabled27922
+Node: logger.logger.Logger.isTraceEnabled28305
+Node: logger.logger.Logger.listEnabledLevels28692
+Node: logger.trace29124
+Node: logger.tracej29310
+Node: logger.version29482
+Node: logger.warn29655
+Node: logger.warnj29821
+Node: prettyprint29986
+Node: Copying30129
+
+End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:

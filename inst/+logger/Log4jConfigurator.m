@@ -1,58 +1,71 @@
+## -*- texinfo -*-
+##
+## @deftyp {Class} logger.Log4jConfigurator
+##
+## A configurator tool for Log4j
+##
+## This class configures the logging setup for Octave/SLF4O logging. It
+## configures the log4j library that SLF4O logging sits on top of.
+##
+## This class is provided as a convenience. You can also configure SLF4O logging
+## by directly configuring log4j using its normal Java interface.
+##
+## SLF4O does not automatically configure log4j. You must either call a
+## configureXxx method on this class or configure log4j directly yourself to get
+## logging to work. Otherwise, you may get warnings like this at the console:
+##
+##   log4j:WARN No appenders could be found for logger (unknown).
+##   log4j:WARN Please initialize the log4j system properly.
+##
+## If that happens, it means you need to call
+## logger.Log4jConfigurator.configureBasicConsoleLogging.
+##
+## This also provides a log4j configuration GUI that you can launch with
+## `logger.Log4jConfigurator.showGui`.
+##
+## Examples:
+##
+## @example
+## logger.Log4jConfigurator.configureBasicConsoleLogging
+##
+## logger.Log4jConfigurator.setLevels(@{'root','DEBUG'@});
+##
+## logger.Log4jConfigurator.setLevels(@{
+##     'root'    'INFO'
+##     'net.apjanke.logger.swing'  'DEBUG'
+##     @});
+##
+## logger.Log4jConfigurator.prettyPrintLogConfiguration
+##
+## % Display fully-qualified class/category names in the log output:
+## logger.Log4jConfigurator.setRootAppenderPattern(...
+##    ['%d@{HH:mm:ss.SSS@} %p %c - %m' sprintf('\n')]);
+##
+## % Bring up the configuration GUI
+## logger.Log4jConfigurator.showGui
+## @end example
+##
+## @end deftyp
+
 classdef Log4jConfigurator
-    % A configurator for log4j
-    %
-    % This class configures the logging setup for Matlab/SLF4O logging. It
-    % configures the log4j library that SLF4O logging sits on top of. (We use log4j
-    % because it ships with Matlab.)
-    %
-    % This class is provided as a convenience. You can also configure SLF4O logging
-    % by directly configuring log4j using its normal Java interface.
-    %
-    % SLF4O does not automatically configure log4j. You must either call a
-    % configureXxx method on this class or configure log4j directly yourself to get
-    % logging to work. Otherwise, you may get warnings like this at the console:
-    %
-    %   log4j:WARN No appenders could be found for logger (unknown).
-    %   log4j:WARN Please initialize the log4j system properly.
-    %
-    % If that happens, it means you need to call
-    % logger.Log4jConfigurator.configureBasicConsoleLogging.
-    %
-    % This also provides a log4j configuration GUI that you can launch with
-    % `logger.Log4jConfigurator.showGui`.
-    %
-    % Examples:
-    %
-    % logger.Log4jConfigurator.configureBasicConsoleLogging
-    %
-    % logger.Log4jConfigurator.setLevels({'root','DEBUG'});
-    %
-    % logger.Log4jConfigurator.setLevels({
-    %     'root'    'INFO'
-    %     'net.apjanke.logger.swing'  'DEBUG'
-    %     });
-    %
-    % logger.Log4jConfigurator.prettyPrintLogConfiguration
-    %
-    % % Display fully-qualified class/category names in the log output:
-    % logger.Log4jConfigurator.setRootAppenderPattern(...
-    %    ['%d{HH:mm:ss.SSS} %p %c - %m' sprintf('\n')]);
-    %
-    % % Bring up the configuration GUI
-    % logger.Log4jConfigurator.showGui
-    
     
     methods (Static)
+
+        ## -*- texinfo -*-
+        ## @node logger.Log4jConfigurator.configureBasicConsoleLogging
+        ## @deftypefn {Static Method} logger.Log4jConfigurator.configureBasicConsoleLogging ()
+        ##
+        ## Configures log4j to do basic logging to the console
+        ##
+        ## This sets up a basic log4j configuration, with log output going to the
+        ## console, and the root logger set to the INFO level.
+        ##
+        ## This method can safely be called multiple times. If there's already an
+        ## appender on the root logger (indicating logging has already been
+        ## configured), it silently does nothing.
+        ##
+        ## @end deftypefn
         function configureBasicConsoleLogging
-            % Configures log4j to do basic logging to the console
-            %
-            % This sets up a basic log4j configuration, with log output going to the
-            % console, and the root logger set to the INFO level.
-            %
-            % This method can safely be called multiple times. If there's already an
-            % appender on the root logger (indicating logging has already been
-            % configured), it silently does nothing.
-            
             rootLogger = javaMethod('getRootLogger', 'org.apache.log4j.Logger');
             rootAppenders = rootLogger.getAllAppenders();
             isConfiguredAlready = rootAppenders.hasMoreElements;
@@ -71,19 +84,37 @@ classdef Log4jConfigurator
             
         end
         
+        ## -*- texinfo -*-
+        ## @node logger.Log4jConfigurator.setRootAppenderPattern
+        ## @deftypefn {Static Method} logger.Log4jConfigurator.setRootAppenderPattern (@var{pattern})
+        ##
+        ## Sets the pattern on the root appender
+        ##
+        ## This is just a convenience method. Assumes there is a single
+        ## appender on the root logger.
+        ##
+        ## @end deftypefn
         function setRootAppenderPattern(pattern)
-            % Sets the pattern on the root appender
-            %
-            % This is just a convenience method. Assumes there is a single
-            % appender on the root logger.
             rootLogger = javaMethod('getRootLogger', 'org.apache.log4j.Logger');
             rootAppender = rootLogger.getAllAppenders().nextElement();
             myLayout = org.apache.log4j.PatternLayout(pattern);
             rootAppender.setLayout(myLayout);
         end
         
+        ## -*- texinfo -*-
+        ## @node logger.Log4jConfigurator.getLog4jLevel
+        ## @deftypefn {Static Method} logger.Log4jConfigurator.getLog4jLevel (@var{levelName})
+        ##
+        ## Gets the log4j Level Java enum value for a named level.
+        ##
+        ## @var{levelName} is a charvec containing the name of the log level, such as
+        ## @code{'INFO'} or @code{'DEBUG'}. It may also be one of the special names
+        ## @code{'OFF'} or @code{'ALL'}.
+        ##
+        ## Returns a Java org.apache.log4j.Level enum object.
+        ##
+        ## @end deftypefn
         function out = getLog4jLevel(levelName)
-            % Gets the log4j Level enum for a named level
             validLevels = {'OFF' 'FATAL' 'ERROR' 'WARN' 'INFO' 'DEBUG' 'TRACE' 'ALL'};
             levelName = upper(levelName);
             if ~ismember(levelName, validLevels)
@@ -92,25 +123,33 @@ classdef Log4jConfigurator
             out = eval(['org.apache.log4j.Level.' levelName]);
         end
         
+        ## -*- texinfo -*-
+        ## @node logger.Log4jConfigurator.setLevels
+        ## @deftypefn {Static Method} logger.Log4jConfigurator.setLevels (@var{levels})
+        ##
+        ## Set the logging levels for multiple loggers
+        ##
+        ## logger.Log4jConfigurator.setLevels(levels)
+        ##
+        ## This is a convenience method for setting the logging levels for multiple
+        ## loggers.
+        ##
+        ## The levels input is an n-by-2 cellstr with logger names in column 1 and
+        ## level names in column 2.
+        ##
+        ## Examples:
+        ##
+        ## @example
+        ## logger.Log4jConfigurator.setLevels(@{'root','DEBUG'@});
+        ##
+        ## logger.Log4jConfigurator.setLevels(@{
+        ##     'root'    'INFO'
+        ##     'net.apjanke.logger.swing'  'DEBUG'
+        ##     @});
+        ## @end example
+        ##
+        ## @end deftypefn
         function setLevels(levels)
-            % Set the logging levels for multiple loggers
-            %
-            % logger.Log4jConfigurator.setLevels(levels)
-            %
-            % This is a convenience method for setting the logging levels for multiple
-            % loggers.
-            %
-            % The levels input is an n-by-2 cellstr with logger names in column 1 and
-            % level names in column 2.
-            %
-            % Examples:
-            %
-            % logger.Log4jConfigurator.setLevels({'root','DEBUG'});
-            %
-            % logger.Log4jConfigurator.setLevels({
-            %     'root'    'INFO'
-            %     'net.apjanke.logger.swing'  'DEBUG'
-            %     });
             for i = 1:size(levels, 1)
                 [logName,levelName] = levels{i,:};
                 logger = javaMethod('getLogger', 'org.apache.log4j.LogManager', logName);
@@ -119,10 +158,18 @@ classdef Log4jConfigurator
             end
         end
         
+        ## -*- texinfo -*-
+        ## @node logger.Log4jConfigurator.prettyPrintLogConfiguration
+        ## @deftypefn {Static Method} logger.Log4jConfigurator.prettyPrintLogConfiguration ()
+        ## @deftypefnx {Static Method} logger.Log4jConfigurator.prettyPrintLogConfiguration (@var{verbose})
+        ##
+        ## Displays the current log configuration to the console.
+        ##
+        ## @var{verbose} is a logical flag indicating whether verbose mode should be used.
+        ## Defaults to false.
+        ##
+        ## @end deftypefn
         function prettyPrintLogConfiguration(verbose)
-            % Displays the current log configuration to the console
-            %
-            % logger.Log4jConfigurator.prettyPrintLogConfiguration()
             
             if nargin < 1 || isempty(verbose);  verbose = false;  end
             
@@ -184,6 +231,17 @@ classdef Log4jConfigurator
             end
         end
         
+        ## -*- texinfo -*-
+        ## @node logger.Log4jConfigurator.showGui
+        ## @deftypefn {Static Method} logger.Log4jConfigurator.showGui ()
+        ##
+        ## Display the Log4j configuration GUI provided by SLF4O.
+        ##
+        ## BROKEN!!!
+        ##
+        ## This tool is currently broken, and will probably crash Octave if you call it.
+        ##
+        ## @end deftypefn
         function showGui()
             % Display the log4j configuration GUI
             

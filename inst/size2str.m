@@ -1,9 +1,17 @@
+## -*- texinfo -*-
+##
+## @node size2str
+## @deftypefn {Function} {@var{out} =} size2str (@var{sz})
+##
+## Format a matrix size for display.
+##
+## Sz is an array of dimension sizes, in the format returned by SIZE.
+##
+## Returns a charvec.
+##
+## @end deftypefn
+
 function out = size2str(sz)
-%SIZE2STR Format a matrix size for display
-%
-% out = size2str(sz)
-%
-% Sz is an array of dimension sizes, in the format returned by SIZE.
 
 strs = cell(size(sz));
 for i = 1:numel(sz)

@@ -1,2 +1,13 @@
-# Distribution artifacts
-dist/
+*.o
+*.oct
+/target
+/doc/*.dvi
+/doc/*.qhc
+/doc/html
+/doc/topics.tmp
+cmake-build-debug
+!.idea
+.idea/workspace.xml
+datasets/iris/iris.csv
+datasets/iris/iris.mat
+

@@ -1,21 +1,31 @@
+## -*- texinfo -*-
+##
+## @node sprintfds
+## @deftypefn {Function} sprintfds (@var{fmt}, @var{varargin})
+##
+## A variant of sprintf() that supports dispstr functionality.
+##
+## This is just like Octave's sprintf(), except you can pass objects
+## directly to @code{%s} conversion specifiers, and they will be automatically
+## converted using dispstr.
+##
+## For inputs that are objects, dispstr() is implicitly called on them, so you
+## can pass them directly to '%s' conversion specifiers in your format
+## string.
+##
+## Examples:
+##
+## @example
+## bday = Birthday(3, 14);
+## str = sprintfds('The value is: %s', bday)
+## @end example
+##
+## See also:
+## FPRINTFDS
+##
+## @end deftypefn
+
 function out = sprintfds(fmt, varargin)
-%SPRINTFDS A sprintf that respects dispstr()
-%
-% out = sprintfds(fmt, varargin)
-%
-% This is a variant of sprintf that respects the dispstr() function. For
-% inputs that are objects, dispstr() is implicitly called on them, so you
-% can pass them directly to '%s' conversion specifiers in your format
-% string. ('%s' already works with datetime and related types, so those do
-% not need to be converted.)
-%
-% Examples:
-%
-% bday = Birthday(3, 14);
-% str = sprintfds('The value is: %s', bday)
-%
-% See also:
-% FPRINTFDS
 
 args = dispstrlib.internal.convertArgsForPrintf(varargin);
 

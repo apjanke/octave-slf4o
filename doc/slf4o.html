@@ -1,0 +1,1196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This manual is for SLF4O, version 0.1.0-SNAPSHOT.
+
+Copyright (C) 2020 Andrew Janke
+
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the entire
+resulting derived work is distributed under the terms of a permission
+notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the same conditions as for modified versions. -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SLF4O v0.1.0-SNAPSHOT</title>
+
+<meta name="description" content="User manual for SLF4O for Octave.">
+<meta name="keywords" content="SLF4O v0.1.0-SNAPSHOT">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="#Top" rel="start" title="Top">
+<link href="#SEC_Contents" rel="contents" title="Table of Contents">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<h1 class="settitle" align="center">SLF4O v0.1.0-SNAPSHOT</h1>
+
+
+
+
+
+<span id="SEC_Overview"></span>
+<h2 class="shortcontents-heading">Short Table of Contents</h2>
+
+<div class="shortcontents">
+<ul class="no-bullet">
+<li><a id="stoc-Setup-1" href="#toc-Setup-1">1 Setup</a></li>
+<li><a id="stoc-API-1" href="#toc-API-1">2 API</a></li>
+<li><a id="stoc-The-dispstr-API-1" href="#toc-The-dispstr-API-1">3 The dispstr API</a></li>
+<li><a id="stoc-Configuration-1" href="#toc-Configuration-1">4 Configuration</a></li>
+<li><a id="stoc-Implementation-notes-1" href="#toc-Implementation-notes-1">5 Implementation notes</a></li>
+<li><a id="stoc-API-Reference-1" href="#toc-API-Reference-1">6 API Reference</a></li>
+<li><a id="stoc-Copying-1" href="#toc-Copying-1">7 Copying</a></li>
+</ul>
+</div>
+
+<span id="SEC_Contents"></span>
+<h2 class="contents-heading">Table of Contents</h2>
+
+<div class="contents">
+
+<ul class="no-bullet">
+  <li><a id="toc-Setup-1" href="#Setup">1 Setup</a></li>
+  <li><a id="toc-API-1" href="#API">2 API</a>
+  <ul class="no-bullet">
+    <li><a id="toc-Logging-functions-1" href="#Logging-functions">2.1 Logging functions</a>
+    <ul class="no-bullet">
+      <li><a id="toc-Calling-logging-functions-1" href="#Calling-logging-functions">2.1.1 Calling logging functions</a></li>
+      <li><a id="toc-Regular-and-_0022j_0022-variants-1" href="#Regular-and-_0022j_0022-variants">2.1.2 Regular and &quot;j&quot; variants</a></li>
+      <li><a id="toc-Logger-names-1" href="#Logger-names">2.1.3 Logger names</a>
+      <ul class="no-bullet">
+        <li><a id="toc-The-Logger-object-1" href="#The-Logger-object">2.1.3.1 The Logger object</a></li>
+      </ul></li>
+    </ul></li>
+  </ul></li>
+  <li><a id="toc-The-dispstr-API-1" href="#The-dispstr-API">3 The dispstr API</a>
+  <ul class="no-bullet">
+    <li><a id="toc-The-dispstr-interface-1" href="#The-dispstr-interface">3.1 The dispstr interface</a>
+    <ul class="no-bullet">
+      <li><a id="toc-How-dispstr-and-SLF4O-interact-1" href="#How-dispstr-and-SLF4O-interact">3.1.1 How dispstr and SLF4O interact</a></li>
+    </ul></li>
+  </ul></li>
+  <li><a id="toc-Configuration-1" href="#Configuration">4 Configuration</a></li>
+  <li><a id="toc-Implementation-notes-1" href="#Implementation-notes">5 Implementation notes</a></li>
+  <li><a id="toc-API-Reference-1" href="#API-Reference">6 API Reference</a>
+  <ul class="no-bullet">
+    <li><a id="toc-API-by-Category-1" href="#API-by-Category">6.1 API by Category</a>
+    <ul class="no-bullet">
+      <li><a id="toc-Logging" href="#Logging">6.1.1 Logging</a></li>
+      <li><a id="toc-Dispstr" href="#Dispstr">6.1.2 Dispstr</a></li>
+      <li><a id="toc-Uncategorized" href="#Uncategorized">6.1.3 Uncategorized</a></li>
+    </ul></li>
+    <li><a id="toc-API-Alphabetically-1" href="#API-Alphabetically">6.2 API Alphabetically</a>
+    <ul class="no-bullet">
+      <li><a id="toc-dispstr-1" href="#dispstr">6.2.1 dispstr</a></li>
+      <li><a id="toc-dispstrs-1" href="#dispstrs">6.2.2 dispstrs</a></li>
+      <li><a id="toc-logger_002edebug-1" href="#logger_002edebug">6.2.3 logger.debug</a></li>
+      <li><a id="toc-logger_002edebugj-1" href="#logger_002edebugj">6.2.4 logger.debugj</a></li>
+      <li><a id="toc-logger_002eerror-1" href="#logger_002eerror">6.2.5 logger.error</a></li>
+      <li><a id="toc-logger_002eerrorj-1" href="#logger_002eerrorj">6.2.6 logger.errorj</a></li>
+      <li><a id="toc-logger_002einfo-1" href="#logger_002einfo">6.2.7 logger.info</a></li>
+      <li><a id="toc-logger_002einfoj-1" href="#logger_002einfoj">6.2.8 logger.infoj</a></li>
+      <li><a id="toc-logger_002einitSLF4O-1" href="#logger_002einitSLF4O">6.2.9 logger.initSLF4O</a></li>
+      <li><a id="toc-logger_002eLog4jConfigurator-1" href="#logger_002eLog4jConfigurator">6.2.10 logger.Log4jConfigurator</a></li>
+      <li><a id="toc-logger_002eLogger-1" href="#logger_002eLogger">6.2.11 logger.Logger</a></li>
+      <li><a id="toc-logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging-1" href="#logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging">6.2.12 logger.logger.Log4jConfigurator.configureBasicConsoleLogging</a>
+      <ul class="no-bullet">
+        <li><a id="toc-logger_002elogger_002eLog4jConfigurator_002esetRootAppenderPattern-1" href="#logger_002elogger_002eLog4jConfigurator_002esetRootAppenderPattern">6.2.12.1 logger.logger.Log4jConfigurator.setRootAppenderPattern</a></li>
+        <li><a id="toc-logger_002elogger_002eLog4jConfigurator_002egetLog4jLevel-1" href="#logger_002elogger_002eLog4jConfigurator_002egetLog4jLevel">6.2.12.2 logger.logger.Log4jConfigurator.getLog4jLevel</a></li>
+        <li><a id="toc-logger_002elogger_002eLog4jConfigurator_002esetLevels-1" href="#logger_002elogger_002eLog4jConfigurator_002esetLevels">6.2.12.3 logger.logger.Log4jConfigurator.setLevels</a></li>
+        <li><a id="toc-logger_002elogger_002eLog4jConfigurator_002eprettyPrintLogConfiguration-1" href="#logger_002elogger_002eLog4jConfigurator_002eprettyPrintLogConfiguration">6.2.12.4 logger.logger.Log4jConfigurator.prettyPrintLogConfiguration</a></li>
+        <li><a id="toc-logger_002elogger_002eLog4jConfigurator_002eshowGui-1" href="#logger_002elogger_002eLog4jConfigurator_002eshowGui">6.2.12.5 logger.logger.Log4jConfigurator.showGui</a></li>
+      </ul></li>
+      <li><a id="toc-logger_002elogger_002eLogger_002egetLogger-1" href="#logger_002elogger_002eLogger_002egetLogger">6.2.13 logger.logger.Logger.getLogger</a>
+      <ul class="no-bullet">
+        <li><a id="toc-logger_002elogger_002eLogger_002eLogger-1" href="#logger_002elogger_002eLogger_002eLogger">6.2.13.1 logger.logger.Logger.Logger</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002eerror-1" href="#logger_002elogger_002eLogger_002eerror">6.2.13.2 logger.logger.Logger.error</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002ewarn-1" href="#logger_002elogger_002eLogger_002ewarn">6.2.13.3 logger.logger.Logger.warn</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002einfo-1" href="#logger_002elogger_002eLogger_002einfo">6.2.13.4 logger.logger.Logger.info</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002edebug-1" href="#logger_002elogger_002eLogger_002edebug">6.2.13.5 logger.logger.Logger.debug</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002etrace-1" href="#logger_002elogger_002eLogger_002etrace">6.2.13.6 logger.logger.Logger.trace</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002eerrorj-1" href="#logger_002elogger_002eLogger_002eerrorj">6.2.13.7 logger.logger.Logger.errorj</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002ewarnj-1" href="#logger_002elogger_002eLogger_002ewarnj">6.2.13.8 logger.logger.Logger.warnj</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002einfoj-1" href="#logger_002elogger_002eLogger_002einfoj">6.2.13.9 logger.logger.Logger.infoj</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002edebugj-1" href="#logger_002elogger_002eLogger_002edebugj">6.2.13.10 logger.logger.Logger.debugj</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002etracej-1" href="#logger_002elogger_002eLogger_002etracej">6.2.13.11 logger.logger.Logger.tracej</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002eisErrorEnabled-1" href="#logger_002elogger_002eLogger_002eisErrorEnabled">6.2.13.12 logger.logger.Logger.isErrorEnabled</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002eisWarnEnabled-1" href="#logger_002elogger_002eLogger_002eisWarnEnabled">6.2.13.13 logger.logger.Logger.isWarnEnabled</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002eisInfoEnabled-1" href="#logger_002elogger_002eLogger_002eisInfoEnabled">6.2.13.14 logger.logger.Logger.isInfoEnabled</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002eisDebugEnabled-1" href="#logger_002elogger_002eLogger_002eisDebugEnabled">6.2.13.15 logger.logger.Logger.isDebugEnabled</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002eisTraceEnabled-1" href="#logger_002elogger_002eLogger_002eisTraceEnabled">6.2.13.16 logger.logger.Logger.isTraceEnabled</a></li>
+        <li><a id="toc-logger_002elogger_002eLogger_002elistEnabledLevels-1" href="#logger_002elogger_002eLogger_002elistEnabledLevels">6.2.13.17 logger.logger.Logger.listEnabledLevels</a></li>
+      </ul></li>
+      <li><a id="toc-logger_002etrace-1" href="#logger_002etrace">6.2.14 logger.trace</a></li>
+      <li><a id="toc-logger_002etracej-1" href="#logger_002etracej">6.2.15 logger.tracej</a></li>
+      <li><a id="toc-logger_002eversion-1" href="#logger_002eversion">6.2.16 logger.version</a></li>
+      <li><a id="toc-logger_002ewarn-1" href="#logger_002ewarn">6.2.17 logger.warn</a></li>
+      <li><a id="toc-logger_002ewarnj-1" href="#logger_002ewarnj">6.2.18 logger.warnj</a></li>
+      <li><a id="toc-prettyprint-1" href="#prettyprint">6.2.19 prettyprint</a></li>
+    </ul></li>
+  </ul></li>
+  <li><a id="toc-Copying-1" href="#Copying">7 Copying</a>
+  <ul class="no-bullet">
+    <li><a id="toc-Package-Copyright" href="#Package-Copyright">7.1 Package Copyright</a></li>
+    <li><a id="toc-Manual-Copyright" href="#Manual-Copyright">7.2 Manual Copyright</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+<span id="Top"></span><div class="header">
+<p>
+Next: <a href="#Setup" accesskey="n" rel="next">Setup</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="SLF4O"></span><h1 class="top">SLF4O</h1>
+
+<p>This manual is for SLF4O, version 0.1.0-SNAPSHOT.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="#Setup" accesskey="1">Setup</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#API" accesskey="2">API</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#The-dispstr-API" accesskey="3">The dispstr API</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Configuration" accesskey="4">Configuration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Implementation-notes" accesskey="5">Implementation notes</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#API-Reference" accesskey="6">API Reference</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Copying" accesskey="7">Copying</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<span id="Setup"></span><div class="header">
+<p>
+Next: <a href="#API" accesskey="n" rel="next">API</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="Setup-1"></span><h2 class="chapter">1 Setup</h2>
+
+<p>To use SLF4O in your code:
+</p>
+<p>1. Install and load the SLF4O package using Octave&rsquo;s <code>pkg</code> command
+</p>
+<p><code>pkg install https://github.com/apjanke/octave-slf4o/archive/master.zip</code>
+</p>
+<p>2. Load the SLF4O package in your Octave session
+</p>
+<p><code>pkg load slf4o</code>
+</p>
+<p>3. Call <code>logger.initSLF4O</code> to initialize the library before doing any logging calls
+</p>
+<p>4. Add calls to the <code>logger.*</code> functions in your code
+</p>
+<hr>
+<span id="API"></span><div class="header">
+<p>
+Next: <a href="#The-dispstr-API" accesskey="n" rel="next">The dispstr API</a>, Previous: <a href="#Setup" accesskey="p" rel="prev">Setup</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="API-1"></span><h2 class="chapter">2 API</h2>
+
+<p>SLF4O provides:
+</p>
+<ul>
+<li> A set of logging functions to log events at various levels. This includes Regular and &quot;<code>j</code>&quot; variants for sprintf-style or SLF4J-style formatting.
+</li><li> A Logger class for doing logging with more control over its behavior.
+</li><li> A Log4j configurator tool and GUI.
+</li><li> <code>dispstr</code>, a customizable string-conversion API.
+</li></ul>
+
+<p>All the code is in the <code>+logger</code> package. I chose a short, readable package name because if you&rsquo;re using logging, it&rsquo;ll show up a lot in your code.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="#Logging-functions" accesskey="1">Logging functions</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<span id="Logging-functions"></span><div class="header">
+<p>
+Up: <a href="#API" accesskey="u" rel="up">API</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="Logging-functions-1"></span><h3 class="section">2.1 Logging functions</h3>
+
+<p>Each logging level has a corresponding <code>logger.*</code> function and &quot;J Variant&quot; function that you can call to emit a log message at that level.
+</p>
+<table>
+<thead><tr><th width="33%">Level</th><th width="33%">Function</th><th width="33%">J Variant</th></tr></thead>
+<tr><td width="33%"><code>ERROR</code></td><td width="33%"><code>logger.error</code></td><td width="33%"><code>logger.errorj</code></td></tr>
+<tr><td width="33%"><code>WARNING</code></td><td width="33%"><code>logger.warn</code></td><td width="33%"><code>logger.warnj</code></td></tr>
+<tr><td width="33%"><code>INFO</code></td><td width="33%"><code>logger.info</code></td><td width="33%"><code>logger.infoj</code></td></tr>
+<tr><td width="33%"><code>DEBUG</code></td><td width="33%"><code>logger.debug</code></td><td width="33%"><code>logger.debugj</code></td></tr>
+<tr><td width="33%"><code>TRACE</code></td><td width="33%"><code>logger.trace</code></td><td width="33%"><code>logger.tracej</code></td></tr>
+</table>
+
+<p>The logging levels are predefined. They cannot be customized. This is a design decision made to keep the API simple and performant.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="#Calling-logging-functions" accesskey="1">Calling logging functions</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Regular-and-_0022j_0022-variants" accesskey="2">Regular and &quot;j&quot; variants</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#Logger-names" accesskey="3">Logger names</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<span id="Calling-logging-functions"></span><div class="header">
+<p>
+Next: <a href="#Regular-and-_0022j_0022-variants" accesskey="n" rel="next">Regular and &quot;j&quot; variants</a>, Up: <a href="#Logging-functions" accesskey="u" rel="up">Logging functions</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="Calling-logging-functions-1"></span><h4 class="subsection">2.1.1 Calling logging functions</h4>
+
+<p>In your code, put calls to <code>logger.info(...)</code>, <code>logger.debug(...)</code>, and so on, as appropriate.
+</p>
+<div class="example">
+<pre class="example">    ...
+    logger.info('Working on item %d of %d: %s', i, n, description);
+    logger.debug('Intermediate value: %f', someDoubleValue);
+    ...
+</pre></div>
+
+<hr>
+<span id="Regular-and-_0022j_0022-variants"></span><div class="header">
+<p>
+Next: <a href="#Logger-names" accesskey="n" rel="next">Logger names</a>, Previous: <a href="#Calling-logging-functions" accesskey="p" rel="prev">Calling logging functions</a>, Up: <a href="#Logging-functions" accesskey="u" rel="up">Logging functions</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="Regular-and-_0022j_0022-variants-1"></span><h4 class="subsection">2.1.2 Regular and &quot;j&quot; variants</h4>
+
+<p>The regular (&quot;m&quot;) versions of the logging functions take <code>fprintf</code>-style formatting and arguments, with <code>%s</code>/<code>%f</code>/<code>%d</code>/etc placeholders. These calls look like normal Octave <code>fprintf()</code> calls. The argument conversion and formatting is done at the Octave level before the message is passed along to the SLF4J Java library. These are the functions you should usually be using.
+</p>
+<p>There are also &quot;<code>j</code>&quot; variants (&quot;<code>j</code>&quot; is for &quot;Java&quot;) of all the the logging functions which use SLF4J style formatting. These use &quot;{}&quot; as the placeholders, and the arguments are passed down to the SLF4J Java layer to be converted there. These variants are useful if you&rsquo;re working with actual Java objects in your Octave code, and you want Java to handle the type conversion. In the &quot;<code>j</code>&quot; variants, all the input arguments are converted to Java objects using Octave&rsquo;s default auto-conversion.
+</p>
+<p>Some Octave objects may not convert to Java objects at all, so you&rsquo;ll get errors when trying to use the &quot;<code>j</code>&quot; variants with them.
+</p>
+<div class="example">
+<pre class="example">&gt;&gt; d = database;
+&gt;&gt; logger.infoj('My database: {}', d)
+No method 'info' with matching signature found for class 'org.slf4j.impl.Log4jLoggerAdapter'.
+Error in logger.Logger/infoj (line 146)
+        this.jLogger.info(msg, varargin{:});
+Error in loggerCallImpl (line 69)
+                logger.infoj(msg, args{:});
+Error in logger.infoj (line 13)
+loggerCallImpl('info', msg, varargin, 'j');
+</pre></div>
+
+<p>To avoid this, use the regular variants.
+</p>
+<p>In both cases, the formatting and conversion is done lazily: if the logger is not enabled at the level you are logging the event, the function returns without doing the conversion. So you only pay the cost of the <code>sprintf()</code> or Java conversion and formatting if the logger is enabled.
+</p>
+<hr>
+<span id="Logger-names"></span><div class="header">
+<p>
+Previous: <a href="#Regular-and-_0022j_0022-variants" accesskey="p" rel="prev">Regular and &quot;j&quot; variants</a>, Up: <a href="#Logging-functions" accesskey="u" rel="up">Logging functions</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="Logger-names-1"></span><h4 class="subsection">2.1.3 Logger names</h4>
+
+<p>The logging functions in <code>+logger</code> use the caller&rsquo;s class or function name as the logger name. (This is in line with the Java convention of using the fully-qualified class name as the logger name.) This is accomplished with a trick using <code>dbstack</code>, looking back up the call stack to see who invoked it.
+</p>
+<p>You can use anything for a logger name; if no logger of that name exists, one is created automatically. Logger names are arranged in a hierarchy using dot-qualified prefixes, like package names in Java or Octave. For example, if you have the following loggers:
+</p>
+<ul>
+<li> <code>foo.Thing</code>
+</li><li> <code>foo.bar.Thing</code>
+</li><li> <code>foo.bar.OtherThing</code>
+</li><li> <code>foo.bar.baz.Whatever</code>
+</li></ul>
+
+<p>Then:
+</p>
+<ul>
+<li> All these loggers are children of the logger <code>foo</code>
+</li><li> <code>foo.bar.Thing</code> and <code>foo.bar.OtherThing</code> are children of <code>foo.bar</code>, which in turn is a child of <code>foo</code>.
+</li><li> <code>foo.bar.baz.Whatever</code> is a child of <code>foo.bar.baz</code>, which is a child of <code>foo.bar</code>, which is a child of <code>foo</code>.
+</li></ul>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="#The-Logger-object" accesskey="1">The Logger object</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<span id="The-Logger-object"></span><div class="header">
+<p>
+Up: <a href="#Logger-names" accesskey="u" rel="up">Logger names</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="The-Logger-object-1"></span><h4 class="subsubsection">2.1.3.1 The Logger object</h4>
+
+<p>You can also use the object-oriented <code>logger.Logger</code> API directly. This allows you to set custom logger names. It&rsquo;ll also be a bit faster, because it doesn&rsquo;t have to spend time extracting the caller name from the call stack. To use the Logger object directly, get a logger object by calling <code>logger.Logger.getLogger(name)</code> where <code>name</code> is a string holding the name of the logger you want to use. 
+</p>
+<div class="example">
+<pre class="example">logger = logger.Logger.getLogger('foo.bar.baz.MyThing');
+logger.info('Something happened');
+</pre></div>
+
+<p>If you use <code>logger.Logger</code> in object-oriented Octave code, I recommend you do it like this, which looks like the SLFJ Java conventions.
+</p>
+<div class="example">
+<pre class="example">classdef CallingLoggerDirectlyExample
+
+    properties (Constant, Access=private)
+        log = logger.Logger.getLogger('foo.bar.baz.qux.MyLoggerID');
+    end
+
+    methods
+        function hello(this)
+            this.log.info('Hello, world!');
+        end
+
+        function doWork(this)
+            label = 'thingy';
+            x = 1 + 2;
+            timestamp = datetime;
+            this.log.debug('Calculation result: label=%s, x=%f at %s', label, x, timestamp);
+         end
+    end
+
+end
+</pre></div>
+
+<p>Even though <code>log</code> is a <code>Constant</code> (static) property, I like to call it via <code>this</code> because it&rsquo;s more concise, and then you can copy and paste your code that makes logging calls between classes. Make the <code>log</code> property <code>private</code> so you can have <code>log</code> properties defined in your subclasses, too; they may want to use different IDs.
+</p>
+
+<hr>
+<span id="The-dispstr-API"></span><div class="header">
+<p>
+Next: <a href="#Configuration" accesskey="n" rel="next">Configuration</a>, Previous: <a href="#API" accesskey="p" rel="prev">API</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="The-dispstr-API-1"></span><h2 class="chapter">3 The dispstr API</h2>
+
+<p>In addition to the SLF4J adapter layer, SLF4O provides a new API for generic value formatting and customizing the display of user-defined objects. This consists of a pair of functions, <code>dispstr</code> and <code>dispstrs</code>. They take values of any type and convert them to either a single string, or an array of strings corresponding to the input array&rsquo;s elements.
+</p>
+<p>This is the equivalent of Java&rsquo;s <code>toString()</code> method, which is defined for almost everything and customized extensively. (Well, really it&rsquo;s equivalent to Java&rsquo;s <code>&quot;&quot;+x</code> string concatenation operation, which really is defined for everything.)
+</p>
+<div class="example">
+<pre class="example">    str = dispstr(x)     % Returns char string
+    strs = dispstrs(x)   % Returns cellstr array
+</pre></div>
+
+<p>The input <code>x</code> may be *any* type.
+</p>
+<p>Normally when writing a library, I avoid defining any global functions, to avoid polluting the shared namespace. But <code>dispstr</code> and <code>dispstrs</code> *must* be global functions, because they are polymorphic over all input types, including those which are themselves unaware of <code>dispstr</code>.
+</p>
+<p>This provides an extension point for defining custom string conversions for your own user-defined classes. You can override <code>dispstr</code> and <code>dispstrs</code> in your classes, and SLF4O will recognize it. I find this is useful for other string formatting, too.
+</p>
+<p>For uniformity, if you define <code>dispstr</code> in a class, I recommend that you override <code>disp</code> to make use of it. And you&rsquo;ll typically want to make <code>dispstr</code> and <code>dispstrs</code> consistent.
+</p>
+<div class="example">
+<pre class="example">    function disp(this)
+        disp(dispstr(this));
+    end
+
+    % Standard implementation of dispstr
+    function out = dispstr(this)
+        if isscalar(this)
+            strs = dispstrs(this);
+            out = strs{1};
+        else
+            out = sprintf('%s %s', size2str(size(this)), class(this));
+        end
+    end
+</pre></div>
+
+<p>As a convenience, there is a <code>logger.Displayable</code> mix-in class which takes care of this boilerplate for you. It provides standard implementations of <code>disp</code> and <code>dispstr</code> in terms of <code>dispstrs</code>. If you inherit from <code>logger.Displayable</code>, you only need to define <code>dispstrs</code>.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="#The-dispstr-interface" accesskey="1">The dispstr interface</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<span id="The-dispstr-interface"></span><div class="header">
+<p>
+Up: <a href="#The-dispstr-API" accesskey="u" rel="up">The dispstr API</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="The-dispstr-interface-1"></span><h3 class="section">3.1 The dispstr interface</h3>
+
+<p>The <code>dispstr</code> function/method takes a single argument, which may be an array of any size, and returns a single one-line string.
+</p>
+<p>The <code>dispstrs</code> function/method takes a single argument, which may be an array of any size, and returns a <code>cellstr</code> array of exactly the same size as the input. For <code>strs = dispstrs(x)</code>, the string in <code>strs{i}</code> corresponds to the input <code>x(i)</code>.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="#How-dispstr-and-SLF4O-interact" accesskey="1">How dispstr and SLF4O interact</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<span id="How-dispstr-and-SLF4O-interact"></span><div class="header">
+<p>
+Up: <a href="#The-dispstr-interface" accesskey="u" rel="up">The dispstr interface</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="How-dispstr-and-SLF4O-interact-1"></span><h4 class="subsection">3.1.1 How dispstr and SLF4O interact</h4>
+
+<p>When you call the normal (&quot;<code>m</code>&quot;) variants of the logging functions, <code>dispstr()</code> is applied to any inputs which are objects, so they&rsquo;re converted automatically and may be passed as parameters for the <code>%s</code> conversion. (In the normal Octave <code>sprintf</code>, most objects cannot be passed to <code>%s</code>; it results in an error.)
+</p>
+<div class="example">
+<pre class="example">    d = database;
+    logger.info('Database: %s', d);
+</pre></div>
+
+<p>For most Octave-defined objects, this just results in a &quot;<code>m-by-n &lt;classname&gt;</code>&quot; output. (But at least it doesn&rsquo;t raise an error, which is especially problematic when your functions are receiving inputs of the wrong type.) It gets particularly useful when you define custom <code>dispstr</code> overrides so your objects have useful string representations.
+</p>
+
+<hr>
+<span id="Configuration"></span><div class="header">
+<p>
+Next: <a href="#Implementation-notes" accesskey="n" rel="next">Implementation notes</a>, Previous: <a href="#The-dispstr-API" accesskey="p" rel="prev">The dispstr API</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="Configuration-1"></span><h2 class="chapter">4 Configuration</h2>
+
+<p>All the actual logging goes through the Log4j back end; you can configure it as with any Log4j installation. See the Log4j 1.2 documentation (<a href="http://logging.apache.org/log4j/1.2/">http://logging.apache.org/log4j/1.2/</a> for details. (Note: you have to use the old 1.2 series doco, because that&rsquo;s what SLF4O currently ships with, due to a desire to maintain parity with SLF4J, which is constrained by the Log4j version that Matlab ships with.)
+</p>
+<p>The <code>logger.Log4jConfigurator</code> class provides a convenient Octave-friendly interface for configuring Log4j to do basic stuff. It&rsquo;s enough for simple cases. But all the configuration state is passed on the the Log4j back end; none of it is stored in the Octave layer.
+</p>
+
+<hr>
+<span id="Implementation-notes"></span><div class="header">
+<p>
+Next: <a href="#API-Reference" accesskey="n" rel="next">API Reference</a>, Previous: <a href="#Configuration" accesskey="p" rel="prev">Configuration</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="Implementation-notes-1"></span><h2 class="chapter">5 Implementation notes</h2>
+
+<p>I chose Log4j as the back end because that&rsquo;s what SLF4M uses, and I wanted to be maximally compatible with SLF4M.
+SLF4M chose Log4j as the back end because that&rsquo;s what ships with Matlab.
+</p>
+<p>Aside from the <code>dispstr</code> formatting, everything is done purely in terms of the underlying SLF4J interface, so SLF4O is compatible with any other code or tools that use SLF4J or Log4j.
+</p>
+
+<hr>
+<span id="API-Reference"></span><div class="header">
+<p>
+Next: <a href="#Copying" accesskey="n" rel="next">Copying</a>, Previous: <a href="#Implementation-notes" accesskey="p" rel="prev">Implementation notes</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="API-Reference-1"></span><h2 class="chapter">6 API Reference</h2>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="#API-by-Category" accesskey="1">API by Category</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#API-Alphabetically" accesskey="2">API Alphabetically</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<span id="API-by-Category"></span><div class="header">
+<p>
+Next: <a href="#API-Alphabetically" accesskey="n" rel="next">API Alphabetically</a>, Up: <a href="#API-Reference" accesskey="u" rel="up">API Reference</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="API-by-Category-1"></span><h3 class="section">6.1 API by Category</h3>
+<span id="Logging"></span><h4 class="subsection">6.1.1 Logging</h4>
+<dl compact="compact">
+<dt><a href="#logger_002eLogger">logger.Logger</a></dt>
+<dt><a href="#logger_002eLog4jConfigurator">logger.Log4jConfigurator</a></dt>
+<dt><a href="#logger_002edebug">logger.debug</a></dt>
+<dt><a href="#logger_002edebugj">logger.debugj</a></dt>
+<dt><a href="#logger_002eerror">logger.error</a></dt>
+<dt><a href="#logger_002eerrorj">logger.errorj</a></dt>
+<dt><a href="#logger_002einfo">logger.info</a></dt>
+<dt><a href="#logger_002einfoj">logger.infoj</a></dt>
+<dt><a href="#logger_002etrace">logger.trace</a></dt>
+<dt><a href="#logger_002etracej">logger.tracej</a></dt>
+<dt><a href="#logger_002ewarn">logger.warn</a></dt>
+<dt><a href="#logger_002ewarnj">logger.warnj</a></dt>
+<dt><a href="#logger_002einitSLF4O">logger.initSLF4O</a></dt>
+<dt><a href="#logger_002eversion">logger.version</a></dt>
+</dl>
+<span id="Dispstr"></span><h4 class="subsection">6.1.2 Dispstr</h4>
+<dl compact="compact">
+<dt><a href="#dispstr">dispstr</a></dt>
+<dt><a href="#dispstrs">dispstrs</a></dt>
+<dt><a href="#prettyprint">prettyprint</a></dt>
+</dl>
+<span id="Uncategorized"></span><h4 class="subsection">6.1.3 Uncategorized</h4>
+<dl compact="compact">
+<dt><a href="#logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging">logger.logger.Log4jConfigurator.configureBasicConsoleLogging</a></dt>
+<dd><p>Configures log4j to do basic logging to the console
+</p>
+</dd>
+<dt><a href="#logger_002elogger_002eLogger_002egetLogger">logger.logger.Logger.getLogger</a></dt>
+<dd><p>Gets the named Logger.
+</p>
+</dd>
+</dl>
+
+<hr>
+<span id="API-Alphabetically"></span><div class="header">
+<p>
+Previous: <a href="#API-by-Category" accesskey="p" rel="prev">API by Category</a>, Up: <a href="#API-Reference" accesskey="u" rel="up">API Reference</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="API-Alphabetically-1"></span><h3 class="section">6.2 API Alphabetically</h3>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="#dispstr" accesskey="1">dispstr</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#dispstrs" accesskey="2">dispstrs</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002edebug" accesskey="3">logger.debug</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002edebugj" accesskey="4">logger.debugj</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002eerror" accesskey="5">logger.error</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002eerrorj" accesskey="6">logger.errorj</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002einfo" accesskey="7">logger.info</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002einfoj" accesskey="8">logger.infoj</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002einitSLF4O" accesskey="9">logger.initSLF4O</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002eLog4jConfigurator">logger.Log4jConfigurator</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002eLogger">logger.Logger</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging">logger.logger.Log4jConfigurator.configureBasicConsoleLogging</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+		Configures log4j to do basic logging to the console
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002egetLogger">logger.logger.Logger.getLogger</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Gets the named Logger.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002etrace">logger.trace</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002etracej">logger.tracej</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002eversion">logger.version</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002ewarn">logger.warn</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002ewarnj">logger.warnj</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#prettyprint">prettyprint</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<span id="dispstr"></span><div class="header">
+<p>
+Next: <a href="#dispstrs" accesskey="n" rel="next">dispstrs</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="dispstr-1"></span><h4 class="subsection">6.2.1 dispstr</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="dispstrs"></span><div class="header">
+<p>
+Next: <a href="#logger_002edebug" accesskey="n" rel="next">logger.debug</a>, Previous: <a href="#dispstr" accesskey="p" rel="prev">dispstr</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="dispstrs-1"></span><h4 class="subsection">6.2.2 dispstrs</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="logger_002edebug"></span><div class="header">
+<p>
+Next: <a href="#logger_002edebugj" accesskey="n" rel="next">logger.debugj</a>, Previous: <a href="#dispstrs" accesskey="p" rel="prev">dispstrs</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002edebug-1"></span><h4 class="subsection">6.2.3 logger.debug</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="logger_002edebugj"></span><div class="header">
+<p>
+Next: <a href="#logger_002eerror" accesskey="n" rel="next">logger.error</a>, Previous: <a href="#logger_002edebug" accesskey="p" rel="prev">logger.debug</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002edebugj-1"></span><h4 class="subsection">6.2.4 logger.debugj</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="logger_002eerror"></span><div class="header">
+<p>
+Next: <a href="#logger_002eerrorj" accesskey="n" rel="next">logger.errorj</a>, Previous: <a href="#logger_002edebugj" accesskey="p" rel="prev">logger.debugj</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002eerror-1"></span><h4 class="subsection">6.2.5 logger.error</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="logger_002eerrorj"></span><div class="header">
+<p>
+Next: <a href="#logger_002einfo" accesskey="n" rel="next">logger.info</a>, Previous: <a href="#logger_002eerror" accesskey="p" rel="prev">logger.error</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002eerrorj-1"></span><h4 class="subsection">6.2.6 logger.errorj</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="logger_002einfo"></span><div class="header">
+<p>
+Next: <a href="#logger_002einfoj" accesskey="n" rel="next">logger.infoj</a>, Previous: <a href="#logger_002eerrorj" accesskey="p" rel="prev">logger.errorj</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002einfo-1"></span><h4 class="subsection">6.2.7 logger.info</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="logger_002einfoj"></span><div class="header">
+<p>
+Next: <a href="#logger_002einitSLF4O" accesskey="n" rel="next">logger.initSLF4O</a>, Previous: <a href="#logger_002einfo" accesskey="p" rel="prev">logger.info</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002einfoj-1"></span><h4 class="subsection">6.2.8 logger.infoj</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="logger_002einitSLF4O"></span><div class="header">
+<p>
+Next: <a href="#logger_002eLog4jConfigurator" accesskey="n" rel="next">logger.Log4jConfigurator</a>, Previous: <a href="#logger_002einfoj" accesskey="p" rel="prev">logger.infoj</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002einitSLF4O-1"></span><h4 class="subsection">6.2.9 logger.initSLF4O</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="logger_002eLog4jConfigurator"></span><div class="header">
+<p>
+Next: <a href="#logger_002eLogger" accesskey="n" rel="next">logger.Logger</a>, Previous: <a href="#logger_002einitSLF4O" accesskey="p" rel="prev">logger.initSLF4O</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002eLog4jConfigurator-1"></span><h4 class="subsection">6.2.10 logger.Log4jConfigurator</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="logger_002eLogger"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging" accesskey="n" rel="next">logger.logger.Log4jConfigurator.configureBasicConsoleLogging</a>, Previous: <a href="#logger_002eLog4jConfigurator" accesskey="p" rel="prev">logger.Log4jConfigurator</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002eLogger-1"></span><h4 class="subsection">6.2.11 logger.Logger</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="n" rel="next">logger.logger.Logger.getLogger</a>, Previous: <a href="#logger_002eLogger" accesskey="p" rel="prev">logger.Logger</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging-1"></span><h4 class="subsection">6.2.12 logger.logger.Log4jConfigurator.configureBasicConsoleLogging</h4>
+<dl>
+<dt id="index-_0028_0029">Static Method: <em>logger.Log4jConfigurator.configureBasicConsoleLogging</em> <strong>()</strong></dt>
+<dd>
+<p>Configures log4j to do basic logging to the console
+</p>
+<p>This sets up a basic log4j configuration, with log output going to the
+console, and the root logger set to the INFO level.
+</p>
+<p>This method can safely be called multiple times. If there&rsquo;s already an
+appender on the root logger (indicating logging has already been
+configured), it silently does nothing.
+</p>
+</dd></dl>
+
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLog4jConfigurator_002esetRootAppenderPattern" accesskey="1">logger.logger.Log4jConfigurator.setRootAppenderPattern</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLog4jConfigurator_002egetLog4jLevel" accesskey="2">logger.logger.Log4jConfigurator.getLog4jLevel</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLog4jConfigurator_002esetLevels" accesskey="3">logger.logger.Log4jConfigurator.setLevels</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLog4jConfigurator_002eprettyPrintLogConfiguration" accesskey="4">logger.logger.Log4jConfigurator.prettyPrintLogConfiguration</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLog4jConfigurator_002eshowGui" accesskey="5">logger.logger.Log4jConfigurator.showGui</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<span id="logger_002elogger_002eLog4jConfigurator_002esetRootAppenderPattern"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLog4jConfigurator_002egetLog4jLevel" accesskey="n" rel="next">logger.logger.Log4jConfigurator.getLog4jLevel</a>, Up: <a href="#logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging" accesskey="u" rel="up">logger.logger.Log4jConfigurator.configureBasicConsoleLogging</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLog4jConfigurator_002esetRootAppenderPattern-1"></span><h4 class="subsubsection">6.2.12.1 logger.logger.Log4jConfigurator.setRootAppenderPattern</h4>
+
+<dl>
+<dt id="index-_0028pattern_0029">Static Method: <em>logger.Log4jConfigurator.setRootAppenderPattern</em> <strong>(<var>pattern</var>)</strong></dt>
+<dd>
+<p>Sets the pattern on the root appender
+</p>
+<p>This is just a convenience method. Assumes there is a single
+appender on the root logger.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLog4jConfigurator_002egetLog4jLevel"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLog4jConfigurator_002esetLevels" accesskey="n" rel="next">logger.logger.Log4jConfigurator.setLevels</a>, Previous: <a href="#logger_002elogger_002eLog4jConfigurator_002esetRootAppenderPattern" accesskey="p" rel="prev">logger.logger.Log4jConfigurator.setRootAppenderPattern</a>, Up: <a href="#logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging" accesskey="u" rel="up">logger.logger.Log4jConfigurator.configureBasicConsoleLogging</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLog4jConfigurator_002egetLog4jLevel-1"></span><h4 class="subsubsection">6.2.12.2 logger.logger.Log4jConfigurator.getLog4jLevel</h4>
+
+<dl>
+<dt id="index-_0028levelName_0029">Static Method: <em>logger.Log4jConfigurator.getLog4jLevel</em> <strong>(<var>levelName</var>)</strong></dt>
+<dd>
+<p>Gets the log4j Level Java enum value for a named level.
+</p>
+<p><var>levelName</var> is a charvec containing the name of the log level, such as
+<code>'INFO'</code> or <code>'DEBUG'</code>. It may also be one of the special names
+<code>'OFF'</code> or <code>'ALL'</code>.
+</p>
+<p>Returns a Java org.apache.log4j.Level enum object.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLog4jConfigurator_002esetLevels"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLog4jConfigurator_002eprettyPrintLogConfiguration" accesskey="n" rel="next">logger.logger.Log4jConfigurator.prettyPrintLogConfiguration</a>, Previous: <a href="#logger_002elogger_002eLog4jConfigurator_002egetLog4jLevel" accesskey="p" rel="prev">logger.logger.Log4jConfigurator.getLog4jLevel</a>, Up: <a href="#logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging" accesskey="u" rel="up">logger.logger.Log4jConfigurator.configureBasicConsoleLogging</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLog4jConfigurator_002esetLevels-1"></span><h4 class="subsubsection">6.2.12.3 logger.logger.Log4jConfigurator.setLevels</h4>
+
+<dl>
+<dt id="index-_0028levels_0029">Static Method: <em>logger.Log4jConfigurator.setLevels</em> <strong>(<var>levels</var>)</strong></dt>
+<dd>
+<p>Set the logging levels for multiple loggers
+</p>
+<p>logger.Log4jConfigurator.setLevels(levels)
+</p>
+<p>This is a convenience method for setting the logging levels for multiple
+loggers.
+</p>
+<p>The levels input is an n-by-2 cellstr with logger names in column 1 and
+level names in column 2.
+</p>
+<p>Examples:
+</p>
+<div class="example">
+<pre class="example">logger.Log4jConfigurator.setLevels({'root','DEBUG'});
+
+logger.Log4jConfigurator.setLevels({
+    'root'    'INFO'
+    'net.apjanke.logger.swing'  'DEBUG'
+    });
+</pre></div>
+
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLog4jConfigurator_002eprettyPrintLogConfiguration"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLog4jConfigurator_002eshowGui" accesskey="n" rel="next">logger.logger.Log4jConfigurator.showGui</a>, Previous: <a href="#logger_002elogger_002eLog4jConfigurator_002esetLevels" accesskey="p" rel="prev">logger.logger.Log4jConfigurator.setLevels</a>, Up: <a href="#logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging" accesskey="u" rel="up">logger.logger.Log4jConfigurator.configureBasicConsoleLogging</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLog4jConfigurator_002eprettyPrintLogConfiguration-1"></span><h4 class="subsubsection">6.2.12.4 logger.logger.Log4jConfigurator.prettyPrintLogConfiguration</h4>
+
+<dl>
+<dt id="index-_0028_0029-1">Static Method: <em>logger.Log4jConfigurator.prettyPrintLogConfiguration</em> <strong>()</strong></dt>
+<dt id="index-_0028verbose_0029">Static Method: <em>logger.Log4jConfigurator.prettyPrintLogConfiguration</em> <strong>(<var>verbose</var>)</strong></dt>
+<dd>
+<p>Displays the current log configuration to the console.
+</p>
+<p><var>verbose</var> is a logical flag indicating whether verbose mode should be used.
+Defaults to false.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLog4jConfigurator_002eshowGui"></span><div class="header">
+<p>
+Previous: <a href="#logger_002elogger_002eLog4jConfigurator_002eprettyPrintLogConfiguration" accesskey="p" rel="prev">logger.logger.Log4jConfigurator.prettyPrintLogConfiguration</a>, Up: <a href="#logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging" accesskey="u" rel="up">logger.logger.Log4jConfigurator.configureBasicConsoleLogging</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLog4jConfigurator_002eshowGui-1"></span><h4 class="subsubsection">6.2.12.5 logger.logger.Log4jConfigurator.showGui</h4>
+
+<dl>
+<dt id="index-_0028_0029-2">Static Method: <em>logger.Log4jConfigurator.showGui</em> <strong>()</strong></dt>
+<dd>
+<p>Display the Log4j configuration GUI provided by SLF4O.
+</p>
+<p>BROKEN!!!
+</p>
+<p>This tool is currently broken, and will probably crash Octave if you call it.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002egetLogger"></span><div class="header">
+<p>
+Next: <a href="#logger_002etrace" accesskey="n" rel="next">logger.trace</a>, Previous: <a href="#logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging" accesskey="p" rel="prev">logger.logger.Log4jConfigurator.configureBasicConsoleLogging</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002egetLogger-1"></span><h4 class="subsection">6.2.13 logger.logger.Logger.getLogger</h4>
+<dl>
+<dt id="index-logger_002eLogger_002egetLogger">Static Method: <em><var>obj</var> =</em> <strong>logger.Logger.getLogger</strong> <em>(<var>identifier</var>)</em></dt>
+<dd>
+<p>Gets the named Logger.
+</p>
+<p>Returns a logger.Logger object.
+</p>
+</dd></dl>
+
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002eLogger" accesskey="1">logger.logger.Logger.Logger</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002eerror" accesskey="2">logger.logger.Logger.error</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002ewarn" accesskey="3">logger.logger.Logger.warn</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002einfo" accesskey="4">logger.logger.Logger.info</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002edebug" accesskey="5">logger.logger.Logger.debug</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002etrace" accesskey="6">logger.logger.Logger.trace</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002eerrorj" accesskey="7">logger.logger.Logger.errorj</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002ewarnj" accesskey="8">logger.logger.Logger.warnj</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002einfoj" accesskey="9">logger.logger.Logger.infoj</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002edebugj">logger.logger.Logger.debugj</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002etracej">logger.logger.Logger.tracej</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002eisErrorEnabled">logger.logger.Logger.isErrorEnabled</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002eisWarnEnabled">logger.logger.Logger.isWarnEnabled</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002eisInfoEnabled">logger.logger.Logger.isInfoEnabled</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002eisDebugEnabled">logger.logger.Logger.isDebugEnabled</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002eisTraceEnabled">logger.logger.Logger.isTraceEnabled</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="#logger_002elogger_002eLogger_002elistEnabledLevels">logger.logger.Logger.listEnabledLevels</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002eLogger"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002eerror" accesskey="n" rel="next">logger.logger.Logger.error</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002eLogger-1"></span><h4 class="subsubsection">6.2.13.1 logger.logger.Logger.Logger</h4>
+
+<dl>
+<dt id="index-logger_002eLogger">Constructor: <em><var>obj</var> =</em> <strong>logger.Logger</strong> <em>(<var>jLogger</var>)</em></dt>
+<dd>
+<p>Build a new logger object around an SLF4J Logger object.
+</p>
+<p>Generally, you shouldn&rsquo;t call this. Use logger.Logger.getLogger() instead.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002eerror"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002ewarn" accesskey="n" rel="next">logger.logger.Logger.warn</a>, Previous: <a href="#logger_002elogger_002eLogger_002eLogger" accesskey="p" rel="prev">logger.logger.Logger.Logger</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002eerror-1"></span><h4 class="subsubsection">6.2.13.2 logger.logger.Logger.error</h4>
+
+<dl>
+<dt id="index-_0028obj_002c">Method: <em>error</em> <strong>(<var>obj</var>,</strong> <em><var>msg</var>, <var>varargin</var>)</em></dt>
+<dt id="index-_0028obj_002c-1">Method: <em>error</em> <strong>(<var>obj</var>,</strong> <em><var>exception</var>, <var>msg</var>, <var>varargin</var>)</em></dt>
+<dd>
+<p>Log a message at the ERROR level.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002ewarn"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002einfo" accesskey="n" rel="next">logger.logger.Logger.info</a>, Previous: <a href="#logger_002elogger_002eLogger_002eerror" accesskey="p" rel="prev">logger.logger.Logger.error</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002ewarn-1"></span><h4 class="subsubsection">6.2.13.3 logger.logger.Logger.warn</h4>
+
+<dl>
+<dt id="index-_0028obj_002c-2">Method: <em>warn</em> <strong>(<var>obj</var>,</strong> <em><var>msg</var>, <var>varargin</var>)</em></dt>
+<dt id="index-_0028obj_002c-3">Method: <em>warn</em> <strong>(<var>obj</var>,</strong> <em><var>exception</var>, <var>msg</var>, <var>varargin</var>)</em></dt>
+<dd>
+<p>Log a message at the WARN level.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002einfo"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002edebug" accesskey="n" rel="next">logger.logger.Logger.debug</a>, Previous: <a href="#logger_002elogger_002eLogger_002ewarn" accesskey="p" rel="prev">logger.logger.Logger.warn</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002einfo-1"></span><h4 class="subsubsection">6.2.13.4 logger.logger.Logger.info</h4>
+
+<dl>
+<dt id="index-_0028obj_002c-4">Method: <em>info</em> <strong>(<var>obj</var>,</strong> <em><var>msg</var>, <var>varargin</var>)</em></dt>
+<dt id="index-_0028obj_002c-5">Method: <em>info</em> <strong>(<var>obj</var>,</strong> <em><var>exception</var>, <var>msg</var>, <var>varargin</var>)</em></dt>
+<dd>
+<p>Log a message at the INFO level.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002edebug"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002etrace" accesskey="n" rel="next">logger.logger.Logger.trace</a>, Previous: <a href="#logger_002elogger_002eLogger_002einfo" accesskey="p" rel="prev">logger.logger.Logger.info</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002edebug-1"></span><h4 class="subsubsection">6.2.13.5 logger.logger.Logger.debug</h4>
+
+<dl>
+<dt id="index-_0028obj_002c-6">Method: <em>debug</em> <strong>(<var>obj</var>,</strong> <em><var>msg</var>, <var>varargin</var>)</em></dt>
+<dt id="index-_0028obj_002c-7">Method: <em>debug</em> <strong>(<var>obj</var>,</strong> <em><var>exception</var>, <var>msg</var>, <var>varargin</var>)</em></dt>
+<dd>
+<p>Log a message at the DEBUG level.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002etrace"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002eerrorj" accesskey="n" rel="next">logger.logger.Logger.errorj</a>, Previous: <a href="#logger_002elogger_002eLogger_002edebug" accesskey="p" rel="prev">logger.logger.Logger.debug</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002etrace-1"></span><h4 class="subsubsection">6.2.13.6 logger.logger.Logger.trace</h4>
+
+<dl>
+<dt id="index-_0028obj_002c-8">Method: <em>trace</em> <strong>(<var>obj</var>,</strong> <em><var>msg</var>, <var>varargin</var>)</em></dt>
+<dt id="index-_0028obj_002c-9">Method: <em>trace</em> <strong>(<var>obj</var>,</strong> <em><var>exception</var>, <var>msg</var>, <var>varargin</var>)</em></dt>
+<dd>
+<p>Log a message at the TRACE level.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002eerrorj"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002ewarnj" accesskey="n" rel="next">logger.logger.Logger.warnj</a>, Previous: <a href="#logger_002elogger_002eLogger_002etrace" accesskey="p" rel="prev">logger.logger.Logger.trace</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002eerrorj-1"></span><h4 class="subsubsection">6.2.13.7 logger.logger.Logger.errorj</h4>
+
+<dl>
+<dt id="index-_0028obj_002c-10">Method: <em>errorj</em> <strong>(<var>obj</var>,</strong> <em><var>msg</var>, <var>varargin</var>)</em></dt>
+<dd>
+<p>Log a message at the ERROR level, using SLF4J formatting.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002ewarnj"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002einfoj" accesskey="n" rel="next">logger.logger.Logger.infoj</a>, Previous: <a href="#logger_002elogger_002eLogger_002eerrorj" accesskey="p" rel="prev">logger.logger.Logger.errorj</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002ewarnj-1"></span><h4 class="subsubsection">6.2.13.8 logger.logger.Logger.warnj</h4>
+
+<dl>
+<dt id="index-_0028obj_002c-11">Method: <em>warnj</em> <strong>(<var>obj</var>,</strong> <em><var>msg</var>, <var>varargin</var>)</em></dt>
+<dd>
+<p>Log a message at the WARN level, using SLF4J formatting.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002einfoj"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002edebugj" accesskey="n" rel="next">logger.logger.Logger.debugj</a>, Previous: <a href="#logger_002elogger_002eLogger_002ewarnj" accesskey="p" rel="prev">logger.logger.Logger.warnj</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002einfoj-1"></span><h4 class="subsubsection">6.2.13.9 logger.logger.Logger.infoj</h4>
+
+<dl>
+<dt id="index-_0028obj_002c-12">Method: <em>infoj</em> <strong>(<var>obj</var>,</strong> <em><var>msg</var>, <var>varargin</var>)</em></dt>
+<dd>
+<p>Log a message at the INFO level, using SLF4J formatting.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002edebugj"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002etracej" accesskey="n" rel="next">logger.logger.Logger.tracej</a>, Previous: <a href="#logger_002elogger_002eLogger_002einfoj" accesskey="p" rel="prev">logger.logger.Logger.infoj</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002edebugj-1"></span><h4 class="subsubsection">6.2.13.10 logger.logger.Logger.debugj</h4>
+
+<dl>
+<dt id="index-_0028obj_002c-13">Method: <em>debugj</em> <strong>(<var>obj</var>,</strong> <em><var>msg</var>, <var>varargin</var>)</em></dt>
+<dd>
+<p>Log a message at the DEBUG level, using SLF4J formatting.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002etracej"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002eisErrorEnabled" accesskey="n" rel="next">logger.logger.Logger.isErrorEnabled</a>, Previous: <a href="#logger_002elogger_002eLogger_002edebugj" accesskey="p" rel="prev">logger.logger.Logger.debugj</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002etracej-1"></span><h4 class="subsubsection">6.2.13.11 logger.logger.Logger.tracej</h4>
+
+<dl>
+<dt id="index-_0028obj_002c-14">Method: <em>tracej</em> <strong>(<var>obj</var>,</strong> <em><var>msg</var>, <var>varargin</var>)</em></dt>
+<dd>
+<p>Log a message at the TRACE level, using SLF4J formatting.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002eisErrorEnabled"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002eisWarnEnabled" accesskey="n" rel="next">logger.logger.Logger.isWarnEnabled</a>, Previous: <a href="#logger_002elogger_002eLogger_002etracej" accesskey="p" rel="prev">logger.logger.Logger.tracej</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002eisErrorEnabled-1"></span><h4 class="subsubsection">6.2.13.12 logger.logger.Logger.isErrorEnabled</h4>
+
+<dl>
+<dt id="index-isErrorEnabled">Method: <em><var>out</var> =</em> <strong>isErrorEnabled</strong> <em>(<var>obj</var>)</em></dt>
+<dd>
+<p>True if ERROR level logging is enabled for this logger.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002eisWarnEnabled"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002eisInfoEnabled" accesskey="n" rel="next">logger.logger.Logger.isInfoEnabled</a>, Previous: <a href="#logger_002elogger_002eLogger_002eisErrorEnabled" accesskey="p" rel="prev">logger.logger.Logger.isErrorEnabled</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002eisWarnEnabled-1"></span><h4 class="subsubsection">6.2.13.13 logger.logger.Logger.isWarnEnabled</h4>
+
+<dl>
+<dt id="index-isWarnEnabled">Method: <em><var>out</var> =</em> <strong>isWarnEnabled</strong> <em>(<var>obj</var>)</em></dt>
+<dd>
+<p>True if WARN level logging is enabled for this logger.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002eisInfoEnabled"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002eisDebugEnabled" accesskey="n" rel="next">logger.logger.Logger.isDebugEnabled</a>, Previous: <a href="#logger_002elogger_002eLogger_002eisWarnEnabled" accesskey="p" rel="prev">logger.logger.Logger.isWarnEnabled</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002eisInfoEnabled-1"></span><h4 class="subsubsection">6.2.13.14 logger.logger.Logger.isInfoEnabled</h4>
+
+<dl>
+<dt id="index-isInfoEnabled">Method: <em><var>out</var> =</em> <strong>isInfoEnabled</strong> <em>(<var>obj</var>)</em></dt>
+<dd>
+<p>True if INFO level logging is enabled for this logger.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002eisDebugEnabled"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002eisTraceEnabled" accesskey="n" rel="next">logger.logger.Logger.isTraceEnabled</a>, Previous: <a href="#logger_002elogger_002eLogger_002eisInfoEnabled" accesskey="p" rel="prev">logger.logger.Logger.isInfoEnabled</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002eisDebugEnabled-1"></span><h4 class="subsubsection">6.2.13.15 logger.logger.Logger.isDebugEnabled</h4>
+
+<dl>
+<dt id="index-isDebugEnabled">Method: <em><var>out</var> =</em> <strong>isDebugEnabled</strong> <em>(<var>obj</var>)</em></dt>
+<dd>
+<p>True if DEBUG level logging is enabled for this logger.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002eisTraceEnabled"></span><div class="header">
+<p>
+Next: <a href="#logger_002elogger_002eLogger_002elistEnabledLevels" accesskey="n" rel="next">logger.logger.Logger.listEnabledLevels</a>, Previous: <a href="#logger_002elogger_002eLogger_002eisDebugEnabled" accesskey="p" rel="prev">logger.logger.Logger.isDebugEnabled</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002eisTraceEnabled-1"></span><h4 class="subsubsection">6.2.13.16 logger.logger.Logger.isTraceEnabled</h4>
+
+<dl>
+<dt id="index-isTraceEnabled">Method: <em><var>out</var> =</em> <strong>isTraceEnabled</strong> <em>(<var>obj</var>)</em></dt>
+<dd>
+<p>True if TRACE level logging is enabled for this logger.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002elogger_002eLogger_002elistEnabledLevels"></span><div class="header">
+<p>
+Previous: <a href="#logger_002elogger_002eLogger_002eisTraceEnabled" accesskey="p" rel="prev">logger.logger.Logger.isTraceEnabled</a>, Up: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="u" rel="up">logger.logger.Logger.getLogger</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002elogger_002eLogger_002elistEnabledLevels-1"></span><h4 class="subsubsection">6.2.13.17 logger.logger.Logger.listEnabledLevels</h4>
+
+<dl>
+<dt id="index-listEnabledLevels">Method: <em><var>out</var> =</em> <strong>listEnabledLevels</strong> <em>(<var>obj</var>)</em></dt>
+<dd>
+<p>List the levels that are enabled for this logger.
+</p>
+<p>The enabled levels are listed by name.
+</p>
+<p>Returns a cellstr vector or empty.
+</p>
+</dd></dl>
+
+<hr>
+<span id="logger_002etrace"></span><div class="header">
+<p>
+Next: <a href="#logger_002etracej" accesskey="n" rel="next">logger.tracej</a>, Previous: <a href="#logger_002elogger_002eLogger_002egetLogger" accesskey="p" rel="prev">logger.logger.Logger.getLogger</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002etrace-1"></span><h4 class="subsection">6.2.14 logger.trace</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="logger_002etracej"></span><div class="header">
+<p>
+Next: <a href="#logger_002eversion" accesskey="n" rel="next">logger.version</a>, Previous: <a href="#logger_002etrace" accesskey="p" rel="prev">logger.trace</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002etracej-1"></span><h4 class="subsection">6.2.15 logger.tracej</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="logger_002eversion"></span><div class="header">
+<p>
+Next: <a href="#logger_002ewarn" accesskey="n" rel="next">logger.warn</a>, Previous: <a href="#logger_002etracej" accesskey="p" rel="prev">logger.tracej</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002eversion-1"></span><h4 class="subsection">6.2.16 logger.version</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="logger_002ewarn"></span><div class="header">
+<p>
+Next: <a href="#logger_002ewarnj" accesskey="n" rel="next">logger.warnj</a>, Previous: <a href="#logger_002eversion" accesskey="p" rel="prev">logger.version</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002ewarn-1"></span><h4 class="subsection">6.2.17 logger.warn</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="logger_002ewarnj"></span><div class="header">
+<p>
+Next: <a href="#prettyprint" accesskey="n" rel="next">prettyprint</a>, Previous: <a href="#logger_002ewarn" accesskey="p" rel="prev">logger.warn</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="logger_002ewarnj-1"></span><h4 class="subsection">6.2.18 logger.warnj</h4>
+<p><em>Not documented</em>
+</p><hr>
+<span id="prettyprint"></span><div class="header">
+<p>
+Previous: <a href="#logger_002ewarnj" accesskey="p" rel="prev">logger.warnj</a>, Up: <a href="#API-Alphabetically" accesskey="u" rel="up">API Alphabetically</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="prettyprint-1"></span><h4 class="subsection">6.2.19 prettyprint</h4>
+<p><em>Not documented</em>
+</p>
+
+
+<hr>
+<span id="Copying"></span><div class="header">
+<p>
+Previous: <a href="#API-Reference" accesskey="p" rel="prev">API Reference</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
+</div>
+<span id="Copying-1"></span><h2 class="chapter">7 Copying</h2>
+
+
+<span id="Package-Copyright"></span><h3 class="section">7.1 Package Copyright</h3>
+
+<p>SLF4O for Octave is covered by the GNU GPLv3.
+</p>
+<p>All the code in the package is GNU GPLv3.
+</p>
+<span id="Manual-Copyright"></span><h3 class="section">7.2 Manual Copyright</h3>
+
+<p>This manual is for SLF4O, version 0.1.0-SNAPSHOT.
+</p>
+<p>Copyright &copy; 2020 Andrew Janke
+</p>
+<blockquote>
+<p>Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+</p>
+<p>Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the entire
+resulting derived work is distributed under the terms of a permission
+notice identical to this one.
+</p>
+<p>Permission is granted to copy and distribute translations of this manual
+into another language, under the same conditions as for modified versions.
+</p></blockquote>
+
+<hr>
+
+
+
+</body>
+</html>

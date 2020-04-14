@@ -1,7 +1,13 @@
+## -*- texinfo -*-
+## @deftypefn {Function} logger.initSLF4M
+##
+## Initialzie SLF4O
+##
+## This function must be called once before you use SLF4O.
+##
+## @end deftypefn
+
 function initSLF4O
-%INITSLF4O Initialize SLF4O
-%
-% This function must be called once before you use SLF4O.
 
 % This logic depends on the location of this file relative to the inst/
 % dir in the pkg package.

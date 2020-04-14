@@ -1,33 +1,40 @@
+## -*- texinfo -*-
+##
+## @node dispstr
+## @deftypefn {Function} {@var{out} =} dispstr (@var{x})
+## @deftypefnx {Function} {@var{out} =} dispstr (@var{x}, @var{options})
+##
+## This returns a one-line string representing the input value, in a format
+## suitable for inclusion into multi-element output. The output describes the
+## entire input array in a single string (as opposed to dumping all its
+## elements.)
+##
+## The intention is for user-defined classes to override this method, providing
+## customized display of their values.
+##
+## The input x may be a value of any type. The main DISPSTR implementation has
+## support for Matlab built-ins and common types. Other user-defined objects are
+## displayed in a generic "m-by-n <class> array" format.
+##
+## Options may be a struct or an n-by-2 cell array of name/value pairs (names in
+## column 1; values in column 2).
+##
+## Returns a single string as char.
+##
+## Options:
+##   QuoteStrings  - Put scalar strings in quotes.
+##
+## Examples:
+## @example
+##   dispstr(magic(3))
+## @end example
+##
+## See also:
+## DISPSTRS, SPRINTFDS
+##
+## @end deftypefn
+
 function out = dispstr(x, options)
-%DISPSTR Display string for arrays
-%
-% out = dispstr(x, options)
-%
-% This returns a one-line string representing the input value, in a format
-% suitable for inclusion into multi-element output. The output describes the
-% entire input array in a single string (as opposed to dumping all its
-% elements.)
-%
-% The intention is for user-defined classes to override this method, providing
-% customized display of their values.
-%
-% The input x may be a value of any type. The main DISPSTR implementation has
-% support for Matlab built-ins and common types. Other user-defined objects are
-% displayed in a generic "m-by-n <class> array" format.
-%
-% Options may be a struct or an n-by-2 cell array of name/value pairs (names in
-% column 1; values in column 2).
-%
-% Returns a single string as char.
-%
-% Options:
-%   QuoteStrings  - Put scalar strings in quotes.
-%
-% Examples:
-%   dispstr(magic(3))
-%
-% See also:
-% DISPSTRS, SPRINTFDS
 
 if nargin < 2;  options = [];  end
 options = parseOpts(options, {'QuoteStrings',false});

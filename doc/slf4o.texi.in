@@ -1,0 +1,317 @@
+\input texinfo    @c -*-texinfo-*-
+
+@c %**start of header
+
+@set VERSION %%%%PACKAGE_VERSION%%%%
+
+@setfilename slf40.info
+@settitle SLF4O v@value{VERSION}
+@documentencoding UTF-8
+
+@c %**end of header
+
+@copying
+This manual is for SLF4O, version @value{VERSION}.
+
+Copyright @copyright{} 2020 Andrew Janke
+
+@quotation
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the entire
+resulting derived work is distributed under the terms of a permission
+notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the same conditions as for modified versions.
+@end quotation
+@end copying
+
+@documentdescription
+User manual for SLF4O for Octave.
+@end documentdescription
+
+@titlepage
+@title  SLF4O
+@subtitle version @value{VERSION}, %%%%PACKAGE_DATE_YEARMONTH%%%%
+@author Andrew Janke
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@shortcontents
+@contents
+
+
+@ifnottex
+@node Top, Setup
+@top SLF4O
+
+This manual is for SLF4O, version @value{VERSION}.
+@end ifnottex
+
+@menu
+* Setup::
+* API::
+* The dispstr API::
+* Configuration::
+* Implementation notes::
+* API Reference::
+* Copying::
+@end menu
+
+@node Setup
+@chapter Setup
+
+To use SLF4O in your code:
+
+1. Install and load the SLF4O package using Octave's @code{pkg} command
+
+@code{pkg install https://github.com/apjanke/octave-slf4o/archive/master.zip}
+
+2. Load the SLF4O package in your Octave session
+
+@code{pkg load slf4o}
+
+3. Call @code{logger.initSLF4O} to initialize the library before doing any logging calls
+
+4. Add calls to the @code{logger.*} functions in your code
+
+@node API
+@chapter API
+
+SLF4O provides:
+
+@itemize
+@item A set of logging functions to log events at various levels. This includes Regular and "@code{j}" variants for sprintf-style or SLF4J-style formatting.
+@item A Logger class for doing logging with more control over its behavior.
+@item A Log4j configurator tool and GUI.
+@item @code{dispstr}, a customizable string-conversion API.
+@end itemize
+
+All the code is in the @code{+logger} package. I chose a short, readable package name because if you're using logging, it'll show up a lot in your code.
+
+@node Logging functions
+@section Logging functions
+
+Each logging level has a corresponding @code{logger.*} function and "J Variant" function that you can call to emit a log message at that level.
+
+@multitable @columnfractions .33 .33 .33
+@headitem Level @tab Function @tab J Variant
+@item @code{ERROR}
+@tab @code{logger.error}
+@tab @code{logger.errorj}
+@item @code{WARNING}
+@tab @code{logger.warn}
+@tab @code{logger.warnj}
+@item @code{INFO}
+@tab @code{logger.info}
+@tab @code{logger.infoj}
+@item @code{DEBUG}
+@tab @code{logger.debug}
+@tab @code{logger.debugj}
+@item @code{TRACE}
+@tab @code{logger.trace}
+@tab @code{logger.tracej}
+@end multitable
+
+The logging levels are predefined. They cannot be customized. This is a design decision made to keep the API simple and performant.
+
+@node Calling logging functions
+@subsection Calling logging functions
+
+In your code, put calls to @code{logger.info(...)}, @code{logger.debug(...)}, and so on, as appropriate.
+
+@example
+    ...
+    logger.info('Working on item %d of %d: %s', i, n, description);
+    logger.debug('Intermediate value: %f', someDoubleValue);
+    ...
+@end example
+
+@node Regular and "j" variants
+@subsection Regular and "j" variants
+
+The regular ("m") versions of the logging functions take @code{fprintf}-style formatting and arguments, with @code{%s}/@code{%f}/@code{%d}/etc placeholders. These calls look like normal Octave @code{fprintf()} calls. The argument conversion and formatting is done at the Octave level before the message is passed along to the SLF4J Java library. These are the functions you should usually be using.
+
+There are also "@code{j}" variants ("@code{j}" is for "Java") of all the the logging functions which use SLF4J style formatting. These use "@{@}" as the placeholders, and the arguments are passed down to the SLF4J Java layer to be converted there. These variants are useful if you're working with actual Java objects in your Octave code, and you want Java to handle the type conversion. In the "@code{j}" variants, all the input arguments are converted to Java objects using Octave's default auto-conversion.
+
+Some Octave objects may not convert to Java objects at all, so you'll get errors when trying to use the "@code{j}" variants with them.
+
+@example
+>> d = database;
+>> logger.infoj('My database: @{@}', d)
+No method 'info' with matching signature found for class 'org.slf4j.impl.Log4jLoggerAdapter'.
+Error in logger.Logger/infoj (line 146)
+        this.jLogger.info(msg, varargin@{:@});
+Error in loggerCallImpl (line 69)
+                logger.infoj(msg, args@{:@});
+Error in logger.infoj (line 13)
+loggerCallImpl('info', msg, varargin, 'j');
+@end example
+
+To avoid this, use the regular variants.
+
+In both cases, the formatting and conversion is done lazily: if the logger is not enabled at the level you are logging the event, the function returns without doing the conversion. So you only pay the cost of the @code{sprintf()} or Java conversion and formatting if the logger is enabled.
+
+@node Logger names
+@subsection Logger names
+
+The logging functions in @code{+logger} use the caller's class or function name as the logger name. (This is in line with the Java convention of using the fully-qualified class name as the logger name.) This is accomplished with a trick using @code{dbstack}, looking back up the call stack to see who invoked it.
+
+You can use anything for a logger name; if no logger of that name exists, one is created automatically. Logger names are arranged in a hierarchy using dot-qualified prefixes, like package names in Java or Octave. For example, if you have the following loggers:
+
+@itemize
+@item @code{foo.Thing}
+@item @code{foo.bar.Thing}
+@item @code{foo.bar.OtherThing}
+@item @code{foo.bar.baz.Whatever}
+@end itemize
+
+Then:
+
+@itemize
+@item All these loggers are children of the logger @code{foo}
+@item @code{foo.bar.Thing} and @code{foo.bar.OtherThing} are children of @code{foo.bar}, which in turn is a child of @code{foo}.
+@item @code{foo.bar.baz.Whatever} is a child of @code{foo.bar.baz}, which is a child of @code{foo.bar}, which is a child of @code{foo}.
+@end itemize
+
+@node The Logger object
+@subsubsection The Logger object
+
+You can also use the object-oriented @code{logger.Logger} API directly. This allows you to set custom logger names. It'll also be a bit faster, because it doesn't have to spend time extracting the caller name from the call stack. To use the Logger object directly, get a logger object by calling @code{logger.Logger.getLogger(name)} where @code{name} is a string holding the name of the logger you want to use. 
+
+@example
+logger = logger.Logger.getLogger('foo.bar.baz.MyThing');
+logger.info('Something happened');
+@end example
+
+If you use @code{logger.Logger} in object-oriented Octave code, I recommend you do it like this, which looks like the SLFJ Java conventions.
+
+@example
+classdef CallingLoggerDirectlyExample
+
+    properties (Constant, Access=private)
+        log = logger.Logger.getLogger('foo.bar.baz.qux.MyLoggerID');
+    end
+
+    methods
+        function hello(this)
+            this.log.info('Hello, world!');
+        end
+
+        function doWork(this)
+            label = 'thingy';
+            x = 1 + 2;
+            timestamp = datetime;
+            this.log.debug('Calculation result: label=%s, x=%f at %s', label, x, timestamp);
+         end
+    end
+
+end
+@end example
+
+Even though @code{log} is a @code{Constant} (static) property, I like to call it via @code{this} because it's more concise, and then you can copy and paste your code that makes logging calls between classes. Make the @code{log} property @code{private} so you can have @code{log} properties defined in your subclasses, too; they may want to use different IDs.
+
+
+@node The dispstr API
+@chapter The dispstr API
+
+In addition to the SLF4J adapter layer, SLF4O provides a new API for generic value formatting and customizing the display of user-defined objects. This consists of a pair of functions, @code{dispstr} and @code{dispstrs}. They take values of any type and convert them to either a single string, or an array of strings corresponding to the input array's elements.
+
+This is the equivalent of Java's @code{toString()} method, which is defined for almost everything and customized extensively. (Well, really it's equivalent to Java's @code{""+x} string concatenation operation, which really is defined for everything.)
+
+@example
+    str = dispstr(x)     % Returns char string
+    strs = dispstrs(x)   % Returns cellstr array
+@end example
+
+The input @code{x} may be *any* type.
+
+Normally when writing a library, I avoid defining any global functions, to avoid polluting the shared namespace. But @code{dispstr} and @code{dispstrs} *must* be global functions, because they are polymorphic over all input types, including those which are themselves unaware of @code{dispstr}.
+
+This provides an extension point for defining custom string conversions for your own user-defined classes. You can override @code{dispstr} and @code{dispstrs} in your classes, and SLF4O will recognize it. I find this is useful for other string formatting, too.
+
+For uniformity, if you define @code{dispstr} in a class, I recommend that you override @code{disp} to make use of it. And you'll typically want to make @code{dispstr} and @code{dispstrs} consistent.
+
+@example
+    function disp(this)
+        disp(dispstr(this));
+    end
+
+    % Standard implementation of dispstr
+    function out = dispstr(this)
+        if isscalar(this)
+            strs = dispstrs(this);
+            out = strs@{1@};
+        else
+            out = sprintf('%s %s', size2str(size(this)), class(this));
+        end
+    end
+@end example
+
+As a convenience, there is a @code{logger.Displayable} mix-in class which takes care of this boilerplate for you. It provides standard implementations of @code{disp} and @code{dispstr} in terms of @code{dispstrs}. If you inherit from @code{logger.Displayable}, you only need to define @code{dispstrs}.
+
+@node The dispstr interface
+@section The dispstr interface
+
+The @code{dispstr} function/method takes a single argument, which may be an array of any size, and returns a single one-line string.
+
+The @code{dispstrs} function/method takes a single argument, which may be an array of any size, and returns a @code{cellstr} array of exactly the same size as the input. For @code{strs = dispstrs(x)}, the string in @code{strs@{i@}} corresponds to the input @code{x(i)}.
+
+@node How dispstr and SLF4O interact
+@subsection How dispstr and SLF4O interact
+
+When you call the normal ("@code{m}") variants of the logging functions, @code{dispstr()} is applied to any inputs which are objects, so they're converted automatically and may be passed as parameters for the @code{%s} conversion. (In the normal Octave @code{sprintf}, most objects cannot be passed to @code{%s}; it results in an error.)
+
+@example
+    d = database;
+    logger.info('Database: %s', d);
+@end example
+
+For most Octave-defined objects, this just results in a "@code{m-by-n <classname>}" output. (But at least it doesn't raise an error, which is especially problematic when your functions are receiving inputs of the wrong type.) It gets particularly useful when you define custom @code{dispstr} overrides so your objects have useful string representations.
+
+
+@node Configuration
+@chapter Configuration
+
+All the actual logging goes through the Log4j back end; you can configure it as with any Log4j installation. See the Log4j 1.2 documentation (@url{http://logging.apache.org/log4j/1.2/} for details. (Note: you have to use the old 1.2 series doco, because that's what SLF4O currently ships with, due to a desire to maintain parity with SLF4J, which is constrained by the Log4j version that Matlab ships with.)
+
+The @code{logger.Log4jConfigurator} class provides a convenient Octave-friendly interface for configuring Log4j to do basic stuff. It's enough for simple cases. But all the configuration state is passed on the the Log4j back end; none of it is stored in the Octave layer.
+
+
+@node Implementation notes
+@chapter Implementation notes
+
+I chose Log4j as the back end because that's what SLF4M uses, and I wanted to be maximally compatible with SLF4M.
+SLF4M chose Log4j as the back end because that's what ships with Matlab.
+
+Aside from the @code{dispstr} formatting, everything is done purely in terms of the underlying SLF4J interface, so SLF4O is compatible with any other code or tools that use SLF4J or Log4j.
+
+
+@node API Reference
+@chapter API Reference
+
+@REFERENCE_SECTION(slf4o)
+
+
+
+@node Copying
+@chapter Copying
+
+
+@section Package Copyright
+
+SLF4O for Octave is covered by the GNU GPLv3.
+
+All the code in the package is GNU GPLv3.
+
+@section Manual Copyright
+
+@insertcopying
+
+@bye

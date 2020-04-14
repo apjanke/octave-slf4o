@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+    <namespace>octave.community.slf4o</namespace>
+    <virtualFolder>doc</virtualFolder>
+    <filterSection>
+        <toc>
+            <section title="SLF4O" ref="html/index.html">
+                <section title="Setup" ref="html/Setup.html">
+                </section>
+                <section title="API" ref="html/API.html">
+                    <section title="Logging functions" ref="html/Logging-functions.html">
+                        <section title="Calling logging functions" ref="html/Calling-logging-functions.html">
+                        </section>
+                        <section title="Regular and "j" variants" ref="html/Regular-and-"j"-variants.html">
+                        </section>
+                        <section title="Logger names" ref="html/Logger-names.html">
+                            <section title="The Logger object" ref="html/The-Logger-object.html">
+                            </section>
+                        </section>
+                    </section>
+                </section>
+                <section title="The dispstr API" ref="html/The-dispstr-API.html">
+                    <section title="The dispstr interface" ref="html/The-dispstr-interface.html">
+                        <section title="How dispstr and SLF4O interact" ref="html/How-dispstr-and-SLF4O-interact.html">
+                        </section>
+                    </section>
+                </section>
+                <section title="Configuration" ref="html/Configuration.html">
+                </section>
+                <section title="Implementation notes" ref="html/Implementation-notes.html">
+                </section>
+                <section title="API Reference" ref="html/API-Reference.html">
+                    <section title="API by Category" ref="html/API-by-Category.html">
+                    </section>
+                    <section title="API Alphabetically" ref="html/API-Alphabetically.html">
+                        <section title="dispstr" ref="html/dispstr.html">
+                        </section>
+                        <section title="dispstrs" ref="html/dispstrs.html">
+                        </section>
+                        <section title="logger.debug" ref="html/logger_002edebug.html">
+                        </section>
+                        <section title="logger.debugj" ref="html/logger_002edebugj.html">
+                        </section>
+                        <section title="logger.error" ref="html/logger_002eerror.html">
+                        </section>
+                        <section title="logger.errorj" ref="html/logger_002eerrorj.html">
+                        </section>
+                        <section title="logger.info" ref="html/logger_002einfo.html">
+                        </section>
+                        <section title="logger.infoj" ref="html/logger_002einfoj.html">
+                        </section>
+                        <section title="logger.initSLF4O" ref="html/logger_002einitSLF4O.html">
+                        </section>
+                        <section title="logger.Log4jConfigurator" ref="html/logger_002eLog4jConfigurator.html">
+                        </section>
+                        <section title="logger.Logger" ref="html/logger_002eLogger.html">
+                        </section>
+                        <section title="logger.logger.Log4jConfigurator.configureBasicConsoleLogging" ref="html/logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging.html">
+                            <section title="logger.logger.Log4jConfigurator.setRootAppenderPattern" ref="html/logger_002elogger_002eLog4jConfigurator_002esetRootAppenderPattern.html">
+                            </section>
+                            <section title="logger.logger.Log4jConfigurator.getLog4jLevel" ref="html/logger_002elogger_002eLog4jConfigurator_002egetLog4jLevel.html">
+                            </section>
+                            <section title="logger.logger.Log4jConfigurator.setLevels" ref="html/logger_002elogger_002eLog4jConfigurator_002esetLevels.html">
+                            </section>
+                            <section title="logger.logger.Log4jConfigurator.prettyPrintLogConfiguration" ref="html/logger_002elogger_002eLog4jConfigurator_002eprettyPrintLogConfiguration.html">
+                            </section>
+                            <section title="logger.logger.Log4jConfigurator.showGui" ref="html/logger_002elogger_002eLog4jConfigurator_002eshowGui.html">
+                            </section>
+                        </section>
+                        <section title="logger.logger.Logger.getLogger" ref="html/logger_002elogger_002eLogger_002egetLogger.html">
+                            <section title="logger.logger.Logger.Logger" ref="html/logger_002elogger_002eLogger_002eLogger.html">
+                            </section>
+                            <section title="logger.logger.Logger.error" ref="html/logger_002elogger_002eLogger_002eerror.html">
+                            </section>
+                            <section title="logger.logger.Logger.warn" ref="html/logger_002elogger_002eLogger_002ewarn.html">
+                            </section>
+                            <section title="logger.logger.Logger.info" ref="html/logger_002elogger_002eLogger_002einfo.html">
+                            </section>
+                            <section title="logger.logger.Logger.debug" ref="html/logger_002elogger_002eLogger_002edebug.html">
+                            </section>
+                            <section title="logger.logger.Logger.trace" ref="html/logger_002elogger_002eLogger_002etrace.html">
+                            </section>
+                            <section title="logger.logger.Logger.errorj" ref="html/logger_002elogger_002eLogger_002eerrorj.html">
+                            </section>
+                            <section title="logger.logger.Logger.warnj" ref="html/logger_002elogger_002eLogger_002ewarnj.html">
+                            </section>
+                            <section title="logger.logger.Logger.infoj" ref="html/logger_002elogger_002eLogger_002einfoj.html">
+                            </section>
+                            <section title="logger.logger.Logger.debugj" ref="html/logger_002elogger_002eLogger_002edebugj.html">
+                            </section>
+                            <section title="logger.logger.Logger.tracej" ref="html/logger_002elogger_002eLogger_002etracej.html">
+                            </section>
+                            <section title="logger.logger.Logger.isErrorEnabled" ref="html/logger_002elogger_002eLogger_002eisErrorEnabled.html">
+                            </section>
+                            <section title="logger.logger.Logger.isWarnEnabled" ref="html/logger_002elogger_002eLogger_002eisWarnEnabled.html">
+                            </section>
+                            <section title="logger.logger.Logger.isInfoEnabled" ref="html/logger_002elogger_002eLogger_002eisInfoEnabled.html">
+                            </section>
+                            <section title="logger.logger.Logger.isDebugEnabled" ref="html/logger_002elogger_002eLogger_002eisDebugEnabled.html">
+                            </section>
+                            <section title="logger.logger.Logger.isTraceEnabled" ref="html/logger_002elogger_002eLogger_002eisTraceEnabled.html">
+                            </section>
+                            <section title="logger.logger.Logger.listEnabledLevels" ref="html/logger_002elogger_002eLogger_002elistEnabledLevels.html">
+                            </section>
+                        </section>
+                        <section title="logger.trace" ref="html/logger_002etrace.html">
+                        </section>
+                        <section title="logger.tracej" ref="html/logger_002etracej.html">
+                        </section>
+                        <section title="logger.version" ref="html/logger_002eversion.html">
+                        </section>
+                        <section title="logger.warn" ref="html/logger_002ewarn.html">
+                        </section>
+                        <section title="logger.warnj" ref="html/logger_002ewarnj.html">
+                        </section>
+                        <section title="prettyprint" ref="html/prettyprint.html">
+                        </section>
+                    </section>
+                </section>
+                <section title="Copying" ref="html/Copying.html">
+                </section>
+            <section title="Entire Manual in One Page" ref="slf4o.html"/>
+        </section>
+        </toc>
+        <keywords>
+            <keyword name="logger.logger.Log4jConfigurator.configureBasicConsoleLogging" id="logger.logger.Log4jConfigurator.configureBasicConsoleLogging" ref="html/logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging.html"/>
+            <keyword name="logger.logger.Log4jConfigurator.getLog4jLevel" id="logger.logger.Log4jConfigurator.getLog4jLevel" ref="html/logger_002elogger_002eLog4jConfigurator_002egetLog4jLevel.html"/>
+            <keyword name="logger.logger.Log4jConfigurator.prettyPrintLogConfiguration" id="logger.logger.Log4jConfigurator.prettyPrintLogConfiguration" ref="html/logger_002elogger_002eLog4jConfigurator_002eprettyPrintLogConfiguration.html"/>
+            <keyword name="logger.logger.Log4jConfigurator.setLevels" id="logger.logger.Log4jConfigurator.setLevels" ref="html/logger_002elogger_002eLog4jConfigurator_002esetLevels.html"/>
+            <keyword name="logger.logger.Log4jConfigurator.setRootAppenderPattern" id="logger.logger.Log4jConfigurator.setRootAppenderPattern" ref="html/logger_002elogger_002eLog4jConfigurator_002esetRootAppenderPattern.html"/>
+            <keyword name="logger.logger.Log4jConfigurator.showGui" id="logger.logger.Log4jConfigurator.showGui" ref="html/logger_002elogger_002eLog4jConfigurator_002eshowGui.html"/>
+            <keyword name="logger.logger.Logger.Logger" id="logger.logger.Logger.Logger" ref="html/logger_002elogger_002eLogger_002eLogger.html"/>
+            <keyword name="logger.logger.Logger.debug" id="logger.logger.Logger.debug" ref="html/logger_002elogger_002eLogger_002edebug.html"/>
+            <keyword name="logger.logger.Logger.debugj" id="logger.logger.Logger.debugj" ref="html/logger_002elogger_002eLogger_002edebugj.html"/>
+            <keyword name="logger.logger.Logger.error" id="logger.logger.Logger.error" ref="html/logger_002elogger_002eLogger_002eerror.html"/>
+            <keyword name="logger.logger.Logger.errorj" id="logger.logger.Logger.errorj" ref="html/logger_002elogger_002eLogger_002eerrorj.html"/>
+            <keyword name="logger.logger.Logger.getLogger" id="logger.logger.Logger.getLogger" ref="html/logger_002elogger_002eLogger_002egetLogger.html"/>
+            <keyword name="logger.logger.Logger.info" id="logger.logger.Logger.info" ref="html/logger_002elogger_002eLogger_002einfo.html"/>
+            <keyword name="logger.logger.Logger.infoj" id="logger.logger.Logger.infoj" ref="html/logger_002elogger_002eLogger_002einfoj.html"/>
+            <keyword name="logger.logger.Logger.isDebugEnabled" id="logger.logger.Logger.isDebugEnabled" ref="html/logger_002elogger_002eLogger_002eisDebugEnabled.html"/>
+            <keyword name="logger.logger.Logger.isErrorEnabled" id="logger.logger.Logger.isErrorEnabled" ref="html/logger_002elogger_002eLogger_002eisErrorEnabled.html"/>
+            <keyword name="logger.logger.Logger.isInfoEnabled" id="logger.logger.Logger.isInfoEnabled" ref="html/logger_002elogger_002eLogger_002eisInfoEnabled.html"/>
+            <keyword name="logger.logger.Logger.isTraceEnabled" id="logger.logger.Logger.isTraceEnabled" ref="html/logger_002elogger_002eLogger_002eisTraceEnabled.html"/>
+            <keyword name="logger.logger.Logger.isWarnEnabled" id="logger.logger.Logger.isWarnEnabled" ref="html/logger_002elogger_002eLogger_002eisWarnEnabled.html"/>
+            <keyword name="logger.logger.Logger.listEnabledLevels" id="logger.logger.Logger.listEnabledLevels" ref="html/logger_002elogger_002eLogger_002elistEnabledLevels.html"/>
+            <keyword name="logger.logger.Logger.trace" id="logger.logger.Logger.trace" ref="html/logger_002elogger_002eLogger_002etrace.html"/>
+            <keyword name="logger.logger.Logger.tracej" id="logger.logger.Logger.tracej" ref="html/logger_002elogger_002eLogger_002etracej.html"/>
+            <keyword name="logger.logger.Logger.warn" id="logger.logger.Logger.warn" ref="html/logger_002elogger_002eLogger_002ewarn.html"/>
+            <keyword name="logger.logger.Logger.warnj" id="logger.logger.Logger.warnj" ref="html/logger_002elogger_002eLogger_002ewarnj.html"/>
+        </keywords>
+        <files>
+            <file>slf4o.html</file>
+            <file>html/Copying.html</file>
+            <file>html/prettyprint.html</file>
+            <file>html/logger_002ewarnj.html</file>
+            <file>html/logger_002ewarn.html</file>
+            <file>html/logger_002eversion.html</file>
+            <file>html/logger_002etracej.html</file>
+            <file>html/logger_002etrace.html</file>
+            <file>html/logger_002elogger_002eLogger_002elistEnabledLevels.html</file>
+            <file>html/logger_002elogger_002eLogger_002eisTraceEnabled.html</file>
+            <file>html/logger_002elogger_002eLogger_002eisDebugEnabled.html</file>
+            <file>html/logger_002elogger_002eLogger_002eisInfoEnabled.html</file>
+            <file>html/logger_002elogger_002eLogger_002eisWarnEnabled.html</file>
+            <file>html/logger_002elogger_002eLogger_002eisErrorEnabled.html</file>
+            <file>html/logger_002elogger_002eLogger_002etracej.html</file>
+            <file>html/logger_002elogger_002eLogger_002edebugj.html</file>
+            <file>html/logger_002elogger_002eLogger_002einfoj.html</file>
+            <file>html/logger_002elogger_002eLogger_002ewarnj.html</file>
+            <file>html/logger_002elogger_002eLogger_002eerrorj.html</file>
+            <file>html/logger_002elogger_002eLogger_002etrace.html</file>
+            <file>html/logger_002elogger_002eLogger_002edebug.html</file>
+            <file>html/logger_002elogger_002eLogger_002einfo.html</file>
+            <file>html/logger_002elogger_002eLogger_002ewarn.html</file>
+            <file>html/logger_002elogger_002eLogger_002eerror.html</file>
+            <file>html/logger_002elogger_002eLogger_002eLogger.html</file>
+            <file>html/logger_002elogger_002eLogger_002egetLogger.html</file>
+            <file>html/logger_002elogger_002eLog4jConfigurator_002eshowGui.html</file>
+            <file>html/logger_002elogger_002eLog4jConfigurator_002eprettyPrintLogConfiguration.html</file>
+            <file>html/logger_002elogger_002eLog4jConfigurator_002esetLevels.html</file>
+            <file>html/logger_002elogger_002eLog4jConfigurator_002egetLog4jLevel.html</file>
+            <file>html/logger_002elogger_002eLog4jConfigurator_002esetRootAppenderPattern.html</file>
+            <file>html/logger_002elogger_002eLog4jConfigurator_002econfigureBasicConsoleLogging.html</file>
+            <file>html/logger_002eLogger.html</file>
+            <file>html/logger_002eLog4jConfigurator.html</file>
+            <file>html/logger_002einitSLF4O.html</file>
+            <file>html/logger_002einfoj.html</file>
+            <file>html/logger_002einfo.html</file>
+            <file>html/logger_002eerrorj.html</file>
+            <file>html/logger_002eerror.html</file>
+            <file>html/logger_002edebugj.html</file>
+            <file>html/logger_002edebug.html</file>
+            <file>html/dispstrs.html</file>
+            <file>html/dispstr.html</file>
+            <file>html/API-Alphabetically.html</file>
+            <file>html/API-by-Category.html</file>
+            <file>html/API-Reference.html</file>
+            <file>html/Implementation-notes.html</file>
+            <file>html/Configuration.html</file>
+            <file>html/How-dispstr-and-SLF4O-interact.html</file>
+            <file>html/The-dispstr-interface.html</file>
+            <file>html/The-dispstr-API.html</file>
+            <file>html/The-Logger-object.html</file>
+            <file>html/Logger-names.html</file>
+            <file>html/Regular-and-"j"-variants.html</file>
+            <file>html/Calling-logging-functions.html</file>
+            <file>html/Logging-functions.html</file>
+            <file>html/API.html</file>
+            <file>html/Setup.html</file>
+            <file>html/index.html</file>
+        </files>
+    </filterSection>
+</QtHelpProject>
+

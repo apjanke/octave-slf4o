@@ -1,27 +1,42 @@
+## -*- texinfo -*-
+##
+## @node mustBeA
+## @deftypefn {Function} mustBeA (@var{value}, @var{type})
+##
+## Validate that an input is of a particular data type.
+##
+## Validates that the input Value is of the specified Type or a
+## subtype. If Value is not of Type, an error is raised. If Value is
+## of Type, does nothing and returns.
+##
+## Value is the value to validates the type of. It may be anything. If
+## you call it using a variable (as opposed to a longer expression),
+## the variable name is included in any error messages.
+##
+## Type (char) is the name of the type that Value must be. A type
+## name may be one of:
+##   * A class, such as 'double', 'cell', or 'containers.Map'
+##   * One of the special SLF4O pseudotypes:
+##       cellstr
+##       numeric
+##       object
+##       any
+##
+## Note: The cellstr pseudotype is nontrivial to check for, as it
+## must call iscellstr() and check all cell contents.
+##
+## Examples:
+##
+## @example
+## function foo(x, someStrings)
+##   mustBeA(x, 'double');
+##   mustBeA(someStrings, 'cellstr');
+## endfunction
+## @end example
+##
+## @end deftypefn
+
 function mustBeA(value, type)
-%MUSTBETYPE Validate that an input is of a particular data type
-%
-% MUSTBETYPE(value, type)
-%
-% Validates that the input Value is of the specified Type or a
-% subtype. If Value is not of Type, an error is raised. If Value is
-% of Type, does nothing and returns.
-%
-% Value is the value to validates the type of. It may be anything. If
-% you call it using a variable (as opposed to a longer expression),
-% the variable name is included in any error messages.
-%
-% Type (char) is the name of the type that Value must be. A type
-% name may be one of:
-%   * A class, such as 'double', 'cell', or 'containers.Map'
-%   * One of the special SLF4O pseudotypes:
-%       cellstr
-%       numeric
-%       object
-%       any
-%
-% Note: The cellstr pseudotype is nontrivial to check for, as it
-% must call iscellstr() and check all cell contents.
 
 % Avoid infinite recursion
 assert(ischar(type), 'slf4m:InvalidInput',...
