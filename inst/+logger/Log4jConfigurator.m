@@ -85,7 +85,7 @@ classdef Log4jConfigurator
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Log4jConfigurator.setRootAppenderPattern
+        ## @node Log4jConfigurator.setRootAppenderPattern
         ## @deftypefn {Static Method} logger.Log4jConfigurator.setRootAppenderPattern (@var{pattern})
         ##
         ## Sets the pattern on the root appender
@@ -102,7 +102,7 @@ classdef Log4jConfigurator
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Log4jConfigurator.getLog4jLevel
+        ## @node Log4jConfigurator.getLog4jLevel
         ## @deftypefn {Static Method} logger.Log4jConfigurator.getLog4jLevel (@var{levelName})
         ##
         ## Gets the log4j Level Java enum value for a named level.
@@ -124,7 +124,7 @@ classdef Log4jConfigurator
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Log4jConfigurator.setLevels
+        ## @node Log4jConfigurator.setLevels
         ## @deftypefn {Static Method} logger.Log4jConfigurator.setLevels (@var{levels})
         ##
         ## Set the logging levels for multiple loggers
@@ -159,7 +159,7 @@ classdef Log4jConfigurator
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Log4jConfigurator.prettyPrintLogConfiguration
+        ## @node Log4jConfigurator.prettyPrintLogConfiguration
         ## @deftypefn {Static Method} logger.Log4jConfigurator.prettyPrintLogConfiguration ()
         ## @deftypefnx {Static Method} logger.Log4jConfigurator.prettyPrintLogConfiguration (@var{verbose})
         ##
@@ -232,7 +232,7 @@ classdef Log4jConfigurator
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Log4jConfigurator.showGui
+        ## @node Log4jConfigurator.showGui
         ## @deftypefn {Static Method} logger.Log4jConfigurator.showGui ()
         ##
         ## Display the Log4j configuration GUI provided by SLF4O.

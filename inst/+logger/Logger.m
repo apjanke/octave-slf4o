@@ -72,7 +72,7 @@ classdef Logger
     
     methods (Static)
         ## -*- texinfo -*-
-        ## @node logger.Logger.getLogger
+        ## @node Logger.getLogger
         ## @deftypefn {Static Method} {@var{obj} =} logger.Logger.getLogger (@var{identifier})
         ##
         ## Gets the named Logger.
@@ -89,7 +89,7 @@ classdef Logger
     
     methods
         ## -*- texinfo -*-
-        ## @node logger.Logger.Logger
+        ## @node Logger.Logger
         ## @deftypefn {Constructor} {@var{obj} =} logger.Logger (@var{jLogger})
         ##
         ## Build a new logger object around an SLF4J Logger object.
@@ -136,7 +136,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.error
+        ## @node Logger.error
         ## @deftypefn {Method} error (@var{obj}, @var{msg}, @var{varargin})
         ## @deftypefnx {Method} error (@var{obj}, @var{exception}, @var{msg}, @var{varargin})
         ##
@@ -152,7 +152,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.warn
+        ## @node Logger.warn
         ## @deftypefn {Method} warn (@var{obj}, @var{msg}, @var{varargin})
         ## @deftypefnx {Method} warn (@var{obj}, @var{exception}, @var{msg}, @var{varargin})
         ##
@@ -168,7 +168,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.info
+        ## @node Logger.info
         ## @deftypefn {Method} info (@var{obj}, @var{msg}, @var{varargin})
         ## @deftypefnx {Method} info (@var{obj}, @var{exception}, @var{msg}, @var{varargin})
         ##
@@ -185,7 +185,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.debug
+        ## @node Logger.debug
         ## @deftypefn {Method} debug (@var{obj}, @var{msg}, @var{varargin})
         ## @deftypefnx {Method} debug (@var{obj}, @var{exception}, @var{msg}, @var{varargin})
         ##
@@ -202,7 +202,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.trace
+        ## @node Logger.trace
         ## @deftypefn {Method} trace (@var{obj}, @var{msg}, @var{varargin})
         ## @deftypefnx {Method} trace (@var{obj}, @var{exception}, @var{msg}, @var{varargin})
         ##
@@ -219,7 +219,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.errorj
+        ## @node Logger.errorj
         ## @deftypefn {Method} errorj (@var{obj}, @var{msg}, @var{varargin})
         ##
         ## Log a message at the ERROR level, using SLF4J formatting.
@@ -233,7 +233,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.warnj
+        ## @node Logger.warnj
         ## @deftypefn {Method} warnj (@var{obj}, @var{msg}, @var{varargin})
         ##
         ## Log a message at the WARN level, using SLF4J formatting.
@@ -247,7 +247,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.infoj
+        ## @node Logger.infoj
         ## @deftypefn {Method} infoj (@var{obj}, @var{msg}, @var{varargin})
         ##
         ## Log a message at the INFO level, using SLF4J formatting.
@@ -261,7 +261,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.debugj
+        ## @node Logger.debugj
         ## @deftypefn {Method} debugj (@var{obj}, @var{msg}, @var{varargin})
         ##
         ## Log a message at the DEBUG level, using SLF4J formatting.
@@ -275,7 +275,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.tracej
+        ## @node Logger.tracej
         ## @deftypefn {Method} tracej (@var{obj}, @var{msg}, @var{varargin})
         ##
         ## Log a message at the TRACE level, using SLF4J formatting.
@@ -290,7 +290,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.isErrorEnabled
+        ## @node Logger.isErrorEnabled
         ## @deftypefn {Method} {@var{out} =} isErrorEnabled (@var{obj})
         ##
         ## True if ERROR level logging is enabled for this logger.
@@ -301,7 +301,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.isWarnEnabled
+        ## @node Logger.isWarnEnabled
         ## @deftypefn {Method} {@var{out} =} isWarnEnabled (@var{obj})
         ##
         ## True if WARN level logging is enabled for this logger.
@@ -312,7 +312,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.isInfoEnabled
+        ## @node Logger.isInfoEnabled
         ## @deftypefn {Method} {@var{out} =} isInfoEnabled (@var{obj})
         ##
         ## True if INFO level logging is enabled for this logger.
@@ -323,7 +323,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.isDebugEnabled
+        ## @node Logger.isDebugEnabled
         ## @deftypefn {Method} {@var{out} =} isDebugEnabled (@var{obj})
         ##
         ## True if DEBUG level logging is enabled for this logger.
@@ -334,7 +334,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.isTraceEnabled
+        ## @node Logger.isTraceEnabled
         ## @deftypefn {Method} {@var{out} =} isTraceEnabled (@var{obj})
         ##
         ## True if TRACE level logging is enabled for this logger.
@@ -345,7 +345,7 @@ classdef Logger
         end
         
         ## -*- texinfo -*-
-        ## @node logger.Logger.listEnabledLevels
+        ## @node Logger.listEnabledLevels
         ## @deftypefn {Method} {@var{out} =} listEnabledLevels (@var{obj})
         ##
         ## List the levels that are enabled for this logger.
