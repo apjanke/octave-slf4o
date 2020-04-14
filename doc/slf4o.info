@@ -442,6 +442,9 @@ File: slf4o.info,  Node: API by Category,  Next: API Alphabetically,  Up: API Re
 *note logger.initSLF4O::
      Initialzie SLF4O
 
+*note logger.initSLF4M::
+     SLF4M compatibility shim for initSLF4O
+
 *note logger.version::
      Gets version info for the SLF4O library.
 
@@ -458,32 +461,29 @@ File: slf4o.info,  Node: API by Category,  Next: API Alphabetically,  Up: API Re
 *note prettyprint::
      Formatted output of array contents.
 
-6.1.3 Uncategorized
--------------------
-
-*note errords::
-     A variant of error() that supports dispstr functionality.
+*note pp::
+     Command wrapper for prettyprint().
 
 *note fprintfds::
      A variant of fprintf() that supports dispstr functionality.
 
-*note logger.initSLF4M::
-     SLF4M compatibility shim for initSLF4O
+*note sprintfds::
+     A variant of sprintf() that supports dispstr functionality.
 
-*note mustBeA::
-     Validate that an input is of a particular data type.
+*note errords::
+     A variant of error() that supports dispstr functionality.
 
-*note pp::
-     Command wrapper for prettyprint().
+*note warningds::
+     A variant of warning() that supports dispstr functionality.
 
 *note size2str::
      Format a matrix size for display.
 
-*note sprintfds::
-     A variant of sprintf() that supports dispstr functionality.
+6.1.3 Uncategorized
+-------------------
 
-*note warningds::
-     A variant of warning() that supports dispstr functionality.
+*note mustBeA::
+     Validate that an input is of a particular data type.
 
 
 File: slf4o.info,  Node: API Alphabetically,  Prev: API by Category,  Up: API Reference

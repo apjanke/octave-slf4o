@@ -339,6 +339,9 @@ Log a WARN level message from caller, with SLF4J style formatting.
 @item @ref{logger.initSLF4O}
 Initialzie SLF4O
 
+@item @ref{logger.initSLF4M}
+SLF4M compatibility shim for initSLF4O
+
 @item @ref{logger.version}
 Gets version info for the SLF4O library.
 
@@ -354,32 +357,29 @@ Get display strings for array elements.
 @item @ref{prettyprint}
 Formatted output of array contents.
 
-@end table
-@subsection Uncategorized
-@table @asis
-@item @ref{errords}
-A variant of error() that supports dispstr functionality.
+@item @ref{pp}
+Command wrapper for prettyprint().
 
 @item @ref{fprintfds}
 A variant of fprintf() that supports dispstr functionality.
 
-@item @ref{logger.initSLF4M}
-SLF4M compatibility shim for initSLF4O
+@item @ref{sprintfds}
+A variant of sprintf() that supports dispstr functionality.
 
-@item @ref{mustBeA}
-Validate that an input is of a particular data type.
+@item @ref{errords}
+A variant of error() that supports dispstr functionality.
 
-@item @ref{pp}
-Command wrapper for prettyprint().
+@item @ref{warningds}
+A variant of warning() that supports dispstr functionality.
 
 @item @ref{size2str}
 Format a matrix size for display.
 
-@item @ref{sprintfds}
-A variant of sprintf() that supports dispstr functionality.
-
-@item @ref{warningds}
-A variant of warning() that supports dispstr functionality.
+@end table
+@subsection Uncategorized
+@table @asis
+@item @ref{mustBeA}
+Validate that an input is of a particular data type.
 
 @end table
 
