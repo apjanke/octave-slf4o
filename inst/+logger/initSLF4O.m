@@ -1,5 +1,5 @@
 ## -*- texinfo -*-
-## @deftypefn {Function} logger.initSLF4M
+## @deftypefn {Function} logger.initSLF4O ()
 ##
 ## Initialzie SLF4O
 ##

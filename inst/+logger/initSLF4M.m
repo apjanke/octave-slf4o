@@ -1,5 +1,5 @@
 ## -*- texinfo -*-
-## @deftypefn {Function} logger.initSLF4M
+## @deftypefn {Function} logger.initSLF4M ()
 ##
 ## SLF4M compatibility shim for initSLF4O
 ##
