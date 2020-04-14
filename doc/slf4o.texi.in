@@ -48,13 +48,14 @@ User manual for SLF4O for Octave.
 
 
 @ifnottex
-@node Top, Setup
+@node Top, Introduction
 @top SLF4O
 
 This manual is for SLF4O, version @value{VERSION}.
 @end ifnottex
 
 @menu
+* Introduction::
 * Setup::
 * API::
 * The dispstr API::
@@ -64,22 +65,33 @@ This manual is for SLF4O, version @value{VERSION}.
 * Copying::
 @end menu
 
+@node Introduction
+@chapter Introduction
+
+SLF4O is a simple logging framework for GNU Octave. It provides an API for making logging calls from
+your code, and a back-end that supports fine-grained configurability at run time. This allows you
+to write code with logging statements for debugging or other purposes that can be turned on and
+off at run time without having to alter your source code.
+
+SLF4O is built on top of the well-known SLF4J Java logging framework and the Log4j Java logging
+library. SLF4O is an Octave port of the Matlab SLF4M logging framework.
+
 @node Setup
 @chapter Setup
 
 To use SLF4O in your code:
 
-1. Install and load the SLF4O package using Octave's @code{pkg} command
+1. Install and load the SLF4O package using Octave's @code{pkg} command.
 
 @code{pkg install https://github.com/apjanke/octave-slf4o/archive/master.zip}
 
-2. Load the SLF4O package in your Octave session
+2. Load the SLF4O package in your Octave session.
 
 @code{pkg load slf4o}
 
-3. Call @code{logger.initSLF4O} to initialize the library before doing any logging calls
+3. Call @code{logger.initSLF4O} to initialize the library before doing any logging calls.
 
-4. Add calls to the @code{logger.*} functions in your code
+4. Add calls to the @code{logger.*} functions in your code.
 
 @node API
 @chapter API
@@ -101,22 +113,24 @@ All the code is in the @code{+logger} package. I chose a short, readable package
 Each logging level has a corresponding @code{logger.*} function and "J Variant" function that you can call to emit a log message at that level.
 
 @multitable @columnfractions .33 .33 .33
-@headitem Level @tab Function @tab J Variant
+@headitem Level
+ @tab Function
+ @tab J Variant
 @item @code{ERROR}
-@tab @code{logger.error}
-@tab @code{logger.errorj}
+ @tab @code{logger.error}
+ @tab @code{logger.errorj}
 @item @code{WARNING}
-@tab @code{logger.warn}
-@tab @code{logger.warnj}
+ @tab @code{logger.warn}
+ @tab @code{logger.warnj}
 @item @code{INFO}
-@tab @code{logger.info}
-@tab @code{logger.infoj}
+ @tab @code{logger.info}
+ @tab @code{logger.infoj}
 @item @code{DEBUG}
-@tab @code{logger.debug}
-@tab @code{logger.debugj}
+ @tab @code{logger.debug}
+ @tab @code{logger.debugj}
 @item @code{TRACE}
-@tab @code{logger.trace}
-@tab @code{logger.tracej}
+ @tab @code{logger.trace}
+ @tab @code{logger.tracej}
 @end multitable
 
 The logging levels are predefined. They cannot be customized. This is a design decision made to keep the API simple and performant.
