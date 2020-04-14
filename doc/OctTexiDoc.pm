@@ -132,6 +132,7 @@ sub read_m_source_file {
     my $blocks = OctTexiDoc::extract_multiple_texinfo_blocks_from_mfile ($file, $namespace);
     my $n_blocks = scalar (@$blocks);
     my $ns_name = $namespace || "";
+    #print "Read file: $file; got $n_blocks blocks; ns_name is $ns_name\n";
     return unless (scalar (@$blocks));
     my $first_block = shift @$blocks;
     my $node = $$first_block{node};
@@ -357,34 +358,36 @@ sub extract_multiple_texinfo_blocks_from_mfile {
     my ($mfile, $namespace) = @_;
     my $retval = '';
     my $file_node_name = basename($mfile, ('.m'));
+    #print "Reading file $mfile; namespace $namespace; file_node_name = $file_node_name\n";
 
     my $fh = IO::File->new($mfile, "r")
         or die "Error: Could not open file $mfile: $!\n";
 
-    # Skip leading blank lines
-    while (<$fh>) {
-        last if /\S/;
-    }
-    # First block may be copyright statement; skip it
-    if (m/\s*[%\#][\s\#%]* Copyright/) {
-        while (<$fh>) {
-            last unless /^\s*[%\#]/;
-        }
-    }
-
-    # Okay, now detect all Texinfo comment blocks
-    #
-    # This is currently broken: I'm using @node lines in the Texinfo to indicate node
-    # starts, but the @node and @section/@subsection/@subsubsection are emitted automatically
-    # by mktexi.pl.
+    # Detect all Texinfo comment blocks
     my @blocks;
     my $block; # the current block
     my $in_block = 0;
     my $line;
     my $node;
+    my $is_at_beginning = 1;
     while (<$fh>) {
+        if ($is_at_beginning) {
+            # Skip leading blank lines
+            while (/^\s*$/) {
+                <$fh>;
+            }
+            # First block may be copyright statement; skip it
+            if (/\s*[%\#][\s\#%]* Copyright/) {
+                #print "Skipping Copyright block\n";
+                while (<$fh>) {
+                    last unless /^\s*[%\#]/;
+                }
+            }
+            $is_at_beginning = 0;
+        }
         my $line_num = $fh->input_line_number();
         if (/^\s*## -\*- texinfo -\*-/) {
+            #print "Found texinfo block at line $line_num\n";
             # block start
             if ($in_block) {
                 push @blocks, { node => $node, block => $block};
@@ -423,7 +426,7 @@ sub extract_multiple_texinfo_blocks_from_mfile {
     my $line_num = $fh->input_line_number();
     if ($in_block) {
         push @blocks, { node => $node, block => $block};
-        $block = "-*- texinfo -*-";
+        $block = "";
         $in_block = 0;
     }
 
