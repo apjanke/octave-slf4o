@@ -13,8 +13,15 @@ Logging
  logger.warn
  logger.warnj
  logger.initSLF4O
+ logger.initSLF4M
  logger.version
 Dispstr
  dispstr
  dispstrs
  prettyprint
+ pp
+ fprintfds
+ sprintfds
+ errords
+ warningds
+ size2str
