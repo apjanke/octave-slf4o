@@ -60,7 +60,7 @@ switch form
         loggerObj.trace (msg, args{:});
         return
       otherwise
-        error ('logger:InvalidInput', 'Invalid logLevel: %s', logLevel);
+        error ('slf4o:InvalidInput', 'Invalid logLevel: %s', logLevel);
     end
   case 'j'
     switch logLevel
@@ -80,7 +80,7 @@ switch form
         loggerObj.tracej (msg, args{:});
         return
       otherwise
-        error ('logger:InvalidInput', 'Invalid logLevel: %s', logLevel);
+        error ('slf4o:InvalidInput', 'Invalid logLevel: %s', logLevel);
     end
 end
 
