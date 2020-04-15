@@ -1,7 +1,7 @@
 SLF4M Changelog
 ===============
 
-Version 0.1.0  (???)
+Version 0.1.0 (2020-04-14)
 --------------------------
 
 * Initial checkin, based on a copy of SLF4M

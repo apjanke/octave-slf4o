@@ -1,6 +1,6 @@
 Name: slf4o
-Version: 0.1.0-SNAPSHOT
-Date: 2020-04-04
+Version: 0.1.0
+Date: 2020-04-14
 Title: SLF4O - A simple logging framework for GNU Octave
 Author: Andrew Janke <floss@apjanke.net>
 Maintainer: Andrew Janke <floss@apjanke.net>
