@@ -1,6 +1,6 @@
 This is slf4o.info, produced by makeinfo version 6.7 from slf4o.texi.
 
-This manual is for SLF4O, version 0.1.0-SNAPSHOT.
+This manual is for SLF4O, version 0.1.0.
 
    Copyright © 2020 Andrew Janke
 
@@ -23,7 +23,7 @@ File: slf4o.info,  Node: Top,  Next: Introduction,  Up: (dir)
 SLF4O
 *****
 
-This manual is for SLF4O, version 0.1.0-SNAPSHOT.
+This manual is for SLF4O, version 0.1.0.
 
 * Menu:
 
@@ -1483,7 +1483,7 @@ SLF4O for Octave is covered by the GNU GPLv3.
 8.2 Manual Copyright
 ====================
 
-This manual is for SLF4O, version 0.1.0-SNAPSHOT.
+This manual is for SLF4O, version 0.1.0.
 
    Copyright © 2020 Andrew Janke
 
@@ -1503,73 +1503,73 @@ This manual is for SLF4O, version 0.1.0-SNAPSHOT.
 
 
 Tag Table:
-Node: Top766
-Node: Introduction1033
-Node: Setup1825
-Node: API2345
-Node: Logging functions3001
-Node: Calling logging functions3993
-Node: Regular and j variants4437
-Node: Logger names6452
-Node: The Logger object7661
-Node: The dispstr API9376
-Node: The dispstr interface11764
-Node: How dispstr and SLF4O interact12335
-Node: Configuration13259
-Node: Implementation notes14084
-Node: API Reference14618
-Node: API by Category14801
-Node: API Alphabetically17136
-Node: dispstr19132
-Node: dispstrs20218
-Node: errords21938
-Node: fprintfds22395
-Node: logger.debug23058
-Node: logger.debugj23588
-Node: logger.error24089
-Node: logger.errorj24624
-Node: logger.info25130
-Node: logger.infoj25657
-Node: logger.initSLF4M26158
-Node: logger.initSLF4O26626
-Node: logger.Log4jConfigurator26923
-Node: logger.Log4jConfigurator.configureBasicConsoleLogging29031
-Node: logger.Log4jConfigurator.setRootAppenderPattern29800
-Node: logger.Log4jConfigurator.getLog4jLevel30365
-Node: logger.Log4jConfigurator.setLevels31034
-Node: logger.Log4jConfigurator.prettyPrintLogConfiguration31917
-Node: logger.Log4jConfigurator.showGui32582
-Node: logger.Logger33042
-Node: logger.Logger.getLogger35361
-Node: logger.Logger.Logger35659
-Node: logger.Logger.error36049
-Node: logger.Logger.warn36362
-Node: logger.Logger.info36668
-Node: logger.Logger.debug36974
-Node: logger.Logger.trace37286
-Node: logger.Logger.errorj37600
-Node: logger.Logger.warnj37891
-Node: logger.Logger.infoj38178
-Node: logger.Logger.debugj38467
-Node: logger.Logger.tracej38761
-Node: logger.Logger.isErrorEnabled39064
-Node: logger.Logger.isWarnEnabled39387
-Node: logger.Logger.isInfoEnabled39713
-Node: logger.Logger.isDebugEnabled40039
-Node: logger.Logger.isTraceEnabled40370
-Node: logger.Logger.listEnabledLevels40705
-Node: logger.trace41092
-Node: logger.tracej41628
-Node: logger.version42133
-Node: logger.warn42619
-Node: logger.warnj43143
-Node: mustBeA43634
-Node: pp44761
-Node: prettyprint45377
-Node: size2str46793
-Node: sprintfds47099
-Node: warningds47824
-Node: Copying48282
+Node: Top757
+Node: Introduction1015
+Node: Setup1807
+Node: API2327
+Node: Logging functions2983
+Node: Calling logging functions3975
+Node: Regular and j variants4419
+Node: Logger names6434
+Node: The Logger object7643
+Node: The dispstr API9358
+Node: The dispstr interface11746
+Node: How dispstr and SLF4O interact12317
+Node: Configuration13241
+Node: Implementation notes14066
+Node: API Reference14600
+Node: API by Category14783
+Node: API Alphabetically17118
+Node: dispstr19114
+Node: dispstrs20200
+Node: errords21920
+Node: fprintfds22377
+Node: logger.debug23040
+Node: logger.debugj23570
+Node: logger.error24071
+Node: logger.errorj24606
+Node: logger.info25112
+Node: logger.infoj25639
+Node: logger.initSLF4M26140
+Node: logger.initSLF4O26608
+Node: logger.Log4jConfigurator26905
+Node: logger.Log4jConfigurator.configureBasicConsoleLogging29013
+Node: logger.Log4jConfigurator.setRootAppenderPattern29782
+Node: logger.Log4jConfigurator.getLog4jLevel30347
+Node: logger.Log4jConfigurator.setLevels31016
+Node: logger.Log4jConfigurator.prettyPrintLogConfiguration31899
+Node: logger.Log4jConfigurator.showGui32564
+Node: logger.Logger33024
+Node: logger.Logger.getLogger35343
+Node: logger.Logger.Logger35641
+Node: logger.Logger.error36031
+Node: logger.Logger.warn36344
+Node: logger.Logger.info36650
+Node: logger.Logger.debug36956
+Node: logger.Logger.trace37268
+Node: logger.Logger.errorj37582
+Node: logger.Logger.warnj37873
+Node: logger.Logger.infoj38160
+Node: logger.Logger.debugj38449
+Node: logger.Logger.tracej38743
+Node: logger.Logger.isErrorEnabled39046
+Node: logger.Logger.isWarnEnabled39369
+Node: logger.Logger.isInfoEnabled39695
+Node: logger.Logger.isDebugEnabled40021
+Node: logger.Logger.isTraceEnabled40352
+Node: logger.Logger.listEnabledLevels40687
+Node: logger.trace41074
+Node: logger.tracej41610
+Node: logger.version42115
+Node: logger.warn42601
+Node: logger.warnj43125
+Node: mustBeA43616
+Node: pp44743
+Node: prettyprint45359
+Node: size2str46775
+Node: sprintfds47081
+Node: warningds47806
+Node: Copying48264
 
 End Tag Table
 
