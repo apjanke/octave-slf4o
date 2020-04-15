@@ -6,6 +6,6 @@ Author: Andrew Janke <floss@apjanke.net>
 Maintainer: Andrew Janke <floss@apjanke.net>
 Description: A simple logging framework for GNU Octave
 License: GPLv3+
-Problems: Implementation is maybe not complete.
-Url: https://github.com/apjanke/octave-table
+Problems: Implementation is maybe not complete. GUI configurator tool is crashy
+Url: https://github.com/apjanke/octave-slf4o
 Categories: data manipulation, statistics
