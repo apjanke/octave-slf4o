@@ -4,6 +4,8 @@ SLF4M Changelog
 Version 0.2.0 (???)
 --------------------------
 
+* Convert source code to GNU Octave code style
+
 Version 0.1.0 (2020-04-14)
 --------------------------
 

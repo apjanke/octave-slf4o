@@ -9,13 +9,13 @@
 ## Examples:
 ##
 ## @example
-## logger.debugj('Some message. value1=@{@} value2=@{@}', 'foo', 42);
+## logger.debugj ('Some message. value1=@{@} value2=@{@}', 'foo', 42);
 ## @end example
 ##
 ## @end deftypefn
 
-function debugj(msg, varargin)
+function debugj (msg, varargin)
 
-__SLF4O_loggerCallImpl__('debug', msg, varargin, 'j');
+__SLF4O_loggerCallImpl__ ('debug', msg, varargin, 'j');
 
 end

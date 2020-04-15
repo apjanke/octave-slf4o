@@ -13,9 +13,9 @@ cld = calling_Logger_directly;
 cld.hello;
 
 try
-    fcn_a();
+  fcn_a();
 catch err
-    logger.warn(err, 'Caught error during processing.');
+  logger.warn(err, 'Caught error during processing.');
 end
 
 end

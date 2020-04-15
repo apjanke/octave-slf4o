@@ -15,8 +15,8 @@
 ##
 ## @end deftypefn
 
-function info(msg, varargin)
+function info (msg, varargin)
 
-__SLF4O_loggerCallImpl__('info', msg, varargin);
+__SLF4O_loggerCallImpl__ ('info', msg, varargin);
 
 end

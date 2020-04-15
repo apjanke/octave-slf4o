@@ -9,23 +9,23 @@ classdef Displayable
   %
   % classdef Birthday < dispstrlib.Displayable
   %
-  %     properties
-  %         Month
-  %         Day
-  %     end
+  %   properties
+  %     Month
+  %     Day
+  %   end
   %
-  %     methods
-  %         function this = Birthday(month, day)
-  %             this.Month = month;
-  %             this.Day = day;
-  %         end
+  %   methods
+  %     function this = Birthday (month, day)
+  %       this.Month = month;
+  %       this.Day = day;
   %     end
+  %   end
   %
-  %     methods (Access = protected)
-  %         function out = dispstr_scalar(this)
-  %             out = datestr(datenum(1, this.Month, this.Day), 'mmm dd');
-  %         end
+  %   methods (Access = protected)
+  %     function out = dispstr_scalar (this)
+  %       out = datestr (datenum (1, this.Month, this.Day), 'mmm dd');
   %     end
+  %   end
   %
   % end
   %
@@ -33,97 +33,96 @@ classdef Displayable
   % dispstrlib.DisplayableHandle
   
   methods
-    
-    function disp(this)
+  
+    function disp (this)
       %DISP Custom display
-      disp(dispstr(this));
+      disp (dispstr (this));
     end
     
-    function out = dispstr(this)
+    function out = dispstr (this)
       %DISPSTR Custom display string
-      if isscalar(this)
-        strs = dispstrs(this);
-        out = strs{1};
+      if isscalar (this)
+      strs = dispstrs (this);
+      out = strs{1};
       else
-        out = sprintf('%s %s', dispstrlib.internal.size2str(size(this)), class(this));
+      out = sprintf ('%s %s', dispstrlib.internal.size2str (size (this)), class (this));
       end
     end
     
-    function out = dispstrs(this)
-      out = cell(size(this));
-      for i = 1:numel(this)
-        out{i} = dispstr_scalar(subsref(this, ...
-          struct('type','()', 'subs',{{i}})));
+    function out = dispstrs (this)
+      out = cell (size (this));
+      for i = 1:numel (this)
+      out{i} = dispstr_scalar (subsref (this, struct ('type','()', 'subs',{{i}})));
       end
     end
     
-    function error(varargin)
-      args = convertDisplayablesToString(varargin);
-      err = MException(args{:});
-      throwAsCaller(err);
+    function error (varargin)
+      args = convertDisplayablesToString (varargin);
+      err = MException (args{:});
+      throwAsCaller (err);
     end
     
-    function warning(varargin)
-      args = convertDisplayablesToString(varargin);
-      warning(args{:});
+    function warning (varargin)
+      args = convertDisplayablesToString (varargin);
+      warning (args{:});
     end
     
-    function out = sprintf(varargin)
-      args = convertDisplayablesToString(varargin);
-      out = sprintf(args{:});
+    function out = sprintf (varargin)
+      args = convertDisplayablesToString (varargin);
+      out = sprintf (args{:});
     end
     
-    function out = fprintf(varargin)
-      args = convertDisplayablesToString(varargin);
-      out = sprintf(args{:});
+    function out = fprintf (varargin)
+      args = convertDisplayablesToString (varargin);
+      out = sprintf (args{:});
     end
-    
+  
   end
   
   methods (Access = protected)
-    
-    function out = dispstr_scalar(this) %#ok<STOUT>
-      error('jl:Unimplemented', ['Subclasses of Displayable must override ' ...
+  
+    function out = dispstr_scalar (this) %#ok<STOUT>
+      error ('dispstr:Unimplemented', ['Subclasses of Displayable must override ' ...
         'dispstr_scalar; %s does not'], ...
-        class(this));
+        class (this));
     end
     
-    function dispMaybeMatrix(this)
-      if ~ismatrix(this)
-        disp(dispstr(this));
+    function dispMaybeMatrix (this)
+      if ~ismatrix (this)
+        disp (dispstr (this));
         return
-      elseif isempty(this)
-        if isequal(size(this), [0 0])
-          fprintf('[] (%s)\n', class(this));
+      elseif isempty (this)
+        if isequal (size (this), [0 0])
+          fprintf ('[] (%s)\n', class (this));
         else
-          fprintf('Empty %s %s array\n', dispstrlib.internal.size2str(size(this)), ...
-            class(this));
+          fprintf ('Empty %s %s array\n', dispstrlib.internal.size2str (size (this)), ...
+            class (this));
         end
       else
-        strs = dispstrs(this);
-        nCols = size(strs, 2);
-        colWidths = NaN(1, nCols);
+        strs = dispstrs (this);
+        nCols = size (strs, 2);
+        colWidths = NaN (1, nCols);
         for i = 1:nCols
-          colWidths(i) = max(strlen(strs(:,i)));
+          colWidths(i) = max (strlen (strs(:,i)));
         end
         fmt = [strjoin(repmat({'%*s'}, [1 nCols]), '  ') '\n'];
-        for iRow = 1:size(strs, 1)
+        for iRow = 1:size (strs, 1)
           args = [num2cell(colWidths); strs(iRow,:)];
           args = args(:);
-          fprintf(fmt, args{:});
+          fprintf (fmt, args{:});
         end
       end
     end
-    
+  
   end
 end
 
-function out = convertDisplayablesToString(c)
-mustBeA(c, 'cell');
+function out = convertDisplayablesToString (c)
+mustBeA (c, 'cell');
 out = c;
-for i = 1:numel(c)
-  if isa(c{i}, 'dispstrlib.Displayable')
-    out{i} = dispstr(c{i});
+for i = 1:numel (c)
+  if isa (c{i}, 'dispstrlib.Displayable')
+    out{i} = dispstr (c{i});
   end
 end
 end

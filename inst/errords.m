@@ -11,18 +11,18 @@
 ##
 ## @end deftypefn
 
-function errords(varargin)
+function errords (varargin)
 
-args = dispstrlib.internal.convertArgsForPrintf(varargin);
+args = dispstrlib.internal.convertArgsForPrintf (varargin);
 
-if dispstrlib.internal.isErrorIdentifier(args{1})
+if dispstrlib.internal.isErrorIdentifier (args{1})
   id = args{1};
   args = args(2:end);
 else
   id = '';
 end
 
-err = MException(id, args{:});
-throwAsCaller(err);
+err = MException (id, args{:});
+throwAsCaller (err);
 
 end

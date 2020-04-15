@@ -10,13 +10,13 @@
 ## Examples:
 ##
 ## @example
-## logger.warn('Some message. value1=%s value2=%d', 'foo', 42);
+## logger.warn ('Some message. value1=%s value2=%d', 'foo', 42);
 ## @end example
 ##
 ## @end deftypefn
 
-function warn(msg, varargin)
+function warn (msg, varargin)
 
-__SLF4O_loggerCallImpl__('warn', msg, varargin);
+__SLF4O_loggerCallImpl__ ('warn', msg, varargin);
 
 end

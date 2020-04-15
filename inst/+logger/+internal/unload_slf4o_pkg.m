@@ -27,5 +27,5 @@ function unload_slf4o_pkg
       __event_manager_unregister_doc__ (qhelp_file);
     endif
   endif
-    
+  
 endfunction

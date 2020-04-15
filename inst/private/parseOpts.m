@@ -1,7 +1,7 @@
-function out = parseOpts(opts, defaults)
+function out = parseOpts (opts, defaults)
 %PARSEOPTS Parse a Janklab-style "option" argument
 %
-% out = parseOpts(opts, defaults)
+% out = parseOpts (opts, defaults)
 %
 % Parses a Janklab-style "option" argument into a struct, optionally applying
 % defaults. Generally you will want to supply a defaults with all fields
@@ -9,26 +9,26 @@ function out = parseOpts(opts, defaults)
 % referencing it.
 %
 % Options and defaults may both be of type:
-%   * struct
-%   * cellrec
+% * struct
+% * cellrec
 % 
-out = parseOptsArg(opts);
+out = parseOptsArg (opts);
 if nargin > 1
-    defaults = parseOptsArg(defaults);
-    out = copyfields(defaults, out);
+  defaults = parseOptsArg (defaults);
+  out = copyfields (defaults, out);
 end
 end
 
-function out = parseOptsArg(opts)
-if isempty(opts)
-    opts = struct;
+function out = parseOptsArg (opts)
+if isempty (opts)
+  opts = struct;
 end
-if isstruct(opts)
-    out = opts;
-elseif iscell(opts)
-    opts = cellrec(opts);
-    out = cellrec2struct(opts);
+if isstruct (opts)
+  out = opts;
+elseif iscell (opts)
+  opts = cellrec (opts);
+  out = cellrec2struct (opts);
 else
-    error('dispstr:InvalidInput', 'Unsupported input type: %s', class(opts));
+  error ('slf4o:InvalidInput', 'Unsupported input type: %s', class (opts));
 end
 end

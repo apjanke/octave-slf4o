@@ -14,8 +14,8 @@
 ##
 ## @end deftypefn
 
-function errorj(msg, varargin)
+function errorj (msg, varargin)
 
-__SLF4O_loggerCallImpl__('error', msg, varargin, 'j');
+__SLF4O_loggerCallImpl__ ('error', msg, varargin, 'j');
 
 end

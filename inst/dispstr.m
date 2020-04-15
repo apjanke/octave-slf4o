@@ -12,7 +12,7 @@
 ## customized display of their values.
 ##
 ## The input x may be a value of any type. The main DISPSTR implementation has
-## support for Matlab built-ins and common types. Other user-defined objects are
+## support for Octave built-ins and common types. Other user-defined objects are
 ## displayed in a generic "m-by-n <class> array" format.
 ##
 ## Options may be a struct or an n-by-2 cell array of name/value pairs (names in
@@ -33,77 +33,77 @@
 ##
 ## @end deftypefn
 
-function out = dispstr(x, options)
+function out = dispstr (x, options)
 
 if nargin < 2;  options = [];  end
-options = parseOpts(options, {'QuoteStrings',false});
+options = parseOpts (options, {'QuoteStrings',false});
 
-if ~ismatrix(x)
-    out = sprintf('%s %s', dispstrlib.internal.size2str(size(x)), class(x));
-elseif isempty(x)
-    if ischar(x) && isequal(size(x), [0 0])
-        out = '''''';
-    elseif isnumeric(x) && isequal(size(x), [0 0])
-        out = '[]';
-    else
-        out = sprintf('Empty %s %s', dispstrlib.internal.size2str(size(x)), class(x));
-    end
-elseif isnumeric(x)
-    if isscalar(x)
-        out = num2str(x);
-    else
-        strs = strtrim(cellstr(num2str(x(:))));
-        strs = reshape(strs, size(x));
-        out = formatArrayOfStrings(strs);
-    end
-elseif ischar(x)
-    if isrow(x)
-        if options.QuoteStrings
-            out = ['''' x ''''];
-        else
-            out = x;
-        end
-    else
-        strs = strcat({''''}, num2cell(x,2), {''''});
-        out = formatArrayOfStrings(strs);
-    end
-elseif iscell(x)
-    if iscellstr(x)
-        strs = strcat('''', x, '''');
-    else
-        strs = cellfun(@dispstr, x, 'UniformOutput',false);
-    end
-    out = formatArrayOfStrings(strs, {'{','}'});
-elseif isstring(x)
+if ~ismatrix (x)
+  out = sprintf ('%s %s', dispstrlib.internal.size2str (size (x)), class (x));
+elseif isempty (x)
+  if ischar (x) && isequal (size (x), [0 0])
+    out = '''''';
+  elseif isnumeric (x) && isequal (size (x), [0 0])
+    out = '[]';
+  else
+    out = sprintf ('Empty %s %s', dispstrlib.internal.size2str (size (x)), class (x));
+  end
+elseif isnumeric (x)
+  if isscalar (x)
+    out = num2str (x);
+  else
+    strs = strtrim (cellstr (num2str (x(:))));
+    strs = reshape (strs, size (x));
+    out = formatArrayOfStrings (strs);
+  end
+elseif ischar (x)
+  if isrow (x)
     if options.QuoteStrings
-        strs = strcat('"', cellstr(x), '"');
+      out = ['''' x ''''];
     else
-        strs = cellstr(x);
+      out = x;
     end
-    out = formatArrayOfStrings(strs, {'[',']'});
-elseif isa(x, 'datetime') && isscalar(x)
-    if isnat(x)
-        out = 'NaT';
-    else
-        out = char(x);
-    end
-elseif isscalar(x) && (isa(x, 'duration') || isa(x, 'calendarDuration'))
-    out = char(x);
-elseif isscalar(x) && iscategorical(x)
-    out = char(x);
+  else
+    strs = strcat ({''''}, num2cell (x,2), {''''});
+    out = formatArrayOfStrings (strs);
+  end
+elseif iscell (x)
+  if iscellstr (x)
+    strs = strcat ('''', x, '''');
+  else
+    strs = cellfun (@dispstr, x, 'UniformOutput',false);
+  end
+  out = formatArrayOfStrings (strs, {'{','}'});
+elseif isstring (x)
+  if options.QuoteStrings
+    strs = strcat ('"', cellstr (x), '"');
+  else
+    strs = cellstr (x);
+  end
+  out = formatArrayOfStrings (strs, {'[',']'});
+elseif isa (x, 'datetime') && isscalar (x)
+  if isnat (x)
+    out = 'NaT';
+  else
+    out = char (x);
+  end
+elseif isscalar (x) && (isa (x, 'duration') || isa (x, 'calendarDuration'))
+  out = char (x);
+elseif isscalar (x) && iscategorical (x)
+  out = char (x);
 else
-    out = sprintf('%s %s', dispstrlib.internal.size2str(size(x)), class(x));
+  out = sprintf ('%s %s', dispstrlib.internal.size2str (size (x)), class (x));
 end
 
-out = string(out);
+out = string (out);
 
 end
 
-function out = formatArrayOfStrings(strs, brackets)
-if nargin < 2 || isempty(brackets);  brackets = { '[' ']' }; end
-rowStrs = cell(size(strs,1), 1);
-for iRow = 1:size(strs,1)
-    rowStrs{iRow} = strjoin(strs(iRow,:), ' ');
+function out = formatArrayOfStrings (strs, brackets)
+if nargin < 2 || isempty (brackets);  brackets = { '[' ']' }; end
+rowStrs = cell (size (strs,1), 1);
+for iRow = 1:size (strs,1)
+  rowStrs{iRow} = strjoin (strs (iRow,:), ' ');
 end
 out = [brackets{1} strjoin(rowStrs, '; ') brackets{2}];
 end

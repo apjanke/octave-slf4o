@@ -13,6 +13,6 @@
 
 function initSLF4M
 
-initSLF4O();
+initSLF4O ();
 
 end

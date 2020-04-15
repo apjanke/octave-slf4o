@@ -14,8 +14,8 @@
 ##
 ## @end deftypefn
 
-function pp(varargin)
+function pp (varargin)
 
-prettyprint(varargin{:});
+prettyprint (varargin{:});
 
 end

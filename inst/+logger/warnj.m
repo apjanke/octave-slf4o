@@ -9,13 +9,13 @@
 ## Examples:
 ##
 ## @example
-## logger.warnj('Some message. value1=@{@} value2=@{@}', 'foo', 42);
+## logger.warnj ('Some message. value1=@{@} value2=@{@}', 'foo', 42);
 ## @end example
 ##
 ## @end deftypefn
 
-function warnj(msg, varargin)
+function warnj (msg, varargin)
 
-__SLF4O_loggerCallImpl__('warn', msg, varargin, 'j');
+__SLF4O_loggerCallImpl__ ('warn', msg, varargin, 'j');
 
 end

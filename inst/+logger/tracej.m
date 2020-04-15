@@ -9,13 +9,13 @@
 ## Examples:
 ##
 ## @example
-## logger.tracej('Some message. value1=@{@} value2=@{@}', 'foo', 42);
+## logger.tracej ('Some message. value1=@{@} value2=@{@}', 'foo', 42);
 ## @end example
 ##
 ## @end deftypefn
 
-function tracej(msg, varargin)
+function tracej (msg, varargin)
 
-__SLF4O_loggerCallImpl__('trace', msg, varargin, 'j');
+__SLF4O_loggerCallImpl__ ('trace', msg, varargin, 'j');
 
 end

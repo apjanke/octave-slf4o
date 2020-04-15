@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- This manual is for SLF4O, version 0.1.0.
+<!-- This manual is for SLF4O, version 0.2.0-SNAPSHOT.
 
 Copyright (C) 2020 Andrew Janke
 
@@ -18,10 +18,10 @@ into another language, under the same conditions as for modified versions. -->
 <!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>SLF4O v0.1.0</title>
+<title>SLF4O v0.2.0-SNAPSHOT</title>
 
 <meta name="description" content="User manual for SLF4O for Octave.">
-<meta name="keywords" content="SLF4O v0.1.0">
+<meta name="keywords" content="SLF4O v0.2.0-SNAPSHOT">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
@@ -50,7 +50,7 @@ ul.no-bullet {list-style: none}
 </head>
 
 <body lang="en">
-<h1 class="settitle" align="center">SLF4O v0.1.0</h1>
+<h1 class="settitle" align="center">SLF4O v0.2.0-SNAPSHOT</h1>
 
 
 
@@ -182,7 +182,7 @@ Next: <a href="#Introduction" accesskey="n" rel="next">Introduction</a> &nbsp; [
 </div>
 <span id="SLF4O"></span><h1 class="top">SLF4O</h1>
 
-<p>This manual is for SLF4O, version 0.1.0.
+<p>This manual is for SLF4O, version 0.2.0-SNAPSHOT.
 </p>
 <table class="menu" border="0" cellspacing="0">
 <tr><td align="left" valign="top">&bull; <a href="#Introduction" accesskey="1">Introduction</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
@@ -738,7 +738,7 @@ elements.)
 customized display of their values.
 </p>
 <p>The input x may be a value of any type. The main DISPSTR implementation has
-support for Matlab built-ins and common types. Other user-defined objects are
+support for Octave built-ins and common types. Other user-defined objects are
 displayed in a generic &quot;m-by-n &lt;class&gt; array&quot; format.
 </p>
 <p>Options may be a struct or an n-by-2 cell array of name/value pairs (names in
@@ -853,7 +853,7 @@ converted using dispstr.
 </p>
 <div class="example">
 <pre class="example">bday = Birthday(3, 14);
-fprintfds('The value is: %s', bday)
+fprintfds ('The value is: %s', bday)
 </pre></div>
 
 <p>See also:
@@ -880,7 +880,7 @@ controls as placeholders.
 <p>Examples:
 </p>
 <div class="example">
-<pre class="example">logger.debug('Some message. value1=%s value2=%d', 'foo', 42);
+<pre class="example">logger.debug ('Some message. value1=%s value2=%d', 'foo', 42);
 </pre></div>
 
 </dd></dl>
@@ -903,7 +903,7 @@ values to be interpolated into the message.
 <p>Examples:
 </p>
 <div class="example">
-<pre class="example">logger.debugj('Some message. value1={} value2={}', 'foo', 42);
+<pre class="example">logger.debugj ('Some message. value1={} value2={}', 'foo', 42);
 </pre></div>
 
 </dd></dl>
@@ -927,7 +927,7 @@ controls as placeholders.
 <p>Examples:
 </p>
 <div class="example">
-<pre class="example">logger.error('Some message. value1=%s value2=%d', 'foo', 42);
+<pre class="example">logger.error ('Some message. value1=%s value2=%d', 'foo', 42);
 </pre></div>
 
 </dd></dl>
@@ -997,7 +997,7 @@ values to be interpolated into the message.
 <p>Examples:
 </p>
 <div class="example">
-<pre class="example">logger.infoj('Some message. value1={} value2={}', 'foo', 42);
+<pre class="example">logger.infoj ('Some message. value1={} value2={}', 'foo', 42);
 </pre></div>
 
 </dd></dl>
@@ -1075,20 +1075,21 @@ logger.Log4jConfigurator.configureBasicConsoleLogging.
 <div class="example">
 <pre class="example">logger.Log4jConfigurator.configureBasicConsoleLogging
 
-logger.Log4jConfigurator.setLevels({'root','DEBUG'});
+logger.Log4jConfigurator.setLevels ({'root','DEBUG'});
 
-logger.Log4jConfigurator.setLevels({
-    'root'    'INFO'
+logger.Log4jConfigurator.setLevels ({
+    'root'  'INFO'
     'net.apjanke.logger.swing'  'DEBUG'
     });
 
 logger.Log4jConfigurator.prettyPrintLogConfiguration
 
 % Display fully-qualified class/category names in the log output:
-logger.Log4jConfigurator.setRootAppenderPattern(...
+logger.Log4jConfigurator.setRootAppenderPattern (...
    ['%d{HH:mm:ss.SSS} %p %c - %m' sprintf('\n')]);
 
 % Bring up the configuration GUI
+% NOTE: This is currently broken and will probably crash Octave.
 logger.Log4jConfigurator.showGui
 </pre></div>
 
@@ -1191,10 +1192,10 @@ level names in column 2.
 <p>Examples:
 </p>
 <div class="example">
-<pre class="example">logger.Log4jConfigurator.setLevels({'root','DEBUG'});
+<pre class="example">logger.Log4jConfigurator.setLevels ({'root','DEBUG'});
 
-logger.Log4jConfigurator.setLevels({
-    'root'    'INFO'
+logger.Log4jConfigurator.setLevels ({
+    'root'  'INFO'
     'net.apjanke.logger.swing'  'DEBUG'
     });
 </pre></div>
@@ -1231,7 +1232,7 @@ Previous: <a href="#logger_002eLog4jConfigurator_002eprettyPrintLogConfiguration
 <dd>
 <p>Display the Log4j configuration GUI provided by SLF4O.
 </p>
-<p>BROKEN!!!
+<p>WARNING: BROKEN!!!
 </p>
 <p>This tool is currently broken, and will probably crash Octave if you call it.
 </p>
@@ -1266,13 +1267,13 @@ trace() - takes a sprintf()-style signature, with a format string as
 the first argument, and substitution values as the remaining
 arguments.
 </p><div class="example">
-<pre class="example">   logger.info(format, varargin)
+<pre class="example">   logger.info (format, varargin)
 </pre></div>
 <p>You can also insert an MException object at the beginning of the
 argument list to have its message and stack trace included in the log
 message.
 </p><div class="example">
-<pre class="example">   logger.warn(exception, format, varargin)
+<pre class="example">   logger.warn (exception, format, varargin)
 </pre></div>
 
 <p>See also:
@@ -1285,15 +1286,15 @@ logger.trace
 <p>Examples:
 </p>
 <div class="example">
-<pre class="example">log = logger.Logger.getLogger('foo.bar.FooBar');
-log.info('Hello, world! Running on Octave %s', version);
+<pre class="example">log = logger.Logger.getLogger ('foo.bar.FooBar');
+log.info ('Hello, world! Running on Octave %s', version);
 </pre></div>
 
 <div class="example">
 <pre class="example">try
-    some_operation_that_could_go_wrong();
+  some_operation_that_could_go_wrong ();
 catch err
-    log.warn(err, 'Caught exception during processing')
+  log.warn (err, 'Caught exception during processing')
 end
 </pre></div>
 
@@ -1622,7 +1623,7 @@ controls as placeholders.
 <p>Examples:
 </p>
 <div class="example">
-<pre class="example">logger.trace('Some message. value1=%s value2=%d', 'foo', 42);
+<pre class="example">logger.trace ('Some message. value1=%s value2=%d', 'foo', 42);
 </pre></div>
 
 </dd></dl>
@@ -1645,7 +1646,7 @@ values to be interpolated into the message.
 <p>Examples:
 </p>
 <div class="example">
-<pre class="example">logger.tracej('Some message. value1={} value2={}', 'foo', 42);
+<pre class="example">logger.tracej ('Some message. value1={} value2={}', 'foo', 42);
 </pre></div>
 
 </dd></dl>
@@ -1690,7 +1691,7 @@ controls as placeholders.
 <p>Examples:
 </p>
 <div class="example">
-<pre class="example">logger.warn('Some message. value1=%s value2=%d', 'foo', 42);
+<pre class="example">logger.warn ('Some message. value1=%s value2=%d', 'foo', 42);
 </pre></div>
 
 </dd></dl>
@@ -1713,7 +1714,7 @@ values to be interpolated into the message.
 <p>Examples:
 </p>
 <div class="example">
-<pre class="example">logger.warnj('Some message. value1={} value2={}', 'foo', 42);
+<pre class="example">logger.warnj ('Some message. value1={} value2={}', 'foo', 42);
 </pre></div>
 
 </dd></dl>
@@ -1743,10 +1744,10 @@ the variable name is included in any error messages.
 name may be one of:
   * A class, such as &rsquo;double&rsquo;, &rsquo;cell&rsquo;, or &rsquo;containers.Map&rsquo;
   * One of the special SLF4O pseudotypes:
-      cellstr
-      numeric
-      object
-      any
+    cellstr
+    numeric
+    object
+    any
 </p>
 <p>Note: The cellstr pseudotype is nontrivial to check for, as it
 must call iscellstr() and check all cell contents.
@@ -1754,9 +1755,9 @@ must call iscellstr() and check all cell contents.
 <p>Examples:
 </p>
 <div class="example">
-<pre class="example">function foo(x, someStrings)
-  mustBeA(x, 'double');
-  mustBeA(someStrings, 'cellstr');
+<pre class="example">function foo (x, someStrings)
+  mustBeA (x, 'double');
+  mustBeA (someStrings, 'cellstr');
 endfunction
 </pre></div>
 
@@ -1866,8 +1867,8 @@ string.
 <p>Examples:
 </p>
 <div class="example">
-<pre class="example">bday = Birthday(3, 14);
-str = sprintfds('The value is: %s', bday)
+<pre class="example">bday = Birthday (3, 14);
+str = sprintfds ('The value is: %s', bday)
 </pre></div>
 
 <p>See also:
@@ -1915,7 +1916,7 @@ Previous: <a href="#API-Reference" accesskey="p" rel="prev">API Reference</a>, U
 </p>
 <span id="Manual-Copyright"></span><h3 class="section">8.2 Manual Copyright</h3>
 
-<p>This manual is for SLF4O, version 0.1.0.
+<p>This manual is for SLF4O, version 0.2.0-SNAPSHOT.
 </p>
 <p>Copyright &copy; 2020 Andrew Janke
 </p>

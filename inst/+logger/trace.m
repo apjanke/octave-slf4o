@@ -10,13 +10,13 @@
 ## Examples:
 ##
 ## @example
-## logger.trace('Some message. value1=%s value2=%d', 'foo', 42);
+## logger.trace ('Some message. value1=%s value2=%d', 'foo', 42);
 ## @end example
 ##
 ## @end deftypefn
 
-function trace(msg, varargin)
+function trace (msg, varargin)
 
-__SLF4O_loggerCallImpl__('trace', msg, varargin);
+__SLF4O_loggerCallImpl__ ('trace', msg, varargin);
 
 end

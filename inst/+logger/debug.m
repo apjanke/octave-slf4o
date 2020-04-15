@@ -10,13 +10,13 @@
 ## Examples:
 ##
 ## @example
-## logger.debug('Some message. value1=%s value2=%d', 'foo', 42);
+## logger.debug ('Some message. value1=%s value2=%d', 'foo', 42);
 ## @end example
 ##
 ## @end deftypefn
 
-function debug(msg, varargin)
+function debug (msg, varargin)
 
-__SLF4O_loggerCallImpl__('debug', msg, varargin);
+__SLF4O_loggerCallImpl__ ('debug', msg, varargin);
 
 end

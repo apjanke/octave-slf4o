@@ -29,19 +29,19 @@
 ##
 ## @end deftypefn
 
-function out = prettyprint(x)
+function out = prettyprint (x)
 
-if isstruct(x)
-    out = dispstrlib.internal.prettyprint_struct(x);
-elseif iscell(x)
-    out = dispstrlib.internal.prettyprint_cell(x);
-elseif isa(x, 'tabular')
-    out = dispstrlib.internal.prettyprint_tabular(x);
+if isstruct (x)
+  out = dispstrlib.internal.prettyprint_struct (x);
+elseif iscell (x)
+  out = dispstrlib.internal.prettyprint_cell (x);
+elseif isa (x, 'tabular')
+  out = dispstrlib.internal.prettyprint_tabular (x);
 else
-    out = dispstrlib.internal.dispc(x);
+  out = dispstrlib.internal.dispc (x);
 end
 
 if nargout == 0
-    disp(out);
-    clear out
+  disp (out);
+  clear out
 end

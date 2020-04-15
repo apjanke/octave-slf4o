@@ -16,10 +16,10 @@
 ## name may be one of:
 ##   * A class, such as 'double', 'cell', or 'containers.Map'
 ##   * One of the special SLF4O pseudotypes:
-##       cellstr
-##       numeric
-##       object
-##       any
+##     cellstr
+##     numeric
+##     object
+##     any
 ##
 ## Note: The cellstr pseudotype is nontrivial to check for, as it
 ## must call iscellstr() and check all cell contents.
@@ -27,60 +27,59 @@
 ## Examples:
 ##
 ## @example
-## function foo(x, someStrings)
-##   mustBeA(x, 'double');
-##   mustBeA(someStrings, 'cellstr');
+## function foo (x, someStrings)
+##   mustBeA (x, 'double');
+##   mustBeA (someStrings, 'cellstr');
 ## endfunction
 ## @end example
 ##
 ## @end deftypefn
 
-function mustBeA(value, type)
+function mustBeA (value, type)
 
 % Avoid infinite recursion
-assert(ischar(type), 'slf4m:InvalidInput',...
-    'type must be a char, but got a %s', class(type));
-
+assert (ischar (type), 'slf4o:InvalidInput',...
+  'type must be a char, but got a %s', class (type));
 
 % Special pseudotype cases
 switch type
-    case 'cellstr'
-        if iscellstr(value)
-            return
-        else
-            if iscell(value)
-                elementTypes = unique(cellfun(@class, value, 'UniformOutput',false));
-                typeDescription = sprintf('cell containing %s', strjoin(elementTypes, ' and '));
-            else
-                typeDescription = class(value);
-            end
-            reportBadValue(inputname(1), type, typeDescription);
-        end
-    case 'numeric'
-        if isnumeric(value)
-            return
-        else
-            reportBadValue(inputname(1), 'numeric', class(value));
-        end
-    case 'object'
-        % 'object' means user-defined Matlab objects
-        if isobject(value)
-            return
-        else
-            reportBadValue(inputname(1), 'object', class(value));
-        end
-    case 'any'
-        % Always passes: any type is an 'any'
-        return
+  case 'cellstr'
+    if iscellstr (value)
+      return
+    else
+      if iscell (value)
+        elementTypes = unique (cellfun (@class, value, 'UniformOutput',false));
+        typeDescription = sprintf ('cell containing %s', strjoin (elementTypes, ' and '));
+      else
+        typeDescription = class (value);
+      end
+      reportBadValue (inputname(1), type, typeDescription);
+    end
+  case 'numeric'
+    if isnumeric (value)
+      return
+    else
+      reportBadValue (inputname(1), 'numeric', class (value));
+    end
+  case 'object'
+    % 'object' means user-defined Octave objects
+    if isobject (value)
+      return
+    else
+      reportBadValue (inputname(1), 'object', class (value));
+    end
+  case 'any'
+    % Always passes: any type is an 'any'
+    return
 end
 
 % General case
-if ~isa(value, type)
-    reportBadValue(inputname(1), type, class(value));
+if ~isa (value, type)
+  reportBadValue (inputname(1), type, class (value));
 end
 
 end
 
-function reportBadValue(label, expectedType, actualType)
-    error('slf4o:InvalidInput', '%s must be a %s, but got a %s', label, expectedType, actualType);
+function reportBadValue (label, expectedType, actualType)
+  error ('slf4o:InvalidInput', '%s must be a %s, but got a %s', label, expectedType, actualType);
 end

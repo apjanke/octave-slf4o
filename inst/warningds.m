@@ -11,9 +11,9 @@
 ##
 ## @end deftypefn
 
-function warningds(varargin)
+function warningds (varargin)
 
-args = dispstrlib.internal.convertArgsForPrintf(varargin);
-warning(args{:});
+args = dispstrlib.internal.convertArgsForPrintf (varargin);
+warning (args{:});
 
 end

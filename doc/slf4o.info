@@ -1,6 +1,6 @@
 This is slf4o.info, produced by makeinfo version 6.7 from slf4o.texi.
 
-This manual is for SLF4O, version 0.1.0.
+This manual is for SLF4O, version 0.2.0-SNAPSHOT.
 
    Copyright © 2020 Andrew Janke
 
@@ -23,7 +23,7 @@ File: slf4o.info,  Node: Top,  Next: Introduction,  Up: (dir)
 SLF4O
 *****
 
-This manual is for SLF4O, version 0.1.0.
+This manual is for SLF4O, version 0.2.0-SNAPSHOT.
 
 * Menu:
 
@@ -570,7 +570,7 @@ File: slf4o.info,  Node: dispstr,  Next: dispstrs,  Up: API Alphabetically
      providing customized display of their values.
 
      The input x may be a value of any type.  The main DISPSTR
-     implementation has support for Matlab built-ins and common types.
+     implementation has support for Octave built-ins and common types.
      Other user-defined objects are displayed in a generic "m-by-n
      <class> array" format.
 
@@ -668,7 +668,7 @@ File: slf4o.info,  Node: fprintfds,  Next: logger.debug,  Prev: errords,  Up: AP
      Examples:
 
           bday = Birthday(3, 14);
-          fprintfds('The value is: %s', bday)
+          fprintfds ('The value is: %s', bday)
 
      See also: SPRINTFDS
 
@@ -689,7 +689,7 @@ File: slf4o.info,  Node: logger.debug,  Next: logger.debugj,  Prev: fprintfds,  
 
      Examples:
 
-          logger.debug('Some message. value1=%s value2=%d', 'foo', 42);
+          logger.debug ('Some message. value1=%s value2=%d', 'foo', 42);
 
 
 File: slf4o.info,  Node: logger.debugj,  Next: logger.error,  Prev: logger.debug,  Up: API Alphabetically
@@ -706,7 +706,7 @@ File: slf4o.info,  Node: logger.debugj,  Next: logger.error,  Prev: logger.debug
 
      Examples:
 
-          logger.debugj('Some message. value1={} value2={}', 'foo', 42);
+          logger.debugj ('Some message. value1={} value2={}', 'foo', 42);
 
 
 File: slf4o.info,  Node: logger.error,  Next: logger.errorj,  Prev: logger.debugj,  Up: API Alphabetically
@@ -725,7 +725,7 @@ File: slf4o.info,  Node: logger.error,  Next: logger.errorj,  Prev: logger.debug
 
      Examples:
 
-          logger.error('Some message. value1=%s value2=%d', 'foo', 42);
+          logger.error ('Some message. value1=%s value2=%d', 'foo', 42);
 
 
 File: slf4o.info,  Node: logger.errorj,  Next: logger.info,  Prev: logger.error,  Up: API Alphabetically
@@ -779,7 +779,7 @@ File: slf4o.info,  Node: logger.infoj,  Next: logger.initSLF4M,  Prev: logger.in
 
      Examples:
 
-          logger.infoj('Some message. value1={} value2={}', 'foo', 42);
+          logger.infoj ('Some message. value1={} value2={}', 'foo', 42);
 
 
 File: slf4o.info,  Node: logger.initSLF4M,  Next: logger.initSLF4O,  Prev: logger.infoj,  Up: API Alphabetically
@@ -844,20 +844,21 @@ File: slf4o.info,  Node: logger.Log4jConfigurator,  Next: logger.Logger,  Prev: 
 
           logger.Log4jConfigurator.configureBasicConsoleLogging
 
-          logger.Log4jConfigurator.setLevels({'root','DEBUG'});
+          logger.Log4jConfigurator.setLevels ({'root','DEBUG'});
 
-          logger.Log4jConfigurator.setLevels({
-              'root'    'INFO'
+          logger.Log4jConfigurator.setLevels ({
+              'root'  'INFO'
               'net.apjanke.logger.swing'  'DEBUG'
               });
 
           logger.Log4jConfigurator.prettyPrintLogConfiguration
 
           % Display fully-qualified class/category names in the log output:
-          logger.Log4jConfigurator.setRootAppenderPattern(...
+          logger.Log4jConfigurator.setRootAppenderPattern (...
              ['%d{HH:mm:ss.SSS} %p %c - %m' sprintf('\n')]);
 
           % Bring up the configuration GUI
+          % NOTE: This is currently broken and will probably crash Octave.
           logger.Log4jConfigurator.showGui
 
 * Menu:
@@ -937,10 +938,10 @@ File: slf4o.info,  Node: logger.Log4jConfigurator.setLevels,  Next: logger.Log4j
 
      Examples:
 
-          logger.Log4jConfigurator.setLevels({'root','DEBUG'});
+          logger.Log4jConfigurator.setLevels ({'root','DEBUG'});
 
-          logger.Log4jConfigurator.setLevels({
-              'root'    'INFO'
+          logger.Log4jConfigurator.setLevels ({
+              'root'  'INFO'
               'net.apjanke.logger.swing'  'DEBUG'
               });
 
@@ -970,7 +971,7 @@ File: slf4o.info,  Node: logger.Log4jConfigurator.showGui,  Prev: logger.Log4jCo
 
      Display the Log4j configuration GUI provided by SLF4O.
 
-     BROKEN!!!
+     WARNING: BROKEN!!!
 
      This tool is currently broken, and will probably crash Octave if
      you call it.
@@ -1003,24 +1004,24 @@ File: slf4o.info,  Node: logger.Logger,  Next: logger.trace,  Prev: logger.Log4j
      trace() - takes a sprintf()-style signature, with a format string
      as the first argument, and substitution values as the remaining
      arguments.
-             logger.info(format, varargin)
+             logger.info (format, varargin)
      You can also insert an MException object at the beginning of the
      argument list to have its message and stack trace included in the
      log message.
-             logger.warn(exception, format, varargin)
+             logger.warn (exception, format, varargin)
 
      See also: logger.error logger.warn logger.info logger.debug
      logger.trace
 
      Examples:
 
-          log = logger.Logger.getLogger('foo.bar.FooBar');
-          log.info('Hello, world! Running on Octave %s', version);
+          log = logger.Logger.getLogger ('foo.bar.FooBar');
+          log.info ('Hello, world! Running on Octave %s', version);
 
           try
-              some_operation_that_could_go_wrong();
+            some_operation_that_could_go_wrong ();
           catch err
-              log.warn(err, 'Caught exception during processing')
+            log.warn (err, 'Caught exception during processing')
           end
 
 * Menu:
@@ -1255,7 +1256,7 @@ File: slf4o.info,  Node: logger.trace,  Next: logger.tracej,  Prev: logger.Logge
 
      Examples:
 
-          logger.trace('Some message. value1=%s value2=%d', 'foo', 42);
+          logger.trace ('Some message. value1=%s value2=%d', 'foo', 42);
 
 
 File: slf4o.info,  Node: logger.tracej,  Next: logger.version,  Prev: logger.trace,  Up: API Alphabetically
@@ -1272,7 +1273,7 @@ File: slf4o.info,  Node: logger.tracej,  Next: logger.version,  Prev: logger.tra
 
      Examples:
 
-          logger.tracej('Some message. value1={} value2={}', 'foo', 42);
+          logger.tracej ('Some message. value1={} value2={}', 'foo', 42);
 
 
 File: slf4o.info,  Node: logger.version,  Next: logger.warn,  Prev: logger.tracej,  Up: API Alphabetically
@@ -1307,7 +1308,7 @@ File: slf4o.info,  Node: logger.warn,  Next: logger.warnj,  Prev: logger.version
 
      Examples:
 
-          logger.warn('Some message. value1=%s value2=%d', 'foo', 42);
+          logger.warn ('Some message. value1=%s value2=%d', 'foo', 42);
 
 
 File: slf4o.info,  Node: logger.warnj,  Next: mustBeA,  Prev: logger.warn,  Up: API Alphabetically
@@ -1324,7 +1325,7 @@ File: slf4o.info,  Node: logger.warnj,  Next: mustBeA,  Prev: logger.warn,  Up: 
 
      Examples:
 
-          logger.warnj('Some message. value1={} value2={}', 'foo', 42);
+          logger.warnj ('Some message. value1={} value2={}', 'foo', 42);
 
 
 File: slf4o.info,  Node: mustBeA,  Next: pp,  Prev: logger.warnj,  Up: API Alphabetically
@@ -1354,9 +1355,9 @@ File: slf4o.info,  Node: mustBeA,  Next: pp,  Prev: logger.warnj,  Up: API Alpha
 
      Examples:
 
-          function foo(x, someStrings)
-            mustBeA(x, 'double');
-            mustBeA(someStrings, 'cellstr');
+          function foo (x, someStrings)
+            mustBeA (x, 'double');
+            mustBeA (someStrings, 'cellstr');
           endfunction
 
 
@@ -1447,8 +1448,8 @@ File: slf4o.info,  Node: sprintfds,  Next: warningds,  Prev: size2str,  Up: API 
 
      Examples:
 
-          bday = Birthday(3, 14);
-          str = sprintfds('The value is: %s', bday)
+          bday = Birthday (3, 14);
+          str = sprintfds ('The value is: %s', bday)
 
      See also: FPRINTFDS
 
@@ -1483,7 +1484,7 @@ SLF4O for Octave is covered by the GNU GPLv3.
 8.2 Manual Copyright
 ====================
 
-This manual is for SLF4O, version 0.1.0.
+This manual is for SLF4O, version 0.2.0-SNAPSHOT.
 
    Copyright © 2020 Andrew Janke
 
@@ -1503,73 +1504,73 @@ This manual is for SLF4O, version 0.1.0.
 
 
 Tag Table:
-Node: Top757
-Node: Introduction1015
-Node: Setup1807
-Node: API2327
-Node: Logging functions2983
-Node: Calling logging functions3975
-Node: Regular and j variants4419
-Node: Logger names6434
-Node: The Logger object7643
-Node: The dispstr API9358
-Node: The dispstr interface11746
-Node: How dispstr and SLF4O interact12317
-Node: Configuration13241
-Node: Implementation notes14066
-Node: API Reference14600
-Node: API by Category14783
-Node: API Alphabetically17118
-Node: dispstr19114
-Node: dispstrs20200
-Node: errords21920
-Node: fprintfds22377
-Node: logger.debug23040
-Node: logger.debugj23570
-Node: logger.error24071
-Node: logger.errorj24606
-Node: logger.info25112
-Node: logger.infoj25639
-Node: logger.initSLF4M26140
-Node: logger.initSLF4O26608
-Node: logger.Log4jConfigurator26905
-Node: logger.Log4jConfigurator.configureBasicConsoleLogging29013
-Node: logger.Log4jConfigurator.setRootAppenderPattern29782
-Node: logger.Log4jConfigurator.getLog4jLevel30347
-Node: logger.Log4jConfigurator.setLevels31016
-Node: logger.Log4jConfigurator.prettyPrintLogConfiguration31899
-Node: logger.Log4jConfigurator.showGui32564
-Node: logger.Logger33024
-Node: logger.Logger.getLogger35343
-Node: logger.Logger.Logger35641
-Node: logger.Logger.error36031
-Node: logger.Logger.warn36344
-Node: logger.Logger.info36650
-Node: logger.Logger.debug36956
-Node: logger.Logger.trace37268
-Node: logger.Logger.errorj37582
-Node: logger.Logger.warnj37873
-Node: logger.Logger.infoj38160
-Node: logger.Logger.debugj38449
-Node: logger.Logger.tracej38743
-Node: logger.Logger.isErrorEnabled39046
-Node: logger.Logger.isWarnEnabled39369
-Node: logger.Logger.isInfoEnabled39695
-Node: logger.Logger.isDebugEnabled40021
-Node: logger.Logger.isTraceEnabled40352
-Node: logger.Logger.listEnabledLevels40687
-Node: logger.trace41074
-Node: logger.tracej41610
-Node: logger.version42115
-Node: logger.warn42601
-Node: logger.warnj43125
-Node: mustBeA43616
-Node: pp44743
-Node: prettyprint45359
-Node: size2str46775
-Node: sprintfds47081
-Node: warningds47806
-Node: Copying48264
+Node: Top766
+Node: Introduction1033
+Node: Setup1825
+Node: API2345
+Node: Logging functions3001
+Node: Calling logging functions3993
+Node: Regular and j variants4437
+Node: Logger names6452
+Node: The Logger object7661
+Node: The dispstr API9376
+Node: The dispstr interface11764
+Node: How dispstr and SLF4O interact12335
+Node: Configuration13259
+Node: Implementation notes14084
+Node: API Reference14618
+Node: API by Category14801
+Node: API Alphabetically17136
+Node: dispstr19132
+Node: dispstrs20218
+Node: errords21938
+Node: fprintfds22395
+Node: logger.debug23059
+Node: logger.debugj23590
+Node: logger.error24092
+Node: logger.errorj24628
+Node: logger.info25134
+Node: logger.infoj25661
+Node: logger.initSLF4M26163
+Node: logger.initSLF4O26631
+Node: logger.Log4jConfigurator26928
+Node: logger.Log4jConfigurator.configureBasicConsoleLogging29112
+Node: logger.Log4jConfigurator.setRootAppenderPattern29881
+Node: logger.Log4jConfigurator.getLog4jLevel30446
+Node: logger.Log4jConfigurator.setLevels31115
+Node: logger.Log4jConfigurator.prettyPrintLogConfiguration31998
+Node: logger.Log4jConfigurator.showGui32663
+Node: logger.Logger33132
+Node: logger.Logger.getLogger35453
+Node: logger.Logger.Logger35751
+Node: logger.Logger.error36141
+Node: logger.Logger.warn36454
+Node: logger.Logger.info36760
+Node: logger.Logger.debug37066
+Node: logger.Logger.trace37378
+Node: logger.Logger.errorj37692
+Node: logger.Logger.warnj37983
+Node: logger.Logger.infoj38270
+Node: logger.Logger.debugj38559
+Node: logger.Logger.tracej38853
+Node: logger.Logger.isErrorEnabled39156
+Node: logger.Logger.isWarnEnabled39479
+Node: logger.Logger.isInfoEnabled39805
+Node: logger.Logger.isDebugEnabled40131
+Node: logger.Logger.isTraceEnabled40462
+Node: logger.Logger.listEnabledLevels40797
+Node: logger.trace41184
+Node: logger.tracej41721
+Node: logger.version42227
+Node: logger.warn42713
+Node: logger.warnj43238
+Node: mustBeA43730
+Node: pp44860
+Node: prettyprint45476
+Node: size2str46892
+Node: sprintfds47198
+Node: warningds47925
+Node: Copying48383
 
 End Tag Table
 

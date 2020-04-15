@@ -41,73 +41,71 @@
 ##
 ## @end deftypefn
 
-function out = dispstrs(x)
+function out = dispstrs (x)
 
-if isempty(x)
-	out = reshape({}, size(x));
-elseif isnumeric(x)
-	out = dispstrsNumeric(x);
-elseif iscellstr(x)
-	out = x;
-elseif isstring(x)
-    out = cellstr(x);
-elseif iscell(x)
-	out = dispstrsGenericDisp(x);
-elseif ischar(x)
-	% An unfortunate consequence of the typical use of char and dispstrs' contract
-	out = num2cell(x);
-elseif isa(x, 'tabular')
-    out = dispstrsTabular(x);
-elseif isa(x, 'datetime')
-    out = dispstrsDatetime(x);
-elseif isa(x, 'struct')
-	out = repmat({'1-by-1 struct'}, size(x));
+if isempty (x)
+  out = reshape ({}, size (x));
+elseif isnumeric (x)
+  out = dispstrsNumeric (x);
+elseif iscellstr (x)
+  out = x;
+elseif isstring (x)
+  out = cellstr (x);
+elseif iscell (x)
+  out = dispstrsGenericDisp (x);
+elseif ischar (x)
+  % An unfortunate consequence of the typical use of char and dispstrs' contract
+  out = num2cell (x);
+elseif isa (x, 'tabular')
+  out = dispstrsTabular (x);
+elseif isa (x, 'datetime')
+  out = dispstrsDatetime (x);
+elseif isa (x, 'struct')
+  out = repmat ({'1-by-1 struct'}, size (x));
 else
-	out = dispstrsGenericDisp(x);
+  out = dispstrsGenericDisp (x);
 end
 
-out = string(out);
-
 end
 
-function out = dispstrsDatetime(x)
-out = cell(size(x));
-tfFinite = isfinite(x);
-out(tfFinite) = cellstr(datestr(x(tfFinite)));
-out(isnat(x)) = {'NaT'};
-dnum = datenum(x);
-out(isinf(dnum) & dnum > 0) = {'Inf'};
-out(isinf(dnum) & dnum < 0) = {'-Inf'};
+function out = dispstrsDatetime (x)
+out = cell (size (x));
+tfFinite = isfinite (x);
+out(tfFinite) = cellstr (datestr (x(tfFinite)));
+out(isnat (x)) = {'NaT'};
+dnum = datenum (x);
+out(isinf (dnum) & dnum > 0) = {'Inf'};
+out(isinf (dnum) & dnum < 0) = {'-Inf'};
 end
 
-function out = dispstrsNumeric(x)
-out = reshape(strtrim(cellstr(num2str(x(:)))), size(x));
+function out = dispstrsNumeric (x)
+out = reshape (strtrim (cellstr (num2str (x(:)))), size (x));
 end
 
-function out = dispstrsTabular(x)
-out = cell(size(x));
-for iRow = 1:size(x, 1)
-    for iCol = 1:size(x, 2)
-        val = x{iRow,iCol};
-        if iscell(val)
-            val = val{1};
-        end
-        out{iRow,iCol} = dispstr(val);
+function out = dispstrsTabular (x)
+out = cell (size (x));
+for iRow = 1:size (x, 1)
+  for iCol = 1:size (x, 2)
+    val = x{iRow,iCol};
+    if iscell (val)
+      val = val{1};
     end
+    out{iRow,iCol} = dispstr (val);
+  end
 end
 end
 
-function out = dispstrsGenericDisp(x)
-out = cell(size(x));
-for i = 1:numel(x)
-	if iscell(x)
-		xi = x{i}; %#ok<NASGU>
-	else
-		xi = x(i); %#ok<NASGU>
-	end
-	str = evalc('disp(xi)');
-	str(end) = []; % chomp newline
-	out{i} = str;
+function out = dispstrsGenericDisp (x)
+out = cell (size (x));
+for i = 1:numel (x)
+  if iscell (x)
+    xi = x{i}; %#ok<NASGU>
+  else
+    xi = x(i); %#ok<NASGU>
+  end
+  str = evalc ('disp(xi)');
+  str(end) = []; % chomp newline
+  out{i} = str;
 end
 end
 

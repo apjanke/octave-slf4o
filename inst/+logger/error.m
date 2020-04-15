@@ -10,13 +10,13 @@
 ## Examples:
 ##
 ## @example
-## logger.error('Some message. value1=%s value2=%d', 'foo', 42);
+## logger.error ('Some message. value1=%s value2=%d', 'foo', 42);
 ## @end example
 ##
 ## @end deftypefn
 
-function error(msg, varargin)
+function error (msg, varargin)
 
-__SLF4O_loggerCallImpl__('error', msg, varargin);
+__SLF4O_loggerCallImpl__ ('error', msg, varargin);
 
 end

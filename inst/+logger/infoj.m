@@ -9,13 +9,13 @@
 ## Examples:
 ##
 ## @example
-## logger.infoj('Some message. value1=@{@} value2=@{@}', 'foo', 42);
+## logger.infoj ('Some message. value1=@{@} value2=@{@}', 'foo', 42);
 ## @end example
 ##
 ## @end deftypefn
 
-function infoj(msg, varargin)
+function infoj (msg, varargin)
 
-__SLF4O_loggerCallImpl__('info', msg, varargin, 'j');
+__SLF4O_loggerCallImpl__ ('info', msg, varargin, 'j');
 
 end

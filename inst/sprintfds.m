@@ -15,8 +15,8 @@
 ## Examples:
 ##
 ## @example
-## bday = Birthday(3, 14);
-## str = sprintfds('The value is: %s', bday)
+## bday = Birthday (3, 14);
+## str = sprintfds ('The value is: %s', bday)
 ## @end example
 ##
 ## See also:
@@ -24,10 +24,10 @@
 ##
 ## @end deftypefn
 
-function out = sprintfds(fmt, varargin)
+function out = sprintfds (fmt, varargin)
 
-args = dispstrlib.internal.convertArgsForPrintf(varargin);
+args = dispstrlib.internal.convertArgsForPrintf (varargin);
 
-out = sprintf(fmt, args{:});
+out = sprintf (fmt, args{:});
 
 end

@@ -2,7 +2,7 @@
 
 @c %**start of header
 
-@set VERSION 0.1.0
+@set VERSION 0.2.0-SNAPSHOT
 
 @setfilename slf40.info
 @settitle SLF4O v@value{VERSION}
@@ -457,7 +457,7 @@ The intention is for user-defined classes to override this method, providing
 customized display of their values.
 
 The input x may be a value of any type. The main DISPSTR implementation has
-support for Matlab built-ins and common types. Other user-defined objects are
+support for Octave built-ins and common types. Other user-defined objects are
 displayed in a generic "m-by-n <class> array" format.
 
 Options may be a struct or an n-by-2 cell array of name/value pairs (names in
@@ -557,7 +557,7 @@ Examples:
 
 @example
 bday = Birthday(3, 14);
-fprintfds('The value is: %s', bday)
+fprintfds ('The value is: %s', bday)
 @end example
 
 See also:
@@ -579,7 +579,7 @@ controls as placeholders.
 Examples:
 
 @example
-logger.debug('Some message. value1=%s value2=%d', 'foo', 42);
+logger.debug ('Some message. value1=%s value2=%d', 'foo', 42);
 @end example
 
 @end deftypefn
@@ -597,7 +597,7 @@ values to be interpolated into the message.
 Examples:
 
 @example
-logger.debugj('Some message. value1=@{@} value2=@{@}', 'foo', 42);
+logger.debugj ('Some message. value1=@{@} value2=@{@}', 'foo', 42);
 @end example
 
 @end deftypefn
@@ -616,7 +616,7 @@ controls as placeholders.
 Examples:
 
 @example
-logger.error('Some message. value1=%s value2=%d', 'foo', 42);
+logger.error ('Some message. value1=%s value2=%d', 'foo', 42);
 @end example
 
 @end deftypefn
@@ -671,7 +671,7 @@ values to be interpolated into the message.
 Examples:
 
 @example
-logger.infoj('Some message. value1=@{@} value2=@{@}', 'foo', 42);
+logger.infoj ('Some message. value1=@{@} value2=@{@}', 'foo', 42);
 @end example
 
 @end deftypefn
@@ -734,20 +734,21 @@ Examples:
 @example
 logger.Log4jConfigurator.configureBasicConsoleLogging
 
-logger.Log4jConfigurator.setLevels(@{'root','DEBUG'@});
+logger.Log4jConfigurator.setLevels (@{'root','DEBUG'@});
 
-logger.Log4jConfigurator.setLevels(@{
-    'root'    'INFO'
+logger.Log4jConfigurator.setLevels (@{
+    'root'  'INFO'
     'net.apjanke.logger.swing'  'DEBUG'
     @});
 
 logger.Log4jConfigurator.prettyPrintLogConfiguration
 
 % Display fully-qualified class/category names in the log output:
-logger.Log4jConfigurator.setRootAppenderPattern(...
+logger.Log4jConfigurator.setRootAppenderPattern (...
    ['%d@{HH:mm:ss.SSS@} %p %c - %m' sprintf('\n')]);
 
 % Bring up the configuration GUI
+% NOTE: This is currently broken and will probably crash Octave.
 logger.Log4jConfigurator.showGui
 @end example
 
@@ -815,10 +816,10 @@ level names in column 2.
 Examples:
 
 @example
-logger.Log4jConfigurator.setLevels(@{'root','DEBUG'@});
+logger.Log4jConfigurator.setLevels (@{'root','DEBUG'@});
 
-logger.Log4jConfigurator.setLevels(@{
-    'root'    'INFO'
+logger.Log4jConfigurator.setLevels (@{
+    'root'  'INFO'
     'net.apjanke.logger.swing'  'DEBUG'
     @});
 @end example
@@ -845,7 +846,7 @@ Defaults to false.
 
 Display the Log4j configuration GUI provided by SLF4O.
 
-BROKEN!!!
+WARNING: BROKEN!!!
 
 This tool is currently broken, and will probably crash Octave if you call it.
 
@@ -875,13 +876,13 @@ trace() - takes a sprintf()-style signature, with a format string as
 the first argument, and substitution values as the remaining
 arguments.
 @example
-   logger.info(format, varargin)
+   logger.info (format, varargin)
 @end example
 You can also insert an MException object at the beginning of the
 argument list to have its message and stack trace included in the log
 message.
 @example
-   logger.warn(exception, format, varargin)
+   logger.warn (exception, format, varargin)
 @end example
 
 See also:
@@ -894,15 +895,15 @@ logger.trace
 Examples:
 
 @example
-log = logger.Logger.getLogger('foo.bar.FooBar');
-log.info('Hello, world! Running on Octave %s', version);
+log = logger.Logger.getLogger ('foo.bar.FooBar');
+log.info ('Hello, world! Running on Octave %s', version);
 @end example
 
 @example
 try
-    some_operation_that_could_go_wrong();
+  some_operation_that_could_go_wrong ();
 catch err
-    log.warn(err, 'Caught exception during processing')
+  log.warn (err, 'Caught exception during processing')
 end
 @end example
 
@@ -1097,7 +1098,7 @@ controls as placeholders.
 Examples:
 
 @example
-logger.trace('Some message. value1=%s value2=%d', 'foo', 42);
+logger.trace ('Some message. value1=%s value2=%d', 'foo', 42);
 @end example
 
 @end deftypefn
@@ -1115,7 +1116,7 @@ values to be interpolated into the message.
 Examples:
 
 @example
-logger.tracej('Some message. value1=@{@} value2=@{@}', 'foo', 42);
+logger.tracej ('Some message. value1=@{@} value2=@{@}', 'foo', 42);
 @end example
 
 @end deftypefn
@@ -1150,7 +1151,7 @@ controls as placeholders.
 Examples:
 
 @example
-logger.warn('Some message. value1=%s value2=%d', 'foo', 42);
+logger.warn ('Some message. value1=%s value2=%d', 'foo', 42);
 @end example
 
 @end deftypefn
@@ -1168,7 +1169,7 @@ values to be interpolated into the message.
 Examples:
 
 @example
-logger.warnj('Some message. value1=@{@} value2=@{@}', 'foo', 42);
+logger.warnj ('Some message. value1=@{@} value2=@{@}', 'foo', 42);
 @end example
 
 @end deftypefn
@@ -1193,10 +1194,10 @@ Type (char) is the name of the type that Value must be. A type
 name may be one of:
   * A class, such as 'double', 'cell', or 'containers.Map'
   * One of the special SLF4O pseudotypes:
-      cellstr
-      numeric
-      object
-      any
+    cellstr
+    numeric
+    object
+    any
 
 Note: The cellstr pseudotype is nontrivial to check for, as it
 must call iscellstr() and check all cell contents.
@@ -1204,9 +1205,9 @@ must call iscellstr() and check all cell contents.
 Examples:
 
 @example
-function foo(x, someStrings)
-  mustBeA(x, 'double');
-  mustBeA(someStrings, 'cellstr');
+function foo (x, someStrings)
+  mustBeA (x, 'double');
+  mustBeA (someStrings, 'cellstr');
 endfunction
 @end example
 
@@ -1296,8 +1297,8 @@ string.
 Examples:
 
 @example
-bday = Birthday(3, 14);
-str = sprintfds('The value is: %s', bday)
+bday = Birthday (3, 14);
+str = sprintfds ('The value is: %s', bday)
 @end example
 
 See also:

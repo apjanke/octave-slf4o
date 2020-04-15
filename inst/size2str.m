@@ -10,12 +10,12 @@
 ##
 ## @end deftypefn
 
-function out = size2str(sz)
+function out = size2str (sz)
 
-strs = cell(size(sz));
-for i = 1:numel(sz)
-	strs{i} = sprintf('%d', sz(i));
+strs = cell (size (sz));
+for i = 1:numel (sz)
+  strs{i} = sprintf ('%d', sz(i));
 end
 
-out = strjoin(strs, '-by-');
+out = strjoin (strs, '-by-');
 end

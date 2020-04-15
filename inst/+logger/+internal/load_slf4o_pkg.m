@@ -42,5 +42,3 @@ function load_slf4o_pkg
   endif
   
 endfunction
-
-

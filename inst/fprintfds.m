@@ -15,7 +15,7 @@
 ##
 ## @example
 ## bday = Birthday(3, 14);
-## fprintfds('The value is: %s', bday)
+## fprintfds ('The value is: %s', bday)
 ## @end example
 ##
 ## See also:
@@ -23,10 +23,10 @@
 ##
 ## @end deftypefn
 
-function out = fprintfds(varargin)
+function out = fprintfds (varargin)
 
 args = varargin;
-if isnumeric(args{1})
+if isnumeric (args{1})
   fid = args{1};
   args(1) = [];
 else
@@ -36,12 +36,12 @@ end
 fmt = args{1};
 args(1) = [];
 
-args = dispstrlib.internal.convertArgsForPrintf(args);
+args = dispstrlib.internal.convertArgsForPrintf (args);
 
-if isempty(fid)
-  out = fprintf(fmt, args{:});
+if isempty (fid)
+  out = fprintf (fmt, args{:});
 else
-  out = fprintf(fid, fmt, args{:});
+  out = fprintf (fid, fmt, args{:});
 end
 
 if nargout == 0
