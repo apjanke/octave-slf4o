@@ -15,20 +15,9 @@ thisFile = mfilename ('fullpath');
 instDir = fileparts (fileparts (thisFile));
 libDir = fullfile (instDir, 'lib');
 
-% Load our dispstr library
-
-if ~isempty (which ('dispstr'))
-  % Assume caller got Dispstr loaded themselves
-else
-  % Load Dispstr
-  matlabLibDir = fullfile (libDir, 'matlab');
-  dispstrDir = fullfile (matlabLibDir, 'dispstr', 'dispstr-1.1.1');
-  addpath (fullfile (dispstrDir, 'Mcode'));
-end
-
 % Get Java dependencies on the path
 % TODO: Only add them if they are not already on the path, so this function
-% is idempotent and silent.
+% is truly idempotent and silent.
 
 javaLibDir = fullfile (libDir, 'java');
 javaLibs = {
